@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { MainContainer } from "./components/mainContainer";
+import { MainContainer } from "./container/indexContainer/index";
 import { QueryClientProvider, QueryClient } from "react-query";
 import GlobalStyle from "./style/globalStyle";
 import "./App.css";
