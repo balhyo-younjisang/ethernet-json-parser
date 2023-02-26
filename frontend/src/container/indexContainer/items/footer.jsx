@@ -1,10 +1,11 @@
 import styled from "styled-components";
 import { Table } from "./table";
 
-export const Footer = () => {
+export const Footer = (props) => {
+  console.log(props);
   return (
     <FooterSection>
-      <BasicSection>
+      <BasicSection onClick={props.event}>
         <Img src="setting.svg"></Img>
         <BasicSpan className="BasicSpan">Basic Setting</BasicSpan>
       </BasicSection>
@@ -18,6 +19,10 @@ export const Footer = () => {
 const FooterSection = styled.footer`
   display: flex;
   flex-direction: row;
+  width: 100vw;
+  height: 10vh;
+  position: fixed;
+  bottom: 0;
 `;
 
 const BasicSection = styled.div`

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Header } from "./items/header";
 import { Footer } from "./items/footer";
 import { MainSection } from "./items/mainSection";
+import { BasicSection } from "./items/basicSection";
 
 export const MainContainer = () => {
   // const [clientCount, setClientCount] = useState(0);
@@ -27,11 +28,23 @@ export const MainContainer = () => {
   //   console.log(e.target.value.length);
   // };
 
+  // when state value is open, setModalOpen changed true
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const openModal = () => {
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
   return (
     <>
       <Header />
       <MainSection />
-      <Footer />
+      <BasicSection open={modalOpen} close={closeModal}></BasicSection>
+      <Footer event={openModal} />
     </>
   );
 };
