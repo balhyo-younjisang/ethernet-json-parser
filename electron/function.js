@@ -1,9 +1,10 @@
 const { ipcRenderer } = require("electron");
+// import { IpcRenderer } from "electron";
 const ipc = ipcRenderer;
 
-var btnMin = document.getElementById("min");
-var btnMax = document.getElementById("max");
-var btnClose = document.getElementById("close");
+const btnMin = document.getElementById("min");
+const btnMax = document.getElementById("max");
+const btnClose = document.getElementById("close");
 
 btnMin.addEventListener("click", () => {
   ipc.send("minimizeApp");
