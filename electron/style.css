@@ -3,6 +3,27 @@
   padding: 0;
 }
 
+.icon {
+  padding: 5px;
+}
+
+.control {
+  padding: 5px;
+}
+
+button,
+button:focus {
+  outline: none;
+  background: transparent;
+  border: 1px solid transparent;
+}
+
+button:active {
+  outline: none;
+  background: transparent;
+  border: 1px solid grey;
+}
+
 .container {
   width: 100vw;
   height: 41px;
