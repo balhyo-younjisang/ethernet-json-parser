@@ -57,9 +57,9 @@
   justify-content: center;
 }
 
-.main-container > li {
+/* .main-container > li {
   border-right: 2px solid rgb(207, 207, 207);
-}
+} */
 
 .name {
   width: 20vw;
