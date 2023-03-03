@@ -1,0 +1,52 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.icon {
+  padding: 5px;
+}
+
+.control {
+  padding: 5px;
+}
+
+button,
+button:focus {
+  outline: none;
+  background: transparent;
+  border: 1px solid transparent;
+}
+
+button:active {
+  outline: none;
+  background: transparent;
+  border: 1px solid grey;
+}
+
+.container {
+  width: 100vw;
+  height: 41px;
+  padding: 0;
+  display: flex;
+  background: rgb(128, 128, 128);
+  font-size: 15px;
+  justify-content: space-between;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.prevent-select {
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+}
+
+.draggable {
+  -webkit-app-region: drag;
+}
