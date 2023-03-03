@@ -4,7 +4,7 @@ import { Footer } from "./items/footer";
 import { MainSection } from "./items/mainSection";
 import { BasicSection } from "./items/basicSection";
 
-export const MainContainer = () => {
+export const Container = () => {
   // const [clientCount, setClientCount] = useState(0);
 
   // 서버에 값을 보내서 받아오는 함수
