@@ -5,15 +5,16 @@ app.disableHardwareAcceleration();
 
 const createWindow = () => {
   const win = new BrowserWindow({
-    width: 1600,
+    width: 1000, // Default width : 1600 -> 1000
     height: 600,
     frame: false,
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
     },
+    frame: false, // Remove the frame of the window
   });
-  win.setMenu(null);
+  //win.setMenu(null); // Delete line
 
   win.loadURL("http://localhost:5173/");
 

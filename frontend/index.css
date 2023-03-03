@@ -34,6 +34,13 @@ button:active {
   justify-content: space-between;
 }
 
+.container .control #min:active,
+.container .control #max:active,
+.container .control #close:active {
+  background: rgb(72, 72, 72);
+  border-radius: 5px;
+}
+
 .title {
   display: flex;
   align-items: center;
