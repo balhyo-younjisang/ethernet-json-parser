@@ -41,11 +41,11 @@ export const Data = () => {
       </Item>
       <Item width="13.5vw">
         <span>26.5°C</span>
-        <Green_text>(28°C)</Green_text>
+        <Green_text>&nbsp;(28°C)</Green_text>
       </Item>
       <Item width="13.5vw">
         <span>58.2%</span>
-        <Green_text>(60%)</Green_text>
+        <Green_text>&nbsp;(60%)</Green_text>
       </Item>
       <Item width="8.5vw">
         <Switch alt="switch" onClick={ClickAuto} clicked={auto} />
@@ -82,12 +82,17 @@ const Item = styled.div`
 const Switch = styled.img`
   content: url(${(props) =>
     props.clicked ? "togle_on.svg" : "togle_off.svg"});
-
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
   width: 5vw;
 `;
 
 const Img = styled.img`
   width: ${(props) => props.imgSize};
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
 `;
 
 const Green_text = styled.span`
