@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 1249 564" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
+    <g transform="matrix(1.92901,-1.48018,1.5122,1.97073,-893.076,180.028)">
+        <ellipse cx="469.688" cy="404.334" rx="20.564" ry="20.128"/>
+    </g>
+    <g transform="matrix(1.32445,-1.01629,0.868129,1.13137,-144.754,136.244)">
+        <rect x="312.52" y="473.642" width="299.502" height="140.247" style="fill:none;stroke:black;stroke-width:64.41px;"/>
+    </g>
+    <g transform="matrix(0.792974,-0.609255,0.609255,0.792974,50.0205,354.657)">
+        <g transform="matrix(3.14098,0,0,0.177841,-264.411,-29.7863)">
+            <path d="M243.367,167.346C243.367,167.27 243.363,167.207 243.359,167.207L84.189,167.207C84.184,167.207 84.181,167.27 84.181,167.346L84.181,167.631C84.181,167.708 84.184,167.77 84.189,167.77L243.359,167.77C243.363,167.77 243.367,167.708 243.367,167.631L243.367,167.346Z" style="stroke:black;stroke-width:44.95px;"/>
+        </g>
+        <g transform="matrix(3.14098,0,0,0.177841,-264.411,170.214)">
+            <path d="M243.367,167.346C243.367,167.27 243.363,167.207 243.359,167.207L84.189,167.207C84.184,167.207 84.181,167.27 84.181,167.346L84.181,167.631C84.181,167.708 84.184,167.77 84.189,167.77L243.359,167.77C243.363,167.77 243.367,167.708 243.367,167.631L243.367,167.346Z" style="stroke:black;stroke-width:44.95px;"/>
+        </g>
+        <g transform="matrix(1,0,0,2.35647,-81.0286,-487.828)">
+            <path d="M81.031,207.017C81.031,207.017 81.031,207.016 81.03,207.016L81.027,207.016C81.027,207.016 81.026,207.017 81.026,207.017L81.026,291.888C81.026,291.889 81.027,291.889 81.027,291.889L81.03,291.889C81.031,291.889 81.031,291.889 81.031,291.888L81.031,207.017Z" style="stroke:black;stroke-width:55.25px;"/>
+        </g>
+    </g>
+</svg>
