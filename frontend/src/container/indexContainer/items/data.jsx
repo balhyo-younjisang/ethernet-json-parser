@@ -1,11 +1,16 @@
 import { useState } from "react";
 import styled from "styled-components";
 
-export const Data = () => {
+export const Data = (props) => {
   const [auto, setAuto] = useState(false);
   const [cooling, setCooling] = useState(false);
   const [heating, setHeating] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
+
+  // const { NAME, TEMPOUT, HUMOUT, HEATING, COOLING, AUTO, TLHVL, TLLVL, HUMOP } =
+  //   props.data;
+
+  console.log(props);
 
   const ClickAuto = () => {
     setAuto(!auto);
@@ -30,31 +35,27 @@ export const Data = () => {
       onMouseOut={handleMouseOut}
       isHovering={isHovering}
     >
-      <Item width="25vw">
-        <span>ELECTROSMITH</span>
-      </Item>
+      <Item width="25vw">{/* <span>{NAME}</span> */}</Item>
       <Item width="11.2vw">
         <span>192.168.000.034</span>
       </Item>
-      <Item width="8.5vw">
-        <Green_text>7°C</Green_text>
+      <Item width="8.5vw">{/* <Green_text>{TLLVL}°C</Green_text> */}</Item>
+      <Item width="13.5vw">
+        {/* <span>{TEMPOUT}</span>
+        <Green_text>&nbsp;({TLHVL}°C)</Green_text> */}
       </Item>
       <Item width="13.5vw">
-        <span>26.5°C</span>
-        <Green_text>&nbsp;(28°C)</Green_text>
-      </Item>
-      <Item width="13.5vw">
-        <span>58.2%</span>
-        <Green_text>&nbsp;(60%)</Green_text>
+        {/* <span>{HUMOUT}</span>
+        <Green_text>&nbsp;({HUMOP}°C)</Green_text> */}
       </Item>
       <Item width="8.5vw">
-        <Switch alt="switch" onClick={ClickAuto} clicked={auto} />
+        {/* <Switch alt="switch" onClick={ClickAuto} clicked={AUTO} /> */}
       </Item>
       <Item width="8.5vw">
-        <Switch alt="switch" onClick={ClickCooling} clicked={cooling} />
+        {/* <Switch alt="switch" onClick={ClickCooling} clicked={COOLING} /> */}
       </Item>
       <Item width="8.5vw">
-        <Switch alt="switch" onClick={ClickHeating} clicked={heating} />
+        {/* <Switch alt="switch" onClick={ClickHeating} clicked={HEATING} /> */}
       </Item>
       <Item>
         <Img src="/setting.svg" alt="setting" imgSize="2.75vw" />
