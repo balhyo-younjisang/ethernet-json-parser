@@ -4,7 +4,17 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 export const MainContainer = () => {
-  const [data, setData] = useState();
+  const [data, setData] = useState({
+    NAME: null,
+    TEMPOUT: null,
+    HUMOUT: null,
+    HEATING: false,
+    COOLING: false,
+    AUTO: false,
+    TLHVL: null,
+    TLLVL: null,
+    HUMOP: null,
+  });
 
   async function fetchData() {
     const { data } = await axios.get("http://localhost:3000/");
