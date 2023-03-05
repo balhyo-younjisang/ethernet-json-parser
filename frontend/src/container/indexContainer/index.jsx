@@ -2,10 +2,10 @@ import { Header } from "./items/header";
 import { Data } from "./items/data";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import fetchData from "../../api/fetchData";
 
 export const MainContainer = () => {
   const [data, setData] = useState();
+
   async function fetchData() {
     const { data } = await axios.get("http://localhost:3000/");
     console.log(data);
