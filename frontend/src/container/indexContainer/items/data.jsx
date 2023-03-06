@@ -7,8 +7,8 @@ export const Data = (props) => {
   const [heating, setHeating] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
 
-  const { NAME, TEMPOUT, HUMOUT, HEATING, COOLING, AUTO, TLHVL, TLLVL, HUMOP } =
-    props.data;
+  // const { NAME, TEMPOUT, HUMOUT, HEATING, COOLING, AUTO, TLHVL, TLLVL, HUMOP } =
+  //   props.data;
 
   console.log(props);
 
@@ -35,31 +35,27 @@ export const Data = (props) => {
       onMouseOut={handleMouseOut}
       isHovering={isHovering}
     >
-      <Item width="25vw">
-        <span>{NAME}</span>
-      </Item>
+      <Item width="25vw">{/* <span>{NAME}</span> */}</Item>
       <Item width="11.2vw">
         <span>192.168.000.034</span>
       </Item>
-      <Item width="8.5vw">
-        <Green_text>{TLLVL}°C</Green_text>
+      <Item width="8.5vw">{/* <Green_text>{TLLVL}°C</Green_text> */}</Item>
+      <Item width="13.5vw">
+        {/* <span>{TEMPOUT}</span>
+        <Green_text>&nbsp;({TLHVL}°C)</Green_text> */}
       </Item>
       <Item width="13.5vw">
-        <span>{TEMPOUT}</span>
-        <Green_text>&nbsp;({TLHVL}°C)</Green_text>
-      </Item>
-      <Item width="13.5vw">
-        <span>{HUMOUT}</span>
-        <Green_text>&nbsp;({HUMOP}°C)</Green_text>
+        {/* <span>{HUMOUT}</span>
+        <Green_text>&nbsp;({HUMOP}°C)</Green_text> */}
       </Item>
       <Item width="8.5vw">
-        <Switch alt="switch" onClick={ClickAuto} clicked={AUTO} />
+        {/* <Switch alt="switch" onClick={ClickAuto} clicked={AUTO} /> */}
       </Item>
       <Item width="8.5vw">
-        <Switch alt="switch" onClick={ClickCooling} clicked={COOLING} />
+        {/* <Switch alt="switch" onClick={ClickCooling} clicked={COOLING} /> */}
       </Item>
       <Item width="8.5vw">
-        <Switch alt="switch" onClick={ClickHeating} clicked={HEATING} />
+        {/* <Switch alt="switch" onClick={ClickHeating} clicked={HEATING} /> */}
       </Item>
       <Item>
         <Img src="/setting.svg" alt="setting" imgSize="2.75vw" />
