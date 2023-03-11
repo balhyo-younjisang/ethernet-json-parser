@@ -19,7 +19,7 @@ export const MainContainer = () => {
 
   async function fetchData() {
     const { data } = await axios.get("http://localhost:3000/");
-    console.log(data);
+    // console.log(data);
     setData(data);
     setTimeout(fetchData, 1000); // 1초 후에 fetchData 함수를 다시 호출합니다.
   }
