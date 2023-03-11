@@ -16,6 +16,8 @@ export const ClientSetting = ({ setModalOpen }) => {
               <img src={close} width="25"></img>
             </Button>
             <SettingContainer>
+              <CommandSetting>a</CommandSetting>
+              <ButtonSetting>b</ButtonSetting>
               <Button type="submit">Save</Button>
             </SettingContainer>
           </Modal>
@@ -52,13 +54,18 @@ const Modal = styled.div`
 `;
 
 const SettingContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: end;
+  display: grid;
 `;
 
 const Button = styled.button`
   background-color: #ffffff;
   border: 0px;
+`;
+
+const CommandSetting = styled.div`
+  grid-template-columns: 2fr;
+`;
+
+const ButtonSetting = styled.div`
+  grid-template-columns: 1fr;
 `;
