@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { arduinoControl } from "../api/arduino";
 import styled from "styled-components";
 
 export const Data = (props) => {
@@ -10,7 +11,7 @@ export const Data = (props) => {
   const { NAME, TEMPOUT, HUMOUT, HEATING, COOLING, AUTO, TLHVL, TLLVL, HUMOP } =
     props.data;
 
-  console.log(props);
+  // console.log(props);
 
   const ClickAuto = () => {
     setAuto(!auto);
@@ -53,7 +54,11 @@ export const Data = (props) => {
         <Green_text>&nbsp;({HUMOP}°C)</Green_text>
       </Item>
       <Item width="8.5vw">
-        <Switch alt="switch" onClick={ClickAuto} clicked={AUTO} />
+        <Switch
+          alt="switch"
+          onClick={() => arduinoControl("<S00AUTO1>")}
+          clicked={AUTO}
+        />
       </Item>
       <Item width="8.5vw">
         <Switch alt="switch" onClick={ClickCooling} clicked={COOLING} />
