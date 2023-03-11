@@ -14,7 +14,6 @@ export const ClientSetting = (props, { setModalOpen }) => {
   };
 
   const changeNameValue = (e) => {
-    console.log(e.target.value);
     setName(e.target.value);
   };
 
@@ -29,7 +28,6 @@ export const ClientSetting = (props, { setModalOpen }) => {
   const upCommand = ["<S00TLLIC>", "<S00TLHIC>", "<S00HOPIC>"];
   const downCommand = ["<S00TLLDC>", "<S00TLHDC>", "<S00HOPDC>"];
 
-  console.log(props.data);
   return (
     <>
       <Container>
@@ -44,14 +42,19 @@ export const ClientSetting = (props, { setModalOpen }) => {
                   <div>
                     <Font>Name setting</Font>
                   </div>
+
                   <div>
                     <input
                       type="text"
                       value={name}
                       onChange={changeNameValue}
-                      onSubmit={() => changeName()}
                     />
-                    <img src={upload} width="20" height="20" />
+                    <img
+                      src={upload}
+                      width="20"
+                      height="20"
+                      onClick={() => changeName(name)}
+                    />
                   </div>
                 </Wrap>
                 {settingLabels.map((label, index) => (

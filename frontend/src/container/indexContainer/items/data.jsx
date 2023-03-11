@@ -43,14 +43,7 @@ export const Data = (props) => {
   return (
     <>
       {Modalopen && (
-        <ClientSetting
-          setModalOpen={setModalOpen}
-          setName={setName}
-          setHeater={setHeater}
-          setCooler={setCooler}
-          setHumi={setHumi}
-          data={props.data}
-        />
+        <ClientSetting setModalOpen={setModalOpen} data={props.data} />
       )}
       <Item_list
         onMouseOver={handleMouseOver}
