@@ -1,13 +1,14 @@
 import styled from "styled-components";
+import { ipcRenderer, IpcRenderer } from "electron";
 import Logo from "/DAM+Logo-4.svg";
 import min from "/window-minimize-solid.svg";
 import max from "/window-maximize-regular.svg";
 import close from "/rectangle-xmark-regular.svg";
-import { BasicSetting } from "./basicSetting";
 import { useState } from "react";
 
 export const Titlebar = (props) => {
   const contorls = [min, max, close];
+  const ipcMsg = ["minimizeApp", "maximizeApp", "closeApp"];
 
   const [modalOpen, setModalOpen] = useState(false);
   const showModal = () => {
@@ -31,7 +32,12 @@ export const Titlebar = (props) => {
 
       <Control>
         {contorls.map((icon, index) => (
-          <ControlButton key={index}>
+          <ControlButton
+            key={index}
+            onClick={() => {
+              ipcRenderer.send(ipcMsg[index]);
+            }}
+          >
             <img src={icon} width="25"></img>
           </ControlButton>
         ))}

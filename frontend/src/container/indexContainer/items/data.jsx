@@ -10,6 +10,9 @@ export const Data = (props) => {
   const [isHovering, setIsHovering] = useState(false);
   const [Modalopen, setModalOpen] = useState(false);
   const [name, setName] = useState("");
+  const [heater, setHeater] = useState(0); // 서버에서 가져온 데이터를 초깃값으로
+  const [cooler, setCooler] = useState(0); // 서버에서 가져온 데이터를 초깃값으로
+  const [humi, setHumi] = useState(0); // 서버에서 가져온 데이터를 초깃값으로
 
   const { NAME, TEMPOUT, HUMOUT, HEATING, COOLING, AUTO, TLHVL, TLLVL, HUMOP } =
     props.data;
@@ -40,7 +43,13 @@ export const Data = (props) => {
   return (
     <>
       {Modalopen && (
-        <ClientSetting setModalOpen={setModalOpen} data={props.data} />
+        <ClientSetting
+          setModalOpen={setModalOpen}
+          setName={setName}
+          setHeater={setHeater}
+          setCooler={setCooler}
+          setHumi={setHumi}
+        />
       )}
       <Item_list
         onMouseOver={handleMouseOver}
