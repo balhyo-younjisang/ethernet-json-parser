@@ -1,37 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="stylesheet" href="index.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--function.js connection-->
+    <script src="/function.js" defer></script>
+    <title>Outdoor Projector Enclosure</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-  <link rel="stylesheet" href="index.css" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Outdoor Projector Enclosure</title>
-</head>
-<div class="container">
-  <div class="icon prevent-select draggable">
-    <img src="/DAM+Logo-4.svg" alt="logo" width="60" />
-  </div>
-  <div class="title prevent-select draggable">
-    Outdoor Projector Enclosure
-  </div>
-  <div class="control prevent-select">
-    <button id="min">
-      <img src="/window-minimize-solid.svg" alt="" width="25" />
-    </button>
-    <button id="max">
-      <img src="/window-maximize-regular.svg" alt="" width="25" />
-    </button>
-    <button id="close">
-      <img src="/rectangle-xmark-regular.svg" alt="" width="25" />
-    </button>
-  </div>
-</div>
-
-<body>
-  <div id="root"></div>
-  <script type="module" src="/src/main.jsx"></script>
-</body>
-<script src="./function.js"></script> <!--function.js connection-->
-
+  <body>
+    <div class="container prevent-select">
+      <div class="icon prevent-select draggable">
+        <img src="public/DAM+Logo-4.svg" alt="logo" width="60" />
+      </div>
+      <div class="title prevent-select draggable">
+        Outdoor Projector Enclosure
+      </div>
+      <div class="control prevent-select">
+        <button id="min">
+          <img src="public/window-minimize-solid.svg" alt="" width="25" />
+        </button>
+        <button id="max">
+          <img src="public/window-maximize-regular.svg" alt="" width="25" />
+        </button>
+        <button id="close">
+          <img src="public/rectangle-xmark-regular.svg" alt="" width="25" />
+        </button>
+      </div>
+    </div>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>

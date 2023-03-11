@@ -1,13 +1,16 @@
 const { app, BrowserWindow, ipcMain } = require("electron");
+const { exec } = require("child_process");
+const path = require("path");
 const ipc = ipcMain;
 
 app.disableHardwareAcceleration();
 
 const createWindow = () => {
   const win = new BrowserWindow({
-    width: 1000, // Default width : 1600 -> 1000
+    width: 1200, // Default width : 1600 -> 1000
     height: 600,
     frame: false,
+    icon: path.join(__dirname, "assets/icons/electrosmith.png"),
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
@@ -16,7 +19,7 @@ const createWindow = () => {
   });
   //win.setMenu(null); // Delete line
 
-  win.loadURL("http://localhost:5173/");
+  win.loadFile(__dirname + "\\frontend\\index.html");
 
   // win.webContents.openDevTools();
 
@@ -35,7 +38,19 @@ const createWindow = () => {
   });
 };
 
+function runScript(scriptName) {
+  exec(`npm run ${scriptName}`, (error, stdout, stderr) => {
+    if (error) {
+      console.error(`exec error: ${error}`);
+      return;
+    }
+    console.log(`stdout: ${stdout}`);
+    console.error(`stderr: ${stderr}`);
+  });
+}
+
 app.whenReady().then(() => {
+  runScript("start");
   createWindow();
 
   app.on("activate", () => {
