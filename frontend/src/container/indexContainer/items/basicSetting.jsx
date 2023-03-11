@@ -34,7 +34,12 @@ export const BasicSetting = ({ setModalOpen, consoleLog }) => {
                 <span>Number of Enclosure</span>
               </Item>
               <Item width="14.5vw">
-                <span>5</span>
+                <Input
+                  placeholder="Network port number"
+                  name="port"
+                  value={numOfEnclosure}
+                  onChange={handleChangeEnclosure}
+                />
               </Item>
             </Item_list>
             <Item_list>
@@ -42,19 +47,14 @@ export const BasicSetting = ({ setModalOpen, consoleLog }) => {
                 <span>Network port number</span>
               </Item>
               <Item width="14.5vw">
-                <span>192.168.000.034</span>
+                <Input
+                  placeholder="Network port number"
+                  name="port"
+                  value={port}
+                  onChange={handleChangePort}
+                />
               </Item>
             </Item_list>
-            {/* <Item width="100%">
-              <span>Network port number</span>
-              <br />
-              <input
-                placeholder="Network port number"
-                name="port"
-                value={port}
-                onChange={handleChangePort}
-              />
-            </Item> */}
           </SettingContainer>
         </Modal>
       </Window>
@@ -143,4 +143,13 @@ const Item_list = styled.div`
 const TextBox = styled.div`
   display: flex;
   align-items: center;
+`;
+
+const Input = styled.input`
+  width: inherit;
+  height: inherit;
+  outline: none;
+  border: none;
+  background: transparent;
+  text-align: center;
 `;
