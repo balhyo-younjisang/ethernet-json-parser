@@ -9,10 +9,6 @@ import { useState } from "react";
 export const Titlebar = (props) => {
   const contorls = [min, max, close];
 
-  const [numOfEnclosure, setNumOfEnclosure] = useState(5);
-
-  const [port, setPort] = useState(10001);
-
   const [modalOpen, setModalOpen] = useState(false);
   const showModal = () => {
     setModalOpen(true);
