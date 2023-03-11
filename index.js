@@ -1,5 +1,5 @@
 const { app, BrowserWindow, ipcMain } = require("electron");
-const { exec } = require("child_process");
+const { spawn } = require("child_process");
 const path = require("path");
 const ipc = ipcMain;
 
@@ -39,19 +39,24 @@ const createWindow = () => {
 };
 
 function runScript(scriptName) {
-  exec(`npm run ${scriptName}`, (error, stdout, stderr) => {
-    if (error) {
-      console.error(`exec error: ${error}`);
-      return;
+  const child = spawn(
+    /^win/.test(process.platform) ? "npm.cmd" : "npm",
+    ["run", scriptName],
+    {
+      cwd: __dirname,
+      stdio: "inherit",
+      shell: true,
     }
-    console.log(`stdout: ${stdout}`);
-    console.error(`stderr: ${stderr}`);
+  );
+
+  child.on("close", (code) => {
+    console.log(`child process exited with code ${code}`);
   });
 }
 
 app.whenReady().then(() => {
-  runScript("start");
   createWindow();
+  runScript("start");
 
   app.on("activate", () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
