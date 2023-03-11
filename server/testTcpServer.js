@@ -1,22 +1,20 @@
-const net = require("net");
+var net = require("net");
+var express = require("express");
+var app = express();
+var tcpClient = new net.Socket();
+tcpClient.connect(10001, "192.168.0.100", function () {
+  console.log("Connected to Ethernet shield");
+});
 
-function sendData() {
-  const client = new net.Socket();
-  client.connect(10001, "192.168.55.214", function () {
-    console.log("Connected");
-    client.write("Hello World");
-    client.destroy();
-  });
+app.get("/", function (req, res) {
+  tcpClient.write("GET / HTTP/1.1\r\n\r\n");
+});
 
-  client.on("close", function () {
-    console.log("Connection closed");
-    setTimeout(sendData, 3000);
-  });
+tcpClient.on("data", function (data) {
+  console.log("Data received from Arduino: " + data);
+  res.send(data);
+});
 
-  client.on("error", function (err) {
-    console.error("Error occurred:", err);
-    setTimeout(sendData, 3000);
-  });
-}
-
-sendData();
+app.listen(3001, function () {
+  console.log("Server listening on port 3001");
+});

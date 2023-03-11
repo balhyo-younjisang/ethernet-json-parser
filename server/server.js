@@ -7,7 +7,7 @@ const cors = require("cors");
 const { dataList } = require("./testData");
 
 // 상수
-const PORT = 10001;
+const PORT = 3000;
 
 // 앱
 const app = express();
@@ -23,3 +23,13 @@ app.get("/", (req, res) => {
 });
 
 app.listen(PORT, console.log(`Running on http://localhost:${PORT}`));
+
+if (err.code === "EADDRINUSE") {
+  console.log(`Port ${port} is already in use, trying another port...`);
+  port++;
+  app.listen(port, () => {
+    console.log(`Server listening on port ${port}`);
+  });
+} else {
+  console.error(err);
+}
