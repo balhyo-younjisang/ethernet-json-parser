@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { counterState } from "../../../data/atoms";
 import close from "/rectangle-xmark-regular.svg";

@@ -35,9 +35,9 @@ export const Titlebar = (props) => {
         {contorls.map((icon, index) => (
           <ControlButton
             key={index}
-            onClick={() => {
-              ipcRenderer.send(ipcMsg[index]);
-            }}
+            onClick={() =>
+              window.Electron.ipcRenderer.postMessage(ipcMsg[index])
+            }
           >
             <img src={icon} width="25"></img>
           </ControlButton>
@@ -60,8 +60,6 @@ const Container = styled.div`
     user-select: none;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
-
-    -webkit-app-region: drag;
   }
 `;
 
