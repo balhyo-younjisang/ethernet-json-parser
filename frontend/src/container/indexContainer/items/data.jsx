@@ -1,11 +1,13 @@
 import { useState } from "react";
 import styled from "styled-components";
+import { ClientSetting } from "./clientSetting";
 
 export const Data = (props) => {
   const [auto, setAuto] = useState(false);
   const [cooling, setCooling] = useState(false);
   const [heating, setHeating] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
+  const [Modalopen, setModalOpen] = useState(false);
 
   const { NAME, TEMPOUT, HUMOUT, HEATING, COOLING, AUTO, TLHVL, TLLVL, HUMOP } =
     props.data;
@@ -29,42 +31,49 @@ export const Data = (props) => {
     setIsHovering(false);
   };
 
+  const showSetModal = () => {
+    setModalOpen(true);
+  };
+
   return (
-    <Item_list
-      onMouseOver={handleMouseOver}
-      onMouseOut={handleMouseOut}
-      isHovering={isHovering}
-    >
-      <Item width="25vw">
-        <span>{NAME}</span>
-      </Item>
-      <Item width="11.2vw">
-        <span>192.168.000.034</span>
-      </Item>
-      <Item width="8.5vw">
-        <Green_text>{TLLVL}°C</Green_text>
-      </Item>
-      <Item width="13.5vw">
-        <span>{TEMPOUT}</span>
-        <Green_text>&nbsp;({TLHVL}°C)</Green_text>
-      </Item>
-      <Item width="13.5vw">
-        <span>{HUMOUT}</span>
-        <Green_text>&nbsp;({HUMOP}°C)</Green_text>
-      </Item>
-      <Item width="8.5vw">
-        <Switch alt="switch" onClick={ClickAuto} clicked={AUTO} />
-      </Item>
-      <Item width="8.5vw">
-        <Switch alt="switch" onClick={ClickCooling} clicked={COOLING} />
-      </Item>
-      <Item width="8.5vw">
-        <Switch alt="switch" onClick={ClickHeating} clicked={HEATING} />
-      </Item>
-      <Item>
-        <Img src="/setting.svg" alt="setting" imgSize="2.75vw" />
-      </Item>
-    </Item_list>
+    <>
+      {Modalopen && <ClientSetting setModalOpen={setModalOpen} />}
+      <Item_list
+        onMouseOver={handleMouseOver}
+        onMouseOut={handleMouseOut}
+        isHovering={isHovering}
+      >
+        <Item width="25vw">
+          <span>{NAME}</span>
+        </Item>
+        <Item width="11.2vw">
+          <span>192.168.000.034</span>
+        </Item>
+        <Item width="8.5vw">
+          <Green_text>{TLLVL}°C</Green_text>
+        </Item>
+        <Item width="13.5vw">
+          <span>{TEMPOUT}</span>
+          <Green_text>&nbsp;({TLHVL}°C)</Green_text>
+        </Item>
+        <Item width="13.5vw">
+          <span>{HUMOUT}</span>
+          <Green_text>&nbsp;({HUMOP}°C)</Green_text>
+        </Item>
+        <Item width="8.5vw">
+          <Switch alt="switch" onClick={ClickAuto} clicked={AUTO} />
+        </Item>
+        <Item width="8.5vw">
+          <Switch alt="switch" onClick={ClickCooling} clicked={COOLING} />
+        </Item>
+        <Item width="8.5vw">
+          <Switch alt="switch" onClick={ClickHeating} clicked={HEATING} />
+        </Item>
+        <Item onClick={showSetModal}>
+          <Img src="/setting.svg" alt="setting" imgSize="2.75vw" />
+        </Item>
+      </Item_list>
+    </>
   );
 };
 
