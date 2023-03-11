@@ -44,6 +44,22 @@ app.get("/:method", (req, res) => {
   });
 });
 
+app.get("name/:name", (req, res) => {
+  const name = req.params.name;
+  console.log(name);
+  client.write("<CHIFNAME>", (err) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send("Error sending data to Arduino");
+    } else {
+      client.write(name);
+      client.write("END");
+
+      res.send(`send ${name} command to Arduino`);
+    }
+  });
+});
+
 const port = 3000;
 
 const server = app.listen(port, () => {

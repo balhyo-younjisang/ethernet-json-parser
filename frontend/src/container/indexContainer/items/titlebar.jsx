@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { ipcRenderer, IpcRenderer } from "electron";
+// import { ipcRenderer } from "electron";
 import Logo from "/DAM+Logo-4.svg";
 import min from "/window-minimize-solid.svg";
 import max from "/window-maximize-regular.svg";
