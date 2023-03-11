@@ -10,6 +10,11 @@ export const ClientSetting = (props, { setModalOpen }) => {
     setModalOpen(false);
   };
 
+  const naming = ({ target: { value } }) => {
+    setName(value);
+    console.log(value);
+  };
+
   const settingLabels = [
     "Heater Operation value",
     "Cooler Operation value",
@@ -30,21 +35,17 @@ export const ClientSetting = (props, { setModalOpen }) => {
               <CommandSetting>
                 <Wrap>
                   <div>
-                    <p>Name setting</p>
+                    <Font>Name setting</Font>
                   </div>
                   <div>
-                    <input
-                      type="text"
-                      value={props.data.NAME}
-                      onChange={() => console.log()}
-                    />
+                    <input type="text" defaultValue={props.data.NAME} />
                     <img src={upload} width="20" height="20" />
                   </div>
                 </Wrap>
                 {settingLabels.map((label, index) => (
                   <Wrap key={index}>
                     <div>
-                      <p>{label}</p>
+                      <Font>{label}</Font>
                     </div>
                     <div>
                       <img src={increase} width="20" height="20" />
@@ -63,13 +64,13 @@ export const ClientSetting = (props, { setModalOpen }) => {
                   <RebootBtn>REBOOT SYSTEM</RebootBtn>
                 </ButtonWrap>
                 <ManualControlWrap>
-                  <label>Manual Control</label>
+                  <Font>Manual Control</Font>
                   <SwitchWrap>
-                    <label>Heater</label>
+                    <Font>Heater</Font>
                     <Switch alt="switch" />
                   </SwitchWrap>
                   <SwitchWrap>
-                    <label>Cooler</label>
+                    <Font>Cooler</Font>
                     <Switch alt="switch" />
                   </SwitchWrap>
                 </ManualControlWrap>
@@ -144,17 +145,21 @@ const Wrap = styled.div`
   justify-content: space-around;
 `;
 
+const Font = styled.p`
+  font-size: x-small;
+`;
+
 const Switch = styled.img`
   content: url(${(props) =>
     props.clicked ? "togle_on.svg" : "togle_off.svg"});
   user-select: none;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
-  width: 5vw;
+  width: 3vw;
 `;
 
 const SwitchWrap = styled.div`
-  width: 7vw;
+  width: 5vw;
 `;
 
 const ManualControlWrap = styled.div`

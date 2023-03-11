@@ -9,6 +9,7 @@ export const Data = (props) => {
   const [heating, setHeating] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
   const [Modalopen, setModalOpen] = useState(false);
+  const [name, setName] = useState("");
 
   const { NAME, TEMPOUT, HUMOUT, HEATING, COOLING, AUTO, TLHVL, TLLVL, HUMOP } =
     props.data;
