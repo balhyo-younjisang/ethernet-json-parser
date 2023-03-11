@@ -24,15 +24,23 @@ client.on("error", (err) => {
   console.log(err);
 });
 
-setInterval(() => {
-  client.write("Data request");
-}, 1000);
-
 app.get("/", (req, res) => {
   client.on("data", (chunk) => {
     data = chunk.toString();
   });
   res.send(data);
+});
+
+app.get("/:id", (req, res) => {
+  console.log(req.params.id);
+  client.write(req.params.id, (err) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send("Error sending data to Arduino");
+    } else {
+      res.send("Data sent to Arduino");
+    }
+  });
 });
 
 const port = 3000;

@@ -22,14 +22,8 @@ app.get("/", (req, res) => {
   console.log(dataList[random]);
 });
 
-app.listen(PORT, console.log(`Running on http://localhost:${PORT}`));
+app.get("/asd", (req, res) => {
+  res.send("aisufghaskjahsfgkashgkjashkjsg");
+});
 
-if (err.code === "EADDRINUSE") {
-  console.log(`Port ${port} is already in use, trying another port...`);
-  port++;
-  app.listen(port, () => {
-    console.log(`Server listening on port ${port}`);
-  });
-} else {
-  console.error(err);
-}
+app.listen(PORT, console.log(`Running on http://localhost:${PORT}`));
