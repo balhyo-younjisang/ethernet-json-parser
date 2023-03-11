@@ -5,7 +5,7 @@ import upload from "/upload-svgrepo-com.svg";
 import increase from "/Increase.svg";
 import decrease from "/decrease.svg";
 
-export const ClientSetting = ({ setModalOpen }) => {
+export const ClientSetting = (props, { setModalOpen }) => {
   const hideSetModal = () => {
     setModalOpen(false);
   };
@@ -16,6 +16,8 @@ export const ClientSetting = ({ setModalOpen }) => {
     "Dehumidification value",
   ];
 
+  const settingValues = [props.data.TLLVL, props.data.TLHVL, props.data.HUMOP];
+  console.log(props.data);
   return (
     <>
       <Container>
@@ -31,7 +33,11 @@ export const ClientSetting = ({ setModalOpen }) => {
                     <p>Name setting</p>
                   </div>
                   <div>
-                    <input type="text" />
+                    <input
+                      type="text"
+                      value={props.data.NAME}
+                      onChange={() => console.log()}
+                    />
                     <img src={upload} width="20" height="20" />
                   </div>
                 </Wrap>
@@ -42,7 +48,11 @@ export const ClientSetting = ({ setModalOpen }) => {
                     </div>
                     <div>
                       <img src={increase} width="20" height="20" />
-                      <input type="text" />
+                      <input
+                        type="text"
+                        value={settingValues[index]}
+                        disabled
+                      />
                       <img src={decrease} width="20" height="20" />
                     </div>
                   </Wrap>

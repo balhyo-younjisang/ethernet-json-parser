@@ -1,5 +1,4 @@
 const { app, BrowserWindow, ipcMain } = require("electron");
-const { spawn } = require("child_process");
 const path = require("path");
 const ipc = ipcMain;
 
@@ -14,12 +13,14 @@ const createWindow = () => {
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
+      enableRemoteModule: true,
+      preload: path.join(__dirname, "preload.js"),
     },
     frame: false, // Remove the frame of the window
   });
   //win.setMenu(null); // Delete line
 
-  win.loadFile(__dirname + "\\frontend\\index.html");
+  win.loadURL("http://localhost:5173");
 
   // win.webContents.openDevTools();
 
@@ -38,25 +39,8 @@ const createWindow = () => {
   });
 };
 
-function runScript(scriptName) {
-  const child = spawn(
-    /^win/.test(process.platform) ? "npm.cmd" : "npm",
-    ["run", scriptName],
-    {
-      cwd: __dirname,
-      stdio: "inherit",
-      shell: true,
-    }
-  );
-
-  child.on("close", (code) => {
-    console.log(`child process exited with code ${code}`);
-  });
-}
-
 app.whenReady().then(() => {
   createWindow();
-  runScript("start");
 
   app.on("activate", () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();

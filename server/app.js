@@ -9,7 +9,7 @@ app.use(cors());
 
 let data = "";
 
-const client = net.createConnection(
+let client = net.createConnection(
   { host: "192.168.0.100", port: 10001 },
   () => {
     console.log("Connected to TCP server");
