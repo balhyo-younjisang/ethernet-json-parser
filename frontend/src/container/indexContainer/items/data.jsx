@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { arduinoControl } from "../api/arduino";
+import { arduinoControl } from "../api/apis";
 import styled from "styled-components";
 import { ClientSetting } from "./clientSetting";
 
@@ -43,6 +43,7 @@ export const Data = (props) => {
   return (
     <>
       {Modalopen && (
+<<<<<<< HEAD
         <ClientSetting
           setModalOpen={setModalOpen}
           setName={setName}
@@ -50,6 +51,9 @@ export const Data = (props) => {
           setCooler={setCooler}
           setHumi={setHumi}
         />
+=======
+        <ClientSetting setModalOpen={setModalOpen} data={props.data} />
+>>>>>>> 2aa067a8713638d1ed94b8e90d9866297fdff0df
       )}
       <Item_list
         onMouseOver={handleMouseOver}
@@ -74,7 +78,11 @@ export const Data = (props) => {
           <Green_text>&nbsp;({HUMOP}°C)</Green_text>
         </Item>
         <Item width="8.5vw">
-          <Switch alt="switch" onClick={ClickAuto} clicked={AUTO} />
+          <Switch
+            alt="switch"
+            onClick={() => arduinoControl("<S00AUTO1>")}
+            clicked={AUTO}
+          />
         </Item>
         <Item width="8.5vw">
           <Switch alt="switch" onClick={ClickCooling} clicked={COOLING} />

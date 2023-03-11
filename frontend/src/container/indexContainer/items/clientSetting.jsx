@@ -5,6 +5,7 @@ import upload from "/upload-svgrepo-com.svg";
 import increase from "/Increase.svg";
 import decrease from "/decrease.svg";
 
+<<<<<<< HEAD
 export const ClientSetting = ({
   setModalOpen,
   setName,
@@ -16,6 +17,9 @@ export const ClientSetting = ({
   cooler,
   humi,
 }) => {
+=======
+export const ClientSetting = (props, { setModalOpen }) => {
+>>>>>>> 2aa067a8713638d1ed94b8e90d9866297fdff0df
   const hideSetModal = () => {
     setModalOpen(false);
   };
@@ -31,6 +35,8 @@ export const ClientSetting = ({
 
   const switchLabels = ["Heater", "Cooler"];
 
+  const settingValues = [props.data.TLLVL, props.data.TLHVL, props.data.HUMOP];
+  console.log(props.data);
   return (
     <>
       <Container>
@@ -46,6 +52,7 @@ export const ClientSetting = ({
                     <Font>Name setting</Font>
                   </div>
                   <div>
+<<<<<<< HEAD
                     <input type="text" onChange={naming} value={name} />
                     <img src={upload} width="20" height="20" />
                   </div>
@@ -83,6 +90,28 @@ export const ClientSetting = ({
                     <img src={decrease} width="20" height="20" />
                   </div>
                 </Wrap>
+=======
+                    <input type="text" defaultValue={props.data.NAME} />
+                    <img src={upload} width="20" height="20" />
+                  </div>
+                </Wrap>
+                {settingLabels.map((label, index) => (
+                  <Wrap key={index}>
+                    <div>
+                      <Font>{label}</Font>
+                    </div>
+                    <div>
+                      <img src={increase} width="20" height="20" />
+                      <input
+                        type="text"
+                        value={settingValues[index]}
+                        disabled
+                      />
+                      <img src={decrease} width="20" height="20" />
+                    </div>
+                  </Wrap>
+                ))}
+>>>>>>> 2aa067a8713638d1ed94b8e90d9866297fdff0df
               </CommandSetting>
               <ButtonSetting>
                 <ButtonWrap>
