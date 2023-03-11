@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { arduinoControl } from "../api/arduino";
 import styled from "styled-components";
 import { ClientSetting } from "./clientSetting";
 
@@ -12,7 +13,7 @@ export const Data = (props) => {
   const { NAME, TEMPOUT, HUMOUT, HEATING, COOLING, AUTO, TLHVL, TLLVL, HUMOP } =
     props.data;
 
-  console.log(props);
+  // console.log(props);
 
   const ClickAuto = () => {
     setAuto(!auto);

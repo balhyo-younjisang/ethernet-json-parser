@@ -31,14 +31,15 @@ app.get("/", (req, res) => {
   res.send(data);
 });
 
-app.get("/:id", (req, res) => {
-  console.log(req.params.id);
-  client.write(req.params.id, (err) => {
+app.get("/:method", (req, res) => {
+  const method = req.params.method;
+  console.log(method);
+  client.write(method, (err) => {
     if (err) {
       console.error(err);
       res.status(500).send("Error sending data to Arduino");
     } else {
-      res.send("Data sent to Arduino");
+      res.send(`send ${method} command to Arduino`);
     }
   });
 });

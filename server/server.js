@@ -19,11 +19,11 @@ app.use(cors());
 app.get("/", (req, res) => {
   let random = Math.floor(Math.random() * dataList.length);
   res.send(dataList[random]);
-  console.log(dataList[random]);
+  // console.log(dataList[random]);
 });
 
-app.get("/asd", (req, res) => {
-  res.send("aisufghaskjahsfgkashgkjashkjsg");
+app.get("/:method", (req, res) => {
+  res.send(req.params.method);
 });
 
 app.listen(PORT, console.log(`Running on http://localhost:${PORT}`));
