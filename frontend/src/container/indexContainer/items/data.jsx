@@ -9,10 +9,6 @@ export const Data = (props) => {
   const [heating, setHeating] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
   const [Modalopen, setModalOpen] = useState(false);
-  const [name, setName] = useState("");
-  const [heater, setHeater] = useState(0); // 서버에서 가져온 데이터를 초깃값으로
-  const [cooler, setCooler] = useState(0); // 서버에서 가져온 데이터를 초깃값으로
-  const [humi, setHumi] = useState(0); // 서버에서 가져온 데이터를 초깃값으로
 
   const { NAME, TEMPOUT, HUMOUT, HEATING, COOLING, AUTO, TLHVL, TLLVL, HUMOP } =
     props.data;
@@ -62,7 +58,7 @@ export const Data = (props) => {
         </Item>
         <Item width="13.5vw">
           <span>{HUMOUT}</span>
-          <Green_text>&nbsp;({HUMOP}°C)</Green_text>
+          <Green_text>&nbsp;({HUMOP}%)</Green_text>
         </Item>
         <Item width="8.5vw">
           <Switch
@@ -77,7 +73,7 @@ export const Data = (props) => {
         <Item width="8.5vw">
           <Switch alt="switch" onClick={ClickHeating} clicked={HEATING} />
         </Item>
-        <Item onClick={showSetModal}>
+        <Item onClick={showSetModal} setModalOpen={setModalOpen}>
           <Img src="/setting.svg" alt="setting" imgSize="2.75vw" />
         </Item>
       </Item_list>

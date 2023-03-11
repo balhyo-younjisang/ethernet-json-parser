@@ -3,6 +3,8 @@ import { Titlebar } from "./items/titlebar";
 import { Data } from "./items/data";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useRecoilState } from "recoil";
+import { counterState } from "../../data/atoms";
 
 export const MainContainer = () => {
   const [data, setData] = useState({
@@ -16,6 +18,7 @@ export const MainContainer = () => {
     TLLVL: null,
     HUMOP: null,
   });
+  const [count, setCount] = useRecoilState(counterState);
 
   async function fetchData() {
     const { data } = await axios.get("http://localhost:3000/");
@@ -32,9 +35,11 @@ export const MainContainer = () => {
     <>
       <Titlebar></Titlebar>
       <Header></Header>
-      {[...Array(parseInt(1))].map((n, index) => {
-        return <Data key={index} data={data} />;
-      })}
+      {count === ""
+        ? null
+        : [...Array(parseInt(count))].map((n, index) => {
+            return <Data key={index} data={data} />;
+          })}
     </>
   );
 };

@@ -6,11 +6,13 @@ import increase from "/Increase.svg";
 import decrease from "/decrease.svg";
 import { arduinoControl, changeName } from "../api/apis";
 
-export const ClientSetting = (props, { setModalOpen }) => {
+export const ClientSetting = (props) => {
   const [name, setName] = useState(props.data.NAME);
 
-  const hideSetModal = () => {
-    setModalOpen(false);
+  console.log(props);
+
+  const hideModal = () => {
+    props.setModalOpen(false);
   };
 
   const changeNameValue = (e) => {
@@ -23,7 +25,11 @@ export const ClientSetting = (props, { setModalOpen }) => {
     "Dehumidification value",
   ];
 
-  const settingValues = [props.data.TLLVL, props.data.TLHVL, props.data.HUMOP];
+  const settingValues = [
+    props.data.TLLVL + "°C",
+    props.data.TLHVL + "°C",
+    props.data.HUMOP + "%",
+  ];
 
   const upCommand = ["<S00TLLIC>", "<S00TLHIC>", "<S00HOPIC>"];
   const downCommand = ["<S00TLLDC>", "<S00TLHDC>", "<S00HOPDC>"];
@@ -33,75 +39,84 @@ export const ClientSetting = (props, { setModalOpen }) => {
       <Container>
         <Window>
           <Modal>
-            <Button onClick={hideSetModal}>
-              <img src={close} width="25"></img>
-            </Button>
+            <Header>
+              <TextBox>
+                <Img src="/setting.svg" alt="setting" imgSize="2.75vw" />
+                <span>Basic Setting</span>
+              </TextBox>
+              <Button onClick={hideModal}>
+                <Img src={close} imgSize="1.75vw"></Img>
+              </Button>
+            </Header>
             <SettingContainer>
               <CommandSetting>
                 <Wrap>
-                  <div>
-                    <Font>Name setting</Font>
-                  </div>
+                  <Item_list>
+                    <Item width="9vw">
+                      <Font>Name setting</Font>
+                    </Item>
 
-                  <div>
-                    <input
-                      type="text"
-                      value={name}
-                      onChange={changeNameValue}
-                    />
+                    <Item width="19.5vw">
+                      <Input
+                        type="text"
+                        value={name}
+                        onChange={changeNameValue}
+                      />
+                    </Item>
                     <img
                       src={upload}
-                      width="20"
-                      height="20"
+                      width="30"
+                      height="30"
                       onClick={() => changeName(name)}
                     />
-                  </div>
+                  </Item_list>
                 </Wrap>
                 {settingLabels.map((label, index) => (
-                  <Wrap key={index}>
-                    <div>
+                  <Item_list key={index}>
+                    <Item width="18.5vw">
                       <Font>{label}</Font>
-                    </div>
-                    <div>
-                      <img
-                        src={increase}
-                        width="20"
-                        height="20"
-                        onClick={() => arduinoControl(upCommand[index])}
-                      />
-                      <input
-                        type="text"
-                        value={settingValues[index]}
-                        disabled
-                      />
-                      <img
-                        src={decrease}
-                        width="20"
-                        height="20"
-                        onClick={() => arduinoControl(downCommand[index])}
-                      />
-                    </div>
-                  </Wrap>
+                    </Item>
+                    <img
+                      src={increase}
+                      width="35"
+                      height="35"
+                      onClick={() => arduinoControl(upCommand[index])}
+                    />
+                    <Item width="8vw">
+                      <Green_text>{settingValues[index]}</Green_text>
+                    </Item>
+                    <img
+                      src={decrease}
+                      width="35"
+                      height="35"
+                      onClick={() => arduinoControl(downCommand[index])}
+                    />
+                  </Item_list>
                 ))}
               </CommandSetting>
-              <ButtonSetting>
-                <ButtonWrap>
-                  <RebootBtn>REBOOT SYSTEM</RebootBtn>
-                </ButtonWrap>
-                <ManualControlWrap>
+              <ButtonWrap>
+                <RebootBtn>REBOOT SYSTEM</RebootBtn>
+              </ButtonWrap>
+              <ButtonWrap>
+                <RebootBtn>
                   <Font>Manual Control</Font>
-                  <SwitchWrap>
-                    <Font>Heater</Font>
-                    <Switch alt="switch" />
-                  </SwitchWrap>
-                  <SwitchWrap>
-                    <Font>Cooler</Font>
-                    <Switch alt="switch" />
-                  </SwitchWrap>
-                </ManualControlWrap>
-              </ButtonSetting>
+                  <div>
+                    <WhiteLine>
+                      <SwitchWrap>
+                        <Font>Heater</Font>
+                        <Switch alt="switch" />
+                      </SwitchWrap>
+                    </WhiteLine>
+                    <WhiteLine>
+                      <SwitchWrap>
+                        <Font>Cooler</Font>
+                        <Switch alt="switch" />
+                      </SwitchWrap>
+                    </WhiteLine>
+                  </div>
+                </RebootBtn>
+              </ButtonWrap>
             </SettingContainer>
-            <SaveButton type="submit">Save</SaveButton>
           </Modal>
         </Window>
       </Container>
@@ -109,11 +124,24 @@ export const ClientSetting = (props, { setModalOpen }) => {
   );
 };
 
+const TextBox = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
 const Container = styled.div`
+  font-size: 1.25rem;
   position: fixed;
   width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.3);
+`;
+
+const Img = styled.img`
+  width: ${(props) => props.imgSize};
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
 `;
 
 const Window = styled.div`
@@ -121,6 +149,13 @@ const Window = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
+`;
+
+const Header = styled.div`
+  height: 15%;
+  display: flex;
+  justify-content: space-between;
+  background-color: rgb(179, 179, 179);
 `;
 
 const Modal = styled.div`
@@ -131,37 +166,29 @@ const Modal = styled.div`
   background-color: #ffffff;
   box-shadow: 0 2px 7px rgba(0, 0, 0, 0.3);
   width: 50vw;
-  height: 40vh;
+  height: 26vh;
   transform: translate(-50%, -40%);
 `;
 
 const SettingContainer = styled.div`
-  height: 30vh;
-  display: grid;
-  grid-template-columns: 2fr 1fr;
+  height: 22vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
 `;
 
 const Button = styled.button`
-  background-color: #ffffff;
+  background-color: rgb(179, 179, 179);
   border: 0px;
-`;
-
-const SaveButton = styled.button`
-  background-color: #ffffff;
-  border: 0px;
-  margin-left: 45%;
+  margin-right: 5px;
 `;
 
 const CommandSetting = styled.div`
-  display: grid;
-  grid-template-rows: 1fr 1fr 1fr 1fr;
-`;
-
-const ButtonSetting = styled.div`
+  width: 30vw;
   display: flex;
   flex-direction: column;
+  align-items: center;
 `;
-
 const Wrap = styled.div`
   display: flex;
   flex-direction: row;
@@ -171,7 +198,7 @@ const Wrap = styled.div`
 `;
 
 const Font = styled.p`
-  font-size: x-small;
+  font-size: 1.25rem;
 `;
 
 const Switch = styled.img`
@@ -180,26 +207,70 @@ const Switch = styled.img`
   user-select: none;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
-  width: 3vw;
+  margin-right: 10px;
+  width: 3.75vw;
 `;
 
 const SwitchWrap = styled.div`
-  width: 5vw;
-`;
-
-const ManualControlWrap = styled.div`
   display: flex;
-  flex-direction: column;
   align-items: center;
-  text-align: center;
+  justify-content: space-evenly;
+
+  width: 9vw;
 `;
 
 const ButtonWrap = styled.div`
+  display: flex;
   text-align: center;
+  padding-top: 3px;
+  width: 19vh;
+  height: 19vh;
 `;
 
 const RebootBtn = styled.button`
-  border-radius: 10px;
+  border-radius: 40px;
   border: 1px;
   padding: 10px;
+  width: inherit;
+  height: inherit;
+  align-items: center;
+  font-size: 1.25rem;
+`;
+
+const Item = styled.div`
+  background-color: rgb(230, 230, 230);
+  border-right: 2px solid white;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: ${(props) => props.width};
+`;
+
+const Item_list = styled.div`
+  display: flex;
+  align-items: center;
+  border-top: 5px solid ${(props) => (props.isHovering ? "black" : "white")};
+  border-bottom: 5px solid ${(props) => (props.isHovering ? "black" : "white")};
+`;
+
+const WhiteLine = styled.div`
+  border: 2px solid white;
+  border-radius: 40px;
+  margin-top: 10px;
+  padding: 5px;
+`;
+
+const Green_text = styled.span`
+  color: rgb(35, 152, 32);
+`;
+
+const Input = styled.input`
+  width: inherit;
+  height: inherit;
+  outline: none;
+  border: none;
+  background: transparent;
+  text-align: center;
+  font-size: 1.25rem;
 `;

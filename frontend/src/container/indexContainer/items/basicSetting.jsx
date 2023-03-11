@@ -1,5 +1,7 @@
 import React, { useState } from "react";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import styled from "styled-components";
+import { counterState } from "../../../data/atoms";
 import close from "/rectangle-xmark-regular.svg";
 
 export const BasicSetting = ({ setModalOpen, consoleLog }) => {
@@ -7,10 +9,10 @@ export const BasicSetting = ({ setModalOpen, consoleLog }) => {
     setModalOpen(false);
   };
 
-  const [numOfEnclosure, setNumOfEnclosure] = useState(5);
-  const handleChangeEnclosure = ({ target: { value } }) => {
-    setNumOfEnclosure(value);
-  };
+  const [count, setCount] = useRecoilState(counterState);
+
+  const handleChangeNumber = (e) => setCount(e.target.value);
+  console.log(count);
 
   const [port, setPort] = useState(10001);
   const handleChangePort = ({ target: { value } }) => setPort(value);
@@ -37,8 +39,8 @@ export const BasicSetting = ({ setModalOpen, consoleLog }) => {
                 <Input
                   placeholder="Network port number"
                   name="port"
-                  value={numOfEnclosure}
-                  onChange={handleChangeEnclosure}
+                  value={count}
+                  onChange={handleChangeNumber}
                 />
               </Item>
             </Item_list>
@@ -52,6 +54,7 @@ export const BasicSetting = ({ setModalOpen, consoleLog }) => {
                   name="port"
                   value={port}
                   onChange={handleChangePort}
+                  readOnly
                 />
               </Item>
             </Item_list>
@@ -63,6 +66,7 @@ export const BasicSetting = ({ setModalOpen, consoleLog }) => {
 };
 
 const Container = styled.div`
+  font-size: 1.3rem;
   position: fixed;
   width: 100vw;
   height: 100vh;
@@ -152,4 +156,5 @@ const Input = styled.input`
   border: none;
   background: transparent;
   text-align: center;
+  font-size: 1.3rem;
 `;
