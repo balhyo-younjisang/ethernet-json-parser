@@ -36,16 +36,14 @@ app.get("/", (req, res) => {
 });
 
 const port = 3000;
-app.listen(port, () => {
+
+const server = app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });
 
-if (err.code === "EADDRINUSE") {
-  console.log(`Port ${port} is already in use, trying another port...`);
-  port++;
-  app.listen(port, () => {
-    console.log(`Server listening on port ${port}`);
-  });
-} else {
-  console.error(err);
-}
+server.on("error", (err) => {
+  if (err.code === "EADDRINUSE") {
+    console.log(`Port ${port} is already in use, trying another port...`);
+    server.listen(0); // 0 을 사용하면 무작위 포트가 할당됩니다.
+  }
+});
