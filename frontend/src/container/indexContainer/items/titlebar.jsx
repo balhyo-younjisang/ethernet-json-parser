@@ -5,6 +5,7 @@ import min from "/window-minimize-solid.svg";
 import max from "/window-maximize-regular.svg";
 import close from "/rectangle-xmark-regular.svg";
 import { useState } from "react";
+import { BasicSetting } from "./basicSetting";
 
 export const Titlebar = (props) => {
   const contorls = [min, max, close];

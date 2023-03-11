@@ -19,9 +19,6 @@ export const Data = (props) => {
 
   // console.log(props);
 
-  const ClickAuto = () => {
-    setAuto(!auto);
-  };
   const ClickCooling = () => {
     setCooling(!cooling);
   };

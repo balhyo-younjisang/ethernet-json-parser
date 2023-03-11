@@ -19,21 +19,33 @@ export const BasicSetting = ({ setModalOpen, consoleLog }) => {
     <Container>
       <Window>
         <Modal>
-          <Button onClick={hideModal}>
-            <img src={close} width="25"></img>
-          </Button>
+          <Header>
+            <TextBox>
+              <Img src="/setting.svg" alt="setting" imgSize="2.75vw" />
+              <span>Basic Setting</span>
+            </TextBox>
+            <Button onClick={hideModal}>
+              <Img src={close} imgSize="1.75vw" ba></Img>
+            </Button>
+          </Header>
           <SettingContainer>
-            <div>
-              <span>Number of Enclosure</span>
-              <br />
-              <input
-                placeholder="Number of Enclosure"
-                name="numOfEnclosure"
-                value={numOfEnclosure}
-                onChange={handleChangeEnclosure}
-              />
-            </div>
-            <div>
+            <Item_list>
+              <Item width="14.5vw">
+                <span>Number of Enclosure</span>
+              </Item>
+              <Item width="14.5vw">
+                <span>5</span>
+              </Item>
+            </Item_list>
+            <Item_list>
+              <Item width="14.5vw">
+                <span>Network port number</span>
+              </Item>
+              <Item width="14.5vw">
+                <span>192.168.000.034</span>
+              </Item>
+            </Item_list>
+            {/* <Item width="100%">
               <span>Network port number</span>
               <br />
               <input
@@ -42,10 +54,7 @@ export const BasicSetting = ({ setModalOpen, consoleLog }) => {
                 value={port}
                 onChange={handleChangePort}
               />
-            </div>
-            <Button type="submit" onClick={consoleLog(numOfEnclosure, port)}>
-              Save
-            </Button>
+            </Item> */}
           </SettingContainer>
         </Modal>
       </Window>
@@ -63,7 +72,7 @@ const Container = styled.div`
 const Window = styled.div`
   position: relative;
   width: 100%;
-  height: 100%;
+  height: 90%;
   display: flex;
 `;
 
@@ -74,16 +83,17 @@ const Modal = styled.div`
   transform: translate(-50%, -50%);
   background-color: #ffffff;
   box-shadow: 0 2px 7px rgba(0, 0, 0, 0.3);
-  width: 50vw;
-  height: 20vh;
+  width: 30vw;
+  height: 22vh;
   transform: translate(-50%, -40%);
 `;
 
 const SettingContainer = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-directon: column;
+  flex-wrap: wrap;
   justify-content: space-around;
-  align-items: end;
+  align-items: center;
 
   & > input {
     height: 3vh;
@@ -95,6 +105,42 @@ const SettingContainer = styled.div`
 `;
 
 const Button = styled.button`
-  background-color: #ffffff;
+  background-color: rgb(179, 179, 179);
   border: 0px;
+  margin-right: 5px;
+`;
+
+const Header = styled.div`
+  height: 18%;
+  display: flex;
+  justify-content: space-between;
+  background-color: rgb(179, 179, 179);
+`;
+
+const Img = styled.img`
+  width: ${(props) => props.imgSize};
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+`;
+
+const Item = styled.div`
+  background-color: rgb(230, 230, 230);
+  border-right: 2px solid white;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: ${(props) => props.width};
+`;
+
+const Item_list = styled.div`
+  display: flex;
+  border-top: 5px solid ${(props) => (props.isHovering ? "black" : "white")};
+  border-bottom: 5px solid ${(props) => (props.isHovering ? "black" : "white")};
+`;
+
+const TextBox = styled.div`
+  display: flex;
+  align-items: center;
 `;
