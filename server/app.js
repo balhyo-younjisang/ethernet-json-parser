@@ -24,10 +24,6 @@ client.on("error", (err) => {
   console.log(err);
 });
 
-setInterval(() => {
-  client.write("Data request");
-}, 1000);
-
 app.get("/", (req, res) => {
   client.on("data", (chunk) => {
     data = chunk.toString();
@@ -35,17 +31,27 @@ app.get("/", (req, res) => {
   res.send(data);
 });
 
+app.get("/:id", (req, res) => {
+  console.log(req.params.id);
+  client.write(req.params.id, (err) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send("Error sending data to Arduino");
+    } else {
+      res.send("Data sent to Arduino");
+    }
+  });
+});
+
 const port = 3000;
-app.listen(port, () => {
+
+const server = app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });
 
-if (err.code === "EADDRINUSE") {
-  console.log(`Port ${port} is already in use, trying another port...`);
-  port++;
-  app.listen(port, () => {
-    console.log(`Server listening on port ${port}`);
-  });
-} else {
-  console.error(err);
-}
+server.on("error", (err) => {
+  if (err.code === "EADDRINUSE") {
+    console.log(`Port ${port} is already in use, trying another port...`);
+    server.listen(0); // 0 을 사용하면 무작위 포트가 할당됩니다.
+  }
+});
