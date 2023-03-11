@@ -5,7 +5,6 @@ const ipc = ipcRenderer;
 const btnMin = document.getElementById("min");
 const btnMax = document.getElementById("max");
 const btnClose = document.getElementById("close");
-const damLogo = document.querySelector(".prevent-select .icon");
 
 btnMin.addEventListener("click", () => {
   ipc.send("minimizeApp");
@@ -15,7 +14,4 @@ btnMax.addEventListener("click", () => {
 });
 btnClose.addEventListener("click", () => {
   ipc.send("closeApp");
-});
-damLogo.addEventListener("click", () => {
-
 });

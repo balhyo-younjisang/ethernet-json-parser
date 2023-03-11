@@ -5,7 +5,17 @@ import upload from "/upload-svgrepo-com.svg";
 import increase from "/Increase.svg";
 import decrease from "/decrease.svg";
 
-export const ClientSetting = ({ setModalOpen, setName }) => {
+export const ClientSetting = ({
+  setModalOpen,
+  setName,
+  setHeater,
+  setCooler,
+  setHumi,
+  name,
+  heater,
+  cooler,
+  humi,
+}) => {
   const hideSetModal = () => {
     setModalOpen(false);
   };
@@ -15,11 +25,11 @@ export const ClientSetting = ({ setModalOpen, setName }) => {
     console.log(value);
   };
 
-  const settingLabels = [
-    "Heater Operation value",
-    "Cooler Operation value",
-    "Dehumidification value",
-  ];
+  const handleHeater = ({ target: value }) => {
+    setHeater(value);
+  };
+
+  const switchLabels = ["Heater", "Cooler"];
 
   return (
     <>
@@ -36,22 +46,43 @@ export const ClientSetting = ({ setModalOpen, setName }) => {
                     <Font>Name setting</Font>
                   </div>
                   <div>
-                    <input type="text" onChange={naming} />
+                    <input type="text" onChange={naming} value={name} />
                     <img src={upload} width="20" height="20" />
                   </div>
                 </Wrap>
-                {settingLabels.map((label, index) => (
-                  <Wrap key={index}>
-                    <div>
-                      <Font>{label}</Font>
-                    </div>
-                    <div>
-                      <img src={increase} width="20" height="20" />
-                      <input type="text" />
-                      <img src={decrease} width="20" height="20" />
-                    </div>
-                  </Wrap>
-                ))}
+                {/* 배열 인덱스에 따른 함수 지정 가능하다면 이 방식으로 */}
+                <Wrap>
+                  <div>
+                    <Font>Heater Operation value</Font>
+                  </div>
+                  <div>
+                    <img src={increase} width="20" height="20" />
+                    <input type="text" value={heater} onChange={handleHeater} />
+                    <img src={decrease} width="20" height="20" />
+                  </div>
+                </Wrap>
+
+                <Wrap>
+                  <div>
+                    <Font>Cooler Operation value</Font>
+                  </div>
+                  <div>
+                    <img src={increase} width="20" height="20" />
+                    <input type="text" />
+                    <img src={decrease} width="20" height="20" />
+                  </div>
+                </Wrap>
+
+                <Wrap>
+                  <div>
+                    <Font>Dehumidification value</Font>
+                  </div>
+                  <div>
+                    <img src={increase} width="20" height="20" />
+                    <input type="text" />
+                    <img src={decrease} width="20" height="20" />
+                  </div>
+                </Wrap>
               </CommandSetting>
               <ButtonSetting>
                 <ButtonWrap>
@@ -59,14 +90,12 @@ export const ClientSetting = ({ setModalOpen, setName }) => {
                 </ButtonWrap>
                 <ManualControlWrap>
                   <Font>Manual Control</Font>
-                  <SwitchWrap>
-                    <Font>Heater</Font>
-                    <Switch alt="switch" />
-                  </SwitchWrap>
-                  <SwitchWrap>
-                    <Font>Cooler</Font>
-                    <Switch alt="switch" />
-                  </SwitchWrap>
+                  {switchLabels.map((label, index) => (
+                    <SwitchWrap key={index}>
+                      <Font>{label}</Font>
+                      <Switch alt="switch" />
+                    </SwitchWrap>
+                  ))}
                 </ManualControlWrap>
               </ButtonSetting>
             </SettingContainer>
