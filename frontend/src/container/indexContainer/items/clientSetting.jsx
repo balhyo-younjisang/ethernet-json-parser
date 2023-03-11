@@ -4,15 +4,18 @@ import close from "/rectangle-xmark-regular.svg";
 import upload from "/upload-svgrepo-com.svg";
 import increase from "/Increase.svg";
 import decrease from "/decrease.svg";
+import { arduinoControl, changeName } from "../api/apis";
 
 export const ClientSetting = (props, { setModalOpen }) => {
+  const [name, setName] = useState(props.data.NAME);
+
   const hideSetModal = () => {
     setModalOpen(false);
   };
 
-  const naming = ({ target: { value } }) => {
-    setName(value);
-    console.log(value);
+  const changeNameValue = (e) => {
+    console.log(e.target.value);
+    setName(e.target.value);
   };
 
   const settingLabels = [
@@ -22,6 +25,10 @@ export const ClientSetting = (props, { setModalOpen }) => {
   ];
 
   const settingValues = [props.data.TLLVL, props.data.TLHVL, props.data.HUMOP];
+
+  const upCommand = ["<S00TLLIC>", "<S00TLHIC>", "<S00HOPIC>"];
+  const downCommand = ["<S00TLLDC>", "<S00TLHDC>", "<S00HOPDC>"];
+
   console.log(props.data);
   return (
     <>
@@ -38,7 +45,12 @@ export const ClientSetting = (props, { setModalOpen }) => {
                     <Font>Name setting</Font>
                   </div>
                   <div>
-                    <input type="text" defaultValue={props.data.NAME} />
+                    <input
+                      type="text"
+                      value={name}
+                      onChange={changeNameValue}
+                      onSubmit={() => changeName()}
+                    />
                     <img src={upload} width="20" height="20" />
                   </div>
                 </Wrap>
@@ -48,13 +60,23 @@ export const ClientSetting = (props, { setModalOpen }) => {
                       <Font>{label}</Font>
                     </div>
                     <div>
-                      <img src={increase} width="20" height="20" />
+                      <img
+                        src={increase}
+                        width="20"
+                        height="20"
+                        onClick={() => arduinoControl(upCommand[index])}
+                      />
                       <input
                         type="text"
                         value={settingValues[index]}
                         disabled
                       />
-                      <img src={decrease} width="20" height="20" />
+                      <img
+                        src={decrease}
+                        width="20"
+                        height="20"
+                        onClick={() => arduinoControl(downCommand[index])}
+                      />
                     </div>
                   </Wrap>
                 ))}

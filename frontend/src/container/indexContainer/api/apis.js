@@ -22,3 +22,8 @@ export const dataQuery = axios.create({
     },
   },
 });
+
+export const changeName = async (name) => {
+  const { data } = await axios.get(`http://localhost:3000/name/${name}`);
+  console.log(data);
+};
