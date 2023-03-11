@@ -1,4 +1,5 @@
 import { Header } from "./items/header";
+import { Titlebar } from "./items/titlebar";
 import { Data } from "./items/data";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -29,6 +30,7 @@ export const MainContainer = () => {
 
   return (
     <>
+      <Titlebar></Titlebar>
       <Header></Header>
       {[...Array(parseInt(1))].map((n, index) => {
         return <Data key={index} data={data} />;
