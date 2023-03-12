@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "concurrently \"cd frontend && npm run dev\" \"cd server && node app.js\" ",
     "startAll": "concurrently \"cd frontend && npm run dev\" \"cd server && node app.js\" \"electron .\" ",
     "dev": "electron .",
+    "test": "electron app.js",
     "build:osx": "electron-builder --mac",
     "build:linux": "npm run build:linux32 && npm run build:linux64",
     "build:linux32": "electron-builder --linux --ia32",

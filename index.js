@@ -37,6 +37,10 @@ const createWindow = () => {
   ipc.on("closeApp", () => {
     win.close();
   });
+
+  ipc.on("message-from-renderer", (event, arg) => {
+    console.log(arg);
+  });
 };
 
 app.whenReady().then(() => {

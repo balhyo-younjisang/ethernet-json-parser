@@ -6,7 +6,7 @@ export const arduinoControl = async (method) => {
 };
 
 export const dataQuery = axios.create({
-  baseURL: "http://localhost:3000/",
+  baseURL: "http://localhost:3000",
   retry: {
     retry: true,
     retryDelay: 1000,

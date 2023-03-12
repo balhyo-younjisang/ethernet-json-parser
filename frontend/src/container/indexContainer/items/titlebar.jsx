@@ -1,5 +1,4 @@
 import styled from "styled-components";
-// import { ipcRenderer } from "electron";
 import Logo from "/DAM+Logo-4.svg";
 import min from "/window-minimize-solid.svg";
 import max from "/window-maximize-regular.svg";
@@ -32,16 +31,16 @@ export const Titlebar = (props) => {
       )}
 
       <Control>
-        {contorls.map((icon, index) => (
+        {/* {contorls.map((icon, index) => (
           <ControlButton
             key={index}
-            onClick={() =>
-              window.Electron.ipcRenderer.postMessage(ipcMsg[index])
-            }
+            onClick={() => {
+              // window.ipcRenderer.postMessage(ipcMsg[index]);
+            }}
           >
             <img src={icon} width="25"></img>
           </ControlButton>
-        ))}
+        ))} */}
       </Control>
     </Container>
   );
@@ -55,7 +54,6 @@ const Container = styled.div`
   background: rgb(128, 128, 128);
   font-size: 15px;
   justify-content: space-between;
-
   * {
     user-select: none;
     -webkit-touch-callout: none;
@@ -72,12 +70,17 @@ const Title = styled.div`
   align-items: center;
   justify-content: center;
   text-align: center;
+  -webkit-app-region: drag;
 `;
 
 const Control = styled.div`
   padding: 5px;
   //   background: rgb(72, 72, 72);
   border-radius: 5px;
+
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
 `;
 
 const ControlButton = styled.button`
