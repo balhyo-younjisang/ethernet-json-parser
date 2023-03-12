@@ -31,16 +31,16 @@ export const Titlebar = (props) => {
       )}
 
       <Control>
-        {/* {contorls.map((icon, index) => (
+        {contorls.map((icon, index) => (
           <ControlButton
             key={index}
             onClick={() => {
-              // window.ipcRenderer.postMessage(ipcMsg[index]);
+              console.log(ipcMsg[index]);
             }}
           >
             <img src={icon} width="25"></img>
           </ControlButton>
-        ))} */}
+        ))}
       </Control>
     </Container>
   );
@@ -54,6 +54,7 @@ const Container = styled.div`
   background: rgb(128, 128, 128);
   font-size: 15px;
   justify-content: space-between;
+  -webkit-app-region: drag;
   * {
     user-select: none;
     -webkit-touch-callout: none;

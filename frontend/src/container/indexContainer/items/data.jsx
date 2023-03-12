@@ -4,9 +4,6 @@ import styled from "styled-components";
 import { ClientSetting } from "./clientSetting";
 
 export const Data = (props) => {
-  const [auto, setAuto] = useState(false);
-  const [cooling, setCooling] = useState(false);
-  const [heating, setHeating] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
   const [Modalopen, setModalOpen] = useState(false);
 
@@ -47,7 +44,7 @@ export const Data = (props) => {
           <span>{NAME}</span>
         </Item>
         <Item width="11.2vw">
-          <span>192.168.000.034</span>
+          <span>192.168.000.100</span>
         </Item>
         <Item width="8.5vw">
           <Green_text>{TLLVL}°C</Green_text>

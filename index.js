@@ -1,6 +1,7 @@
 const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
 const ipc = ipcMain;
+const { exec } = require("child_process");
 
 app.disableHardwareAcceleration();
 
@@ -8,7 +9,7 @@ const createWindow = () => {
   const win = new BrowserWindow({
     width: 1200, // Default width : 1600 -> 1000
     height: 600,
-    frame: false,
+    // frame: false,
     icon: path.join(__dirname, "assets/icons/electrosmith.png"),
     webPreferences: {
       nodeIntegration: true,
@@ -16,9 +17,8 @@ const createWindow = () => {
       enableRemoteModule: true,
       preload: path.join(__dirname, "preload.js"),
     },
-    frame: false, // Remove the frame of the window
   });
-  //win.setMenu(null); // Delete line
+  win.setMenu(null); // Delete line
 
   win.loadURL("http://localhost:5173");
 
@@ -44,6 +44,17 @@ const createWindow = () => {
 };
 
 app.whenReady().then(() => {
+  exec("npm run start", { cwd: __dirname }, (error, stdout, stderr) => {
+    if (error) {
+      console.error(`error: ${error.message}`);
+      return;
+    }
+    if (stderr) {
+      console.error(`stderr: ${stderr}`);
+      return;
+    }
+    console.log(`stdout: ${stdout}`);
+  });
   createWindow();
 
   app.on("activate", () => {

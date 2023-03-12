@@ -6,7 +6,7 @@ const { spawn } = require("child_process");
 // Express API 서버 실행 스크립트 경로
 const expressScriptPath = path.join(__dirname, "server", "app.js");
 // React 클라이언트 앱 빌드된 정적 파일 경로
-const reactBuildPath = path.join(__dirname, "frontend/dist", "index.html");
+const reactBuildPath = path.join(__dirname, "frontend/dist");
 
 // Express 서버 실행 함수
 function startExpressServer() {
@@ -59,8 +59,8 @@ app.whenReady().then(async () => {
   });
 
   // React 앱 번들링 파일 로드
-  //   reactWindow.loadFile(path.join(reactBuildPath, "index.html"));
-  reactWindow.loadURL("http://localhost:5173");
+  reactWindow.loadFile(path.join(reactBuildPath, "index.html"));
+  //   reactWindow.loadURL("http://localhost:4173");
   reactWindow.webContents.openDevTools();
 
   // Electron 앱 종료 이벤트 핸들링

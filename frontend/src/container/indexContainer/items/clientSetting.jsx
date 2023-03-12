@@ -8,6 +8,8 @@ import { arduinoControl, changeName } from "../api/apis";
 
 export const ClientSetting = (props) => {
   const [name, setName] = useState(props.data.NAME);
+  const [heating, setHeating] = useState(props.data.HEATING);
+  const [cooling, setCooling] = useState(props.data.COOLING);
 
   console.log(props);
 
@@ -78,8 +80,8 @@ export const ClientSetting = (props) => {
                     </Item>
                     <img
                       src={increase}
-                      width="35"
-                      height="35"
+                      width="25"
+                      height="25"
                       onClick={() => arduinoControl(upCommand[index])}
                     />
                     <Item width="8vw">
@@ -87,14 +89,14 @@ export const ClientSetting = (props) => {
                     </Item>
                     <img
                       src={decrease}
-                      width="35"
-                      height="35"
+                      width="25"
+                      height="25"
                       onClick={() => arduinoControl(downCommand[index])}
                     />
                   </Item_list>
                 ))}
               </CommandSetting>
-              <ButtonWrap>
+              <ButtonWrap onClick={() => arduinoControl("<S00SWRST>")}>
                 <RebootBtn>REBOOT SYSTEM</RebootBtn>
               </ButtonWrap>
               <ButtonWrap>
@@ -102,15 +104,27 @@ export const ClientSetting = (props) => {
                   <Font>Manual Control</Font>
                   <div>
                     <WhiteLine>
-                      <SwitchWrap>
+                      <SwitchWrap
+                        onClick={() =>
+                          heating === true
+                            ? arduinoControl("<S00HEAT0>")
+                            : arduinoControl("<S00HEAT1>")
+                        }
+                      >
                         <Font>Heater</Font>
-                        <Switch alt="switch" />
+                        <Switch alt="switch" clicked={heating} />
                       </SwitchWrap>
                     </WhiteLine>
                     <WhiteLine>
-                      <SwitchWrap>
+                      <SwitchWrap
+                        onClick={() =>
+                          cooling === true
+                            ? arduinoControl("<S00COOL0>")
+                            : arduinoControl("<S00COOL1>")
+                        }
+                      >
                         <Font>Cooler</Font>
-                        <Switch alt="switch" />
+                        <Switch alt="switch" clicked={cooling} />
                       </SwitchWrap>
                     </WhiteLine>
                   </div>
@@ -165,13 +179,13 @@ const Modal = styled.div`
   transform: translate(-50%, -50%);
   background-color: #ffffff;
   box-shadow: 0 2px 7px rgba(0, 0, 0, 0.3);
-  width: 50vw;
-  height: 26vh;
+  width: 60vw;
+  height: 50vh;
   transform: translate(-50%, -40%);
 `;
 
 const SettingContainer = styled.div`
-  height: 22vh;
+  height: 40vh;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
@@ -185,8 +199,10 @@ const Button = styled.button`
 
 const CommandSetting = styled.div`
   width: 30vw;
+  height: inherit;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
 `;
 const Wrap = styled.div`
@@ -198,7 +214,7 @@ const Wrap = styled.div`
 `;
 
 const Font = styled.p`
-  font-size: 1.25rem;
+  font-size: 1rem;
 `;
 
 const Switch = styled.img`
@@ -223,8 +239,8 @@ const ButtonWrap = styled.div`
   display: flex;
   text-align: center;
   padding-top: 3px;
-  width: 19vh;
-  height: 19vh;
+  width: 25vh;
+  height: 38vh;
 `;
 
 const RebootBtn = styled.button`
@@ -240,7 +256,7 @@ const RebootBtn = styled.button`
 const Item = styled.div`
   background-color: rgb(230, 230, 230);
   border-right: 2px solid white;
-  height: 40px;
+  height: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
