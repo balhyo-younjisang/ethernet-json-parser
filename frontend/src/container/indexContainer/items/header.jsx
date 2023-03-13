@@ -6,9 +6,9 @@ export const Header = () => {
       <Main_list>
         <Name>Name</Name>
         <Ip>IP Address</Ip>
-        <Heater>Heater set</Heater>
-        <Cooler>Cooler OP (set)</Cooler>
-        <Humi>Humi OP (set)</Humi>
+        <Heater>Dehumidify val</Heater>
+        <Cooler>TEMP (Cooling val)</Cooler>
+        <Humi>HUM(Heating val)</Humi>
         <Auto>Auto</Auto>
         <Auto>Cooling</Auto>
         <Auto>Heating</Auto>

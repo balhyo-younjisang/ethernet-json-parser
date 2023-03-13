@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Logo from "/DAM+Logo-4.svg";
+import Logo from "/logo.png";
 import min from "/window-minimize-solid.svg";
 import max from "/window-maximize-regular.svg";
 import close from "/rectangle-xmark-regular.svg";
@@ -15,9 +15,9 @@ export const Titlebar = (props) => {
     setModalOpen(true);
   };
 
-  const consoleLog = (enclosure, port) => {
-    console.log(enclosure, port);
-  };
+  // const consoleLog = (enclosure, port) => {
+  //   console.log(enclosure, port);
+  // };
 
   return (
     <Container>
@@ -26,9 +26,7 @@ export const Titlebar = (props) => {
       </Icon>
 
       <Title>Outdoor Projector Enclosure</Title>
-      {modalOpen && (
-        <BasicSetting setModalOpen={setModalOpen} consoleLog={consoleLog} />
-      )}
+      {modalOpen && <BasicSetting setModalOpen={setModalOpen} />}
 
       <Control>
         {contorls.map((icon, index) => (

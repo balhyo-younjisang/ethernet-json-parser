@@ -44,7 +44,7 @@ export const ClientSetting = (props) => {
             <Header>
               <TextBox>
                 <Img src="/setting.svg" alt="setting" imgSize="2.75vw" />
-                <span>Basic Setting</span>
+                <span>Client Setting</span>
               </TextBox>
               <Button onClick={hideModal}>
                 <Img src={close} imgSize="1.75vw"></Img>

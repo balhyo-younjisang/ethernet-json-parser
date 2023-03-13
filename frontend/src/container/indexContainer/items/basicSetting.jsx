@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { counterState } from "../../../data/atoms";
 import close from "/rectangle-xmark-regular.svg";
 
-export const BasicSetting = ({ setModalOpen, consoleLog }) => {
+export const BasicSetting = ({ setModalOpen }) => {
   const hideModal = () => {
     setModalOpen(false);
   };
@@ -54,7 +54,7 @@ export const BasicSetting = ({ setModalOpen, consoleLog }) => {
                   name="port"
                   value={port}
                   onChange={handleChangePort}
-                  readOnly
+                  // readOnly
                 />
               </Item>
             </Item_list>
@@ -88,8 +88,12 @@ const Modal = styled.div`
   background-color: #ffffff;
   box-shadow: 0 2px 7px rgba(0, 0, 0, 0.3);
   width: 30vw;
-  height: 22vh;
+  height: 33vh;
   transform: translate(-50%, -40%);
+
+  @media screen and (max-width: 1000px) {
+    height: 30vh;
+  }
 `;
 
 const SettingContainer = styled.div`

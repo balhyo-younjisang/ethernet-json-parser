@@ -6,6 +6,7 @@ import { ClientSetting } from "./clientSetting";
 export const Data = (props) => {
   const [isHovering, setIsHovering] = useState(false);
   const [Modalopen, setModalOpen] = useState(false);
+  const [ip, setIp] = useState("192.168.000.100");
 
   const { NAME, TEMPOUT, HUMOUT, HEATING, COOLING, AUTO, TLHVL, TLLVL, HUMOP } =
     props.data;
@@ -30,6 +31,11 @@ export const Data = (props) => {
     setModalOpen(true);
   };
 
+  const settingIp = ({ target: { value } }) => {
+    // set Ip
+    setIp(value);
+  };
+
   return (
     <>
       {Modalopen && (
@@ -44,7 +50,8 @@ export const Data = (props) => {
           <span>{NAME}</span>
         </Item>
         <Item width="11.2vw">
-          <span>192.168.000.100</span>
+          {/* <span>192.168.000.100</span> */}
+          <Input onChange={settingIp} value={ip} name="ip"></Input>
         </Item>
         <Item width="8.5vw">
           <Green_text>{TLLVL}°C</Green_text>
@@ -112,4 +119,15 @@ const Img = styled.img`
 
 const Green_text = styled.span`
   color: rgb(35, 152, 32);
+`;
+
+const Input = styled.input`
+  width: inherit;
+  height: inherit;
+  outline: none;
+  border: none;
+  background: transparent;
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: bold;
 `;
