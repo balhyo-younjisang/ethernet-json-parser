@@ -6,10 +6,10 @@ import increase from "/Increase.svg";
 import decrease from "/decrease.svg";
 import { arduinoControl, changeName } from "../api/apis";
 
-export const ClientSetting = (props) => {
+export const ClientSetting = (props, cooling, heating) => {
   const [name, setName] = useState(props.data.NAME);
-  const [heating, setHeating] = useState(props.data.HEATING);
-  const [cooling, setCooling] = useState(props.data.COOLING);
+  // const [heating, setHeating] = useState(props.data.HEATING);
+  // const [cooling, setCooling] = useState(props.data.COOLING);
 
   console.log(props);
 
@@ -106,25 +106,25 @@ export const ClientSetting = (props) => {
                     <WhiteLine>
                       <SwitchWrap
                         onClick={() =>
-                          heating === true
+                          props.data.heating === true
                             ? arduinoControl("<S00HEAT0>")
                             : arduinoControl("<S00HEAT1>")
                         }
                       >
                         <Font>Heater</Font>
-                        <Switch alt="switch" clicked={heating} />
+                        <Switch alt="switch" clicked={props.heating} />
                       </SwitchWrap>
                     </WhiteLine>
                     <WhiteLine>
                       <SwitchWrap
                         onClick={() =>
-                          cooling === true
+                          props.data.cooling === true
                             ? arduinoControl("<S00COOL0>")
                             : arduinoControl("<S00COOL1>")
                         }
                       >
                         <Font>Cooler</Font>
-                        <Switch alt="switch" clicked={cooling} />
+                        <Switch alt="switch" clicked={props.cooling} />
                       </SwitchWrap>
                     </WhiteLine>
                   </div>

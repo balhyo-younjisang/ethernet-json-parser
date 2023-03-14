@@ -4,20 +4,28 @@ import styled from "styled-components";
 import { ClientSetting } from "./clientSetting";
 
 export const Data = (props) => {
-  const [isHovering, setIsHovering] = useState(false);
-  const [Modalopen, setModalOpen] = useState(false);
-  const [ip, setIp] = useState("192.168.000.100");
-
   const { NAME, TEMPOUT, HUMOUT, HEATING, COOLING, AUTO, TLHVL, TLLVL, HUMOP } =
     props.data;
+  const [isHovering, setIsHovering] = useState(false);
+  const [Modalopen, setModalOpen] = useState(false);
+  const [heating, setHeating] = useState(HEATING);
+  const [cooling, setCooling] = useState(COOLING);
+  const [isAuto, setIsAuto] = useState(AUTO);
+  const [ip, setIp] = useState("192.168.000.100");
 
-  // console.log(props);
+  console.log(props);
 
+  const ClickAuto = () => {
+    setIsAuto(!isAuto);
+    arduinoControl("<S00AUTO1>");
+  };
   const ClickCooling = () => {
     setCooling(!cooling);
+    arduinoControl("<S00COOLT>"); // 배기팬 동작 상태 반전
   };
   const ClickHeating = () => {
     setHeating(!heating);
+    arduinoControl("<S00HEATT>"); // 히터 동작 상태 반전
   };
   const handleMouseOver = () => {
     setIsHovering(true);
@@ -39,7 +47,13 @@ export const Data = (props) => {
   return (
     <>
       {Modalopen && (
-        <ClientSetting setModalOpen={setModalOpen} data={props.data} />
+        <ClientSetting
+          setModalOpen={setModalOpen}
+          data={props.data}
+          heating={heating}
+          cooling={cooling}
+          auto={isAuto}
+        />
       )}
       <Item_list
         onMouseOver={handleMouseOver}
@@ -65,17 +79,13 @@ export const Data = (props) => {
           <Green_text>&nbsp;({HUMOP}%)</Green_text>
         </Item>
         <Item width="8.5vw">
-          <Switch
-            alt="switch"
-            onClick={() => arduinoControl("<S00AUTO1>")}
-            clicked={AUTO}
-          />
+          <Switch alt="switch" onClick={ClickAuto} clicked={isAuto} />
         </Item>
         <Item width="8.5vw">
-          <Switch alt="switch" onClick={ClickCooling} clicked={COOLING} />
+          <Switch alt="switch" onClick={ClickCooling} clicked={cooling} />
         </Item>
         <Item width="8.5vw">
-          <Switch alt="switch" onClick={ClickHeating} clicked={HEATING} />
+          <Switch alt="switch" onClick={ClickHeating} clicked={heating} />
         </Item>
         <Item onClick={showSetModal} setModalOpen={setModalOpen}>
           <Img src="/setting.svg" alt="setting" imgSize="2.75vw" />
