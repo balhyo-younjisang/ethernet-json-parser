@@ -6,12 +6,20 @@ import increase from "/Increase.svg";
 import decrease from "/decrease.svg";
 import { arduinoControl, changeName } from "../api/apis";
 
-export const ClientSetting = (props, cooling, heating) => {
+export const ClientSetting = (props) => {
   const [name, setName] = useState(props.data.NAME);
   // const [heating, setHeating] = useState(props.data.HEATING);
   // const [cooling, setCooling] = useState(props.data.COOLING);
 
   console.log(props);
+
+  const ClickCooler = () => {
+    props.setCooling(!props.cooling);
+  };
+
+  const ClickHeater = () => {
+    props.setHeating(!props.heating);
+  };
 
   const hideModal = () => {
     props.setModalOpen(false);
@@ -112,7 +120,11 @@ export const ClientSetting = (props, cooling, heating) => {
                         }
                       >
                         <Font>Heater</Font>
-                        <Switch alt="switch" clicked={props.heating} />
+                        <Switch
+                          alt="switch"
+                          clicked={props.heating}
+                          onClick={ClickHeater}
+                        />
                       </SwitchWrap>
                     </WhiteLine>
                     <WhiteLine>
@@ -124,7 +136,11 @@ export const ClientSetting = (props, cooling, heating) => {
                         }
                       >
                         <Font>Cooler</Font>
-                        <Switch alt="switch" clicked={props.cooling} />
+                        <Switch
+                          alt="switch"
+                          clicked={props.cooling}
+                          onClick={ClickCooler}
+                        />
                       </SwitchWrap>
                     </WhiteLine>
                   </div>

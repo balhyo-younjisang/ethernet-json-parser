@@ -53,6 +53,8 @@ export const Data = (props) => {
           heating={heating}
           cooling={cooling}
           auto={isAuto}
+          setCooling={setCooling}
+          setHeating={setHeating}
         />
       )}
       <Item_list
