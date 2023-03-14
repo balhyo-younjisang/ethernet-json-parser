@@ -7,6 +7,7 @@ import { useState } from "react";
 import { BasicSetting } from "./basicSetting";
 
 export const Titlebar = (props) => {
+  const { ipcRenderer } = window.require("electron");
   const contorls = [min, max, close];
   const ipcMsg = ["minimizeApp", "maximizeApp", "closeApp"];
 
@@ -15,9 +16,10 @@ export const Titlebar = (props) => {
     setModalOpen(true);
   };
 
-  // const consoleLog = (enclosure, port) => {
-  //   console.log(enclosure, port);
-  // };
+  const sendWindowSignal = (ipcMsg) => {
+    ipcRenderer.send(ipcMsg, "send");
+    // console.log(ipcMsg);
+  };
 
   return (
     <Container>
@@ -33,7 +35,7 @@ export const Titlebar = (props) => {
           <ControlButton
             key={index}
             onClick={() => {
-              console.log(ipcMsg[index]);
+              sendWindowSignal(ipcMsg[index]);
             }}
           >
             <img src={icon} width="25"></img>
@@ -52,12 +54,10 @@ const Container = styled.div`
   background: rgb(128, 128, 128);
   font-size: 15px;
   justify-content: space-between;
-  -webkit-app-region: drag;
-  * {
-    user-select: none;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-  }
+
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
 `;
 
 const Icon = styled.div`

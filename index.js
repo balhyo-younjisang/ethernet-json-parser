@@ -9,20 +9,24 @@ const createWindow = () => {
   const win = new BrowserWindow({
     width: 1200, // Default width : 1600 -> 1000
     height: 600,
-    // frame: false,
+    frame: false,
     icon: path.join(__dirname, "assets/icons/electrosmith.png"),
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
       enableRemoteModule: true,
-      preload: path.join(__dirname, "preload.js"),
+      preload: __dirname + "/preload.js",
     },
   });
   win.setMenu(null); // Delete line
 
-  win.loadURL("http://localhost:5173");
+  win.loadURL("http://localhost:5175");
 
   // win.webContents.openDevTools();
+
+  ipc.on("send_main_ping", (event, arg) => {
+    console.log("Main received a ping!!!");
+  });
 
   ipc.on("minimizeApp", () => {
     win.minimize();
@@ -63,5 +67,8 @@ app.whenReady().then(() => {
 });
 
 app.on("window-all-closed", () => {
-  if (process.platform !== "darwin") app.quit();
+  if (process.platform !== "darwin") {
+    win = null;
+    app.quit();
+  }
 });
