@@ -114,7 +114,7 @@ export const ClientSetting = (props) => {
                     <WhiteLine>
                       <SwitchWrap
                         onClick={() =>
-                          props.data.heating === true
+                          props.heating === true
                             ? arduinoControl("<S00HEAT0>")
                             : arduinoControl("<S00HEAT1>")
                         }
@@ -130,7 +130,7 @@ export const ClientSetting = (props) => {
                     <WhiteLine>
                       <SwitchWrap
                         onClick={() =>
-                          props.data.cooling === true
+                          props.cooling === true
                             ? arduinoControl("<S00COOL0>")
                             : arduinoControl("<S00COOL1>")
                         }
