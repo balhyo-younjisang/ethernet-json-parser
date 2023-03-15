@@ -20,9 +20,10 @@ const createWindow = () => {
   });
   win.setMenu(null); // Delete line
 
-  win.loadURL("http://localhost:5175");
+  // win.loadURL("http://localhost:5173");
+  win.loadFile("frontend/dist/index.html");
 
-  // win.webContents.openDevTools();
+  win.webContents.openDevTools();
 
   ipc.on("send_main_ping", (event, arg) => {
     console.log("Main received a ping!!!");
