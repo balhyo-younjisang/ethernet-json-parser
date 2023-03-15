@@ -1,10 +1,6 @@
 import styled from "styled-components";
 
-export const TitlebarButton = ({ message }) => (
-  <ControlButton
-    onClick={() => window.Electron.ipcRenderer.postMessage(message)}
-  ></ControlButton>
-);
+export const TitlebarButton = () => <ControlButton></ControlButton>;
 
 const ControlButton = styled.button`
   outline: none;

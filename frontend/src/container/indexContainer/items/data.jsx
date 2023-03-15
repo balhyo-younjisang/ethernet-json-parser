@@ -8,23 +8,17 @@ export const Data = (props) => {
     props.data;
   const [isHovering, setIsHovering] = useState(false);
   const [Modalopen, setModalOpen] = useState(false);
-  const [heating, setHeating] = useState(HEATING);
-  const [cooling, setCooling] = useState(COOLING);
-  const [isAuto, setIsAuto] = useState(AUTO);
   const [ip, setIp] = useState("192.168.000.100");
 
   console.log(props);
 
   const ClickAuto = () => {
-    setIsAuto(!isAuto);
     arduinoControl("<S00AUTO1>");
   };
   const ClickCooling = () => {
-    setCooling(!cooling);
     arduinoControl("<S00COOLT>"); // 배기팬 동작 상태 반전
   };
   const ClickHeating = () => {
-    setHeating(!heating);
     arduinoControl("<S00HEATT>"); // 히터 동작 상태 반전
   };
   const handleMouseOver = () => {
@@ -81,13 +75,13 @@ export const Data = (props) => {
           <Green_text>&nbsp;({HUMOP}%)</Green_text>
         </Item>
         <Item width="8.5vw">
-          <Switch alt="switch" onClick={ClickAuto} clicked={isAuto} />
+          <Switch alt="switch" onClick={ClickAuto} isActive={AUTO} />
         </Item>
         <Item width="8.5vw">
-          <Switch alt="switch" onClick={ClickCooling} clicked={cooling} />
+          <Switch alt="switch" onClick={ClickCooling} isActive={COOLING} />
         </Item>
         <Item width="8.5vw">
-          <Switch alt="switch" onClick={ClickHeating} clicked={heating} />
+          <Switch alt="switch" onClick={ClickHeating} isActive={HEATING} />
         </Item>
         <Item onClick={showSetModal} setModalOpen={setModalOpen}>
           <Img src="/setting.svg" alt="setting" imgSize="2.75vw" />
@@ -115,7 +109,7 @@ const Item = styled.div`
 
 const Switch = styled.img`
   content: url(${(props) =>
-    props.clicked ? "togle_on.svg" : "togle_off.svg"});
+    props.isActive ? "togle_on.svg" : "togle_off.svg"});
   user-select: none;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
