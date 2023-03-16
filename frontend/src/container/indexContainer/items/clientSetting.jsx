@@ -157,6 +157,10 @@ export const ClientSetting = (props) => {
 const TextBox = styled.div`
   display: flex;
   align-items: center;
+
+  @media screen and (max-height: 300px) {
+    font-size: small;
+  }
 `;
 
 const Container = styled.div`
@@ -309,6 +313,10 @@ const Item = styled.div`
   align-items: center;
   justify-content: center;
   width: ${(props) => props.width};
+
+  @media screen and (max-height: 600px) {
+    height: 8vh;
+  }
 `;
 
 const Item_list = styled.div`
@@ -339,6 +347,10 @@ const Green_text = styled.span`
 
   @media screen and (max-width: 600px) {
     font-size: small;
+  }
+
+  @media screen and (max-width: 600px) {
+    font-size: x-small;
   }
 `;
 

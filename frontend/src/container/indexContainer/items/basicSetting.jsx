@@ -24,7 +24,7 @@ export const BasicSetting = ({ setModalOpen }) => {
           <Header>
             <TextBox>
               <Img src="/setting.svg" alt="setting" imgSize="2.75vw" />
-              <span>Basic Setting</span>
+              <Label>Basic Setting</Label>
             </TextBox>
             <Button onClick={hideModal}>
               <Img src={close} imgSize="1.75vw" ba></Img>
@@ -33,7 +33,7 @@ export const BasicSetting = ({ setModalOpen }) => {
           <SettingContainer>
             <Item_list>
               <Item width="14.5vw">
-                <span>Number of Enclosure</span>
+                <Label>Number of Enclosure</Label>
               </Item>
               <Item width="14.5vw">
                 <Input
@@ -47,7 +47,7 @@ export const BasicSetting = ({ setModalOpen }) => {
             </Item_list>
             <Item_list>
               <Item width="14.5vw">
-                <span>Network port number</span>
+                <Label>Network port number</Label>
               </Item>
               <Item width="14.5vw">
                 <Input
@@ -89,12 +89,8 @@ const Modal = styled.div`
   background-color: #ffffff;
   box-shadow: 0 2px 7px rgba(0, 0, 0, 0.3);
   width: 30vw;
-  height: 33vh;
+  height: 34vh;
   transform: translate(-50%, -40%);
-
-  @media screen and (max-width: 1000px) {
-    height: 30vh;
-  }
 `;
 
 const SettingContainer = styled.div`
@@ -136,11 +132,26 @@ const Img = styled.img`
 const Item = styled.div`
   background-color: rgb(230, 230, 230);
   border-right: 2px solid white;
-  height: 70px;
+  height: 12vh;
   display: flex;
   align-items: center;
   justify-content: center;
   width: ${(props) => props.width};
+
+  @media screen and (max-height: 200px) {
+    height: 5vh;
+    width: ${(props) => (props.width / 2) * 10};
+  }
+
+  @media screen and (max-height: 350px) {
+    height: 11vh;
+    width: ${(props) => (props.width / 2) * 10};
+  }
+
+  @media screen and (max-width: 800px) {
+    height: 11vh;
+    width: ${(props) => (props.width / 2) * 10};
+  }
 `;
 
 const Item_list = styled.div`
@@ -162,4 +173,26 @@ const Input = styled.input`
   background: transparent;
   text-align: center;
   font-size: 1.3rem;
+
+  @media screen and (max-width: 800px) {
+    font-size: large;
+  }
+`;
+
+const Label = styled.span`
+  @media screen and (max-width: 800px) {
+    font-size: large;
+  }
+
+  @media screen and (max-width: 620px) {
+    font-size: small;
+  }
+
+  @media screen and (max-height: 350px) {
+    font-size: small;
+  }
+
+  @media screen and (max-height: 300px) {
+    font-size: 2px;
+  }
 `;

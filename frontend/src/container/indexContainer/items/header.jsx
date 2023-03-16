@@ -26,6 +26,14 @@ const Main_list = styled.ul`
   text-align: center;
   font-weight: 600;
   font-size: 1em;
+
+  @media screen and (max-width: 1000px) {
+    font-size: 0.8rem;
+  }
+
+  @media screen and (max-width: 800px) {
+    font-size: 0.5rem;
+  }
 `;
 
 const Name = styled.li`
