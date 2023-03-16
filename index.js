@@ -49,16 +49,13 @@ const createWindow = () => {
 };
 
 app.whenReady().then(() => {
-  exec("npm run start", { cwd: __dirname }, (error, stdout, stderr) => {
+  exec("cd server/ && dir && node server.js", (error, stdout, stderr) => {
     if (error) {
-      console.error(`error: ${error.message}`);
-      return;
-    }
-    if (stderr) {
-      console.error(`stderr: ${stderr}`);
+      console.error(`exec error: ${error}`);
       return;
     }
     console.log(`stdout: ${stdout}`);
+    console.error(`stderr: ${stderr}`);
   });
   createWindow();
 
@@ -68,7 +65,6 @@ app.whenReady().then(() => {
 });
 
 app.on("window-all-closed", () => {
-  console.log(process.platform);
   if (process.platform !== "darwin") {
     win = null;
     app.quit();

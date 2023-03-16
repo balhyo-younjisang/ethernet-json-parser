@@ -7,7 +7,6 @@ import { useState } from "react";
 import { BasicSetting } from "./basicSetting";
 
 export const Titlebar = (props) => {
-  // const { ipcRenderer } = window.require("electron");
   const contorls = [min, max, close];
   const ipcMsg = ["minimizeApp", "maximizeApp", "closeApp"];
 
