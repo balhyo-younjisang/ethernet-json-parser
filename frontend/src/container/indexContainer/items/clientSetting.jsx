@@ -13,13 +13,13 @@ export const ClientSetting = (props) => {
 
   // console.log(props);
 
-  const ClickCooler = () => {
-    props.setCooling(!props.cooling);
-  };
+  // const ClickCooler = () => {
+  //   props.setCooling(!props.cooling);
+  // };
 
-  const ClickHeater = () => {
-    props.setHeating(!props.heating);
-  };
+  // const ClickHeater = () => {
+  //   props.setHeating(!props.heating);
+  // };
 
   const hideModal = () => {
     props.setModalOpen(false);
@@ -123,7 +123,7 @@ export const ClientSetting = (props) => {
                         <Switch
                           alt="switch"
                           clicked={props.heating}
-                          onClick={ClickHeater}
+                          // onClick={ClickHeater}
                         />
                       </SwitchWrap>
                     </WhiteLine>
@@ -139,7 +139,7 @@ export const ClientSetting = (props) => {
                         <Switch
                           alt="switch"
                           clicked={props.cooling}
-                          onClick={ClickCooler}
+                          // onClick={ClickCooler}
                         />
                       </SwitchWrap>
                     </WhiteLine>
