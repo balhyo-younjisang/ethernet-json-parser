@@ -53,9 +53,10 @@ app.whenReady().then(() => {
     if (error) {
       console.error(`exec error: ${error}`);
       return;
+    } else {
+      console.log(`stdout: ${stdout}`);
+      console.error(`stderr: ${stderr}`);
     }
-    console.log(`stdout: ${stdout}`);
-    console.error(`stderr: ${stderr}`);
   });
   createWindow();
 
