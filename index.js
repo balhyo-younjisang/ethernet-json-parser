@@ -49,7 +49,7 @@ const createWindow = () => {
 };
 
 app.whenReady().then(() => {
-  exec("cd server/ && dir && node server.js", (error, stdout, stderr) => {
+  exec("cd server/ && node server.js", (error, stdout, stderr) => {
     if (error) {
       console.error(`exec error: ${error}`);
       return;
@@ -58,6 +58,17 @@ app.whenReady().then(() => {
       console.error(`stderr: ${stderr}`);
     }
   });
+
+  exec("cd frontend/ && npm run dev", (error, stdout, stderr) => {
+    if (error) {
+      console.error(`exec error: ${error}`);
+      return;
+    } else {
+      console.log(`stdout: ${stdout}`);
+      console.error(`stderr: ${stderr}`);
+    }
+  });
+
   createWindow();
 
   app.on("activate", () => {
