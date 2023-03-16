@@ -73,7 +73,7 @@ export const ClientSetting = (props) => {
                         onChange={changeNameValue}
                       />
                     </Item>
-                    <img
+                    <ControlImg
                       src={upload}
                       width="30"
                       height="30"
@@ -86,7 +86,7 @@ export const ClientSetting = (props) => {
                     <Item width="18.5vw">
                       <Font>{label}</Font>
                     </Item>
-                    <img
+                    <ControlImg
                       src={increase}
                       width="25"
                       height="25"
@@ -95,7 +95,7 @@ export const ClientSetting = (props) => {
                     <Item width="8vw">
                       <Green_text>{settingValues[index]}</Green_text>
                     </Item>
-                    <img
+                    <ControlImg
                       src={decrease}
                       width="25"
                       height="25"
@@ -109,7 +109,7 @@ export const ClientSetting = (props) => {
               </ButtonWrap>
               <ButtonWrap>
                 <RebootBtn>
-                  <Font>Manual Control</Font>
+                  <FontControl>Manual Control</FontControl>
                   <div>
                     <WhiteLine>
                       <SwitchWrap
@@ -119,7 +119,7 @@ export const ClientSetting = (props) => {
                             : arduinoControl("<S00HEAT1>")
                         }
                       >
-                        <Font>Heater</Font>
+                        <FontControl>Heater</FontControl>
                         <Switch
                           alt="switch"
                           clicked={props.heating}
@@ -135,7 +135,7 @@ export const ClientSetting = (props) => {
                             : arduinoControl("<S00COOL1>")
                         }
                       >
-                        <Font>Cooler</Font>
+                        <FontControl>Cooler</FontControl>
                         <Switch
                           alt="switch"
                           clicked={props.cooling}
@@ -172,6 +172,11 @@ const Img = styled.img`
   user-select: none;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
+
+  @media screen and (max-width: 800px) {
+    width: 5vw;
+    height: 5vh;
+  }
 `;
 
 const Window = styled.div`
@@ -231,6 +236,25 @@ const Wrap = styled.div`
 
 const Font = styled.p`
   font-size: 1rem;
+
+  @media screen and (max-width: 1200px) {
+    font-size: small;
+  }
+
+  @media screen and (max-width: 800px) {
+    font-size: x-small;
+  }
+`;
+
+const FontControl = styled.p`
+  font-size: 1rem;
+
+  @media screen and (max-width: 1200px) {
+    font-size: small;
+  }
+  @media screen and (max-width: 800px) {
+    display: none;
+  }
 `;
 
 const Switch = styled.img`
@@ -255,8 +279,8 @@ const ButtonWrap = styled.div`
   display: flex;
   text-align: center;
   padding-top: 3px;
-  width: 25vh;
-  height: 38vh;
+  width: 12vw;
+  height: 40vh;
 `;
 
 const RebootBtn = styled.button`
@@ -267,6 +291,14 @@ const RebootBtn = styled.button`
   height: inherit;
   align-items: center;
   font-size: 1.25rem;
+
+  @media screen and (max-width: 1200px) {
+    font-size: 0.8rem;
+  }
+
+  @media screen and (max-width: 600px) {
+    font-size: 3px;
+  }
 `;
 
 const Item = styled.div`
@@ -282,19 +314,32 @@ const Item = styled.div`
 const Item_list = styled.div`
   display: flex;
   align-items: center;
-  border-top: 5px solid ${(props) => (props.isHovering ? "black" : "white")};
-  border-bottom: 5px solid ${(props) => (props.isHovering ? "black" : "white")};
+  border-top: 3px solid ${(props) => (props.isHovering ? "black" : "white")};
+  border-bottom: 3px solid ${(props) => (props.isHovering ? "black" : "white")};
 `;
 
 const WhiteLine = styled.div`
   border: 2px solid white;
   border-radius: 40px;
+  width: 8.5vw;
   margin-top: 10px;
   padding: 5px;
+
+  @media screen and (max-width: 600px) {
+    width: 6vw;
+  }
 `;
 
 const Green_text = styled.span`
   color: rgb(35, 152, 32);
+
+  @media screen and (max-width: 800px) {
+    font-size: large;
+  }
+
+  @media screen and (max-width: 600px) {
+    font-size: small;
+  }
 `;
 
 const Input = styled.input`
@@ -305,4 +350,11 @@ const Input = styled.input`
   background: transparent;
   text-align: center;
   font-size: 1.25rem;
+`;
+
+const ControlImg = styled.img`
+  @media screen and (max-width: 1000px) {
+    width: 3vw;
+    height: 5vh;
+  }
 `;
