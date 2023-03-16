@@ -11,7 +11,7 @@ export const ClientSetting = (props) => {
   // const [heating, setHeating] = useState(props.data.HEATING);
   // const [cooling, setCooling] = useState(props.data.COOLING);
 
-  console.log(props);
+  // console.log(props);
 
   const ClickCooler = () => {
     props.setCooling(!props.cooling);

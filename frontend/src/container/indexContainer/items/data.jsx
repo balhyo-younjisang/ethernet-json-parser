@@ -10,8 +10,6 @@ export const Data = (props) => {
   const [Modalopen, setModalOpen] = useState(false);
   const [ip, setIp] = useState("192.168.000.100");
 
-  console.log(props);
-
   const ClickAuto = () => {
     arduinoControl("<S00AUTO1>");
   };
@@ -44,11 +42,9 @@ export const Data = (props) => {
         <ClientSetting
           setModalOpen={setModalOpen}
           data={props.data}
-          heating={heating}
-          cooling={cooling}
-          auto={isAuto}
-          setCooling={setCooling}
-          setHeating={setHeating}
+          heating={HEATING}
+          cooling={COOLING}
+          auto={AUTO}
         />
       )}
       <Item_list

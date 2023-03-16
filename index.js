@@ -20,10 +20,10 @@ const createWindow = () => {
   });
   win.setMenu(null); // Delete line
 
-  // win.loadURL("http://localhost:5173");
-  win.loadFile("frontend/dist/index.html");
+  win.loadURL("http://localhost:5173");
+  // win.loadFile("frontend/dist/index.html");
 
-  win.webContents.openDevTools();
+  // win.webContents.openDevTools();
 
   ipc.on("send_main_ping", (event, arg) => {
     console.log("Main received a ping!!!");
@@ -68,6 +68,7 @@ app.whenReady().then(() => {
 });
 
 app.on("window-all-closed", () => {
+  console.log(process.platform);
   if (process.platform !== "darwin") {
     win = null;
     app.quit();

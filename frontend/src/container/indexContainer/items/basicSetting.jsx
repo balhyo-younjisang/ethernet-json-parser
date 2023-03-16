@@ -12,7 +12,7 @@ export const BasicSetting = ({ setModalOpen }) => {
   const [count, setCount] = useRecoilState(counterState);
 
   const handleChangeNumber = (e) => setCount(e.target.value);
-  console.log(count);
+  // console.log(count);
 
   const [port, setPort] = useState(10001);
   const handleChangePort = ({ target: { value } }) => setPort(value);
@@ -41,6 +41,7 @@ export const BasicSetting = ({ setModalOpen }) => {
                   name="port"
                   value={count}
                   onChange={handleChangeNumber}
+                  maxLength={2}
                 />
               </Item>
             </Item_list>
