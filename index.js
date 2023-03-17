@@ -20,7 +20,7 @@ const createWindow = () => {
   });
   win.setMenu(null); // Delete line
 
-  win.loadURL("http://localhost:5173");
+  win.loadURL("http://localhost:5174");
   // win.loadFile("frontend/dist/index.html");
 
   // win.webContents.openDevTools();
@@ -41,12 +41,15 @@ const createWindow = () => {
   });
   ipc.on("closeApp", () => {
     win.close();
+    app.quit();
   });
 
   ipc.on("message-from-renderer", (event, arg) => {
     console.log(arg);
   });
 };
+
+app.dock.setIcon(path.join(__dirname, "/assets/icons/electrosmith.png"));
 
 app.whenReady().then(() => {
   exec("cd server/ && node server.js", (error, stdout, stderr) => {
@@ -59,15 +62,15 @@ app.whenReady().then(() => {
     }
   });
 
-  exec("cd frontend/ && npm run dev", (error, stdout, stderr) => {
-    if (error) {
-      console.error(`exec error: ${error}`);
-      return;
-    } else {
-      console.log(`stdout: ${stdout}`);
-      console.error(`stderr: ${stderr}`);
-    }
-  });
+  // exec("cd frontend/ && npm run dev", (error, stdout, stderr) => {
+  //   if (error) {
+  //     console.error(`exec error: ${error}`);
+  //     return;
+  //   } else {
+  //     console.log(`stdout: ${stdout}`);
+  //     console.error(`stderr: ${stderr}`);
+  //   }
+  // });
 
   createWindow();
 
