@@ -21,7 +21,7 @@ const createWindow = () => {
   win.setMenu(null); // Delete line
 
   // win.loadURL("http://localhost:5174"); --> electron: Failed to load URL: http://localhost:5174/ with error: ERR_CONNECTION_REFUSED
-  // win.loadURL("http://localhost:5173");
+  win.loadURL("http://localhost:5173");
   // win.loadFile("frontend/dist/index.html");
 
   // win.webContents.openDevTools();
