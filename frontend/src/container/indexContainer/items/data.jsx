@@ -88,7 +88,7 @@ export const Data = (props) => {
           <Switch alt="switch" onClick={ClickHeating} isActive={HEATING} />
         </Item>
         <Item onClick={showSetModal} setModalOpen={setModalOpen}>
-          <Img src="/setting.svg" alt="setting" imgSize="2.75vw" />
+          <Img src="setting.svg" alt="setting" imgSize="2.75vw" />
         </Item>
       </Item_list>
     </>
