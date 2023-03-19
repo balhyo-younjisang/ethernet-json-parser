@@ -36,7 +36,7 @@ export const BasicSetting = ({ setModalOpen }) => {
               </Item>
               <Item width="14.5vw">
                 <Input
-                  placeholder="Network port number"
+                  placeholder="Number of Enclosure"
                   name="port"
                   value={count}
                   onChange={handleChangeNumber}

@@ -26,9 +26,9 @@ export const ClientSetting = (props) => {
   };
 
   const settingLabels = [
-    "Heater Operation value",
-    "Cooler Operation value",
     "Dehumidification value",
+    "Cooler Operation value",
+    "Heater Operation value",
   ];
 
   const settingValues = [
