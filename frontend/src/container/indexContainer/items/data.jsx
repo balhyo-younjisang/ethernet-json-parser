@@ -66,7 +66,7 @@ export const Data = (props) => {
           <span>
             {typeof TEMPOUT === "number"
               ? (Math.round(TEMPOUT * 10) / 10).toFixed(1)
-              : "123"}
+              : ""}
           </span>
           <Green_text>&nbsp;({TLHVL}°C)</Green_text>
         </Item>
@@ -74,7 +74,7 @@ export const Data = (props) => {
           <span>
             {typeof HUMOUT === "number"
               ? (Math.round(HUMOUT * 10) / 10).toFixed(1)
-              : "123"}
+              : ""}
           </span>
           <Green_text>&nbsp;({HUMOP}%)</Green_text>
         </Item>

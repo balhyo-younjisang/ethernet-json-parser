@@ -21,9 +21,9 @@ const createWindow = () => {
   win.setMenu(null); // Delete line
 
   // win.loadURL("http://localhost:5174"); --> electron: Failed to load URL: http://localhost:5174/ with error: ERR_CONNECTION_REFUSED
-  // win.loadURL("http://localhost:5173");
-  // win.loadFile("public/index.html");
-  win.loadFile("frontend/dist/index.html");
+  // win.loadURL("http://localhost:5175");
+  // win.loadFile("frontend/dist/index.html");
+  win.loadFile("public/index.html");
 
   // win.webContents.openDevTools();
 
@@ -66,10 +66,10 @@ const createWindow = () => {
   });
 };
 
-// app.dock.setIcon(path.join(__dirname, "/assets/icons/electrosmith.png")); --> TypeError: Cannot read properties of undefined (reading 'setIcon')
+// app.dock.setIcon(path.join(__dirname, "/assets/icons/electrosmith.png"));
 
 app.whenReady().then(() => {
-  exec("cd server/ && node server.js", (error, stdout, stderr) => {
+  exec("cd server/ && node app.js", (error, stdout, stderr) => {
     if (error) {
       console.error(`exec error: ${error}`);
       return;
