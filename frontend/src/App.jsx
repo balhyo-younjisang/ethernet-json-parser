@@ -7,17 +7,33 @@ import "./App.css";
 
 const queryClient = new QueryClient();
 
+// function App() {
+//   return (
+//     <>
+//       <RecoilRoot>
+//         <QueryClientProvider client={queryClient}>
+//           <BrowserRouter>
+//             <GlobalStyle />
+//             <Routes>
+//               <Route path="/" element={<MainContainer />} />
+//             </Routes>
+//           </BrowserRouter>
+//           <GlobalStyle />
+//         </QueryClientProvider>
+//       </RecoilRoot>
+//     </>
+//   );
+// }
+
 function App() {
   return (
     <>
       <RecoilRoot>
         <QueryClientProvider client={queryClient}>
-          <BrowserRouter>
-            <GlobalStyle />
-            <Routes>
-              <Route path="/" element={<MainContainer />} />
-            </Routes>
-          </BrowserRouter>
+          <GlobalStyle />
+
+          <MainContainer></MainContainer>
+
           <GlobalStyle />
         </QueryClientProvider>
       </RecoilRoot>

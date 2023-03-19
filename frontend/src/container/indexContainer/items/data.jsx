@@ -13,12 +13,12 @@ export const Data = (props) => {
   const ClickAuto = () => {
     arduinoControl("<S00AUTO1>");
   };
-  const ClickCooling = () => {
-    arduinoControl("<S00COOLT>"); // 배기팬 동작 상태 반전
-  };
-  const ClickHeating = () => {
-    arduinoControl("<S00HEATT>"); // 히터 동작 상태 반전
-  };
+  // const ClickCooling = () => {
+  //   arduinoControl("<S00COOLT>"); // 배기팬 동작 상태 반전
+  // };
+  // const ClickHeating = () => {
+  //   arduinoControl("<S00HEATT>"); // 히터 동작 상태 반전
+  // };
   const handleMouseOver = () => {
     setIsHovering(true);
   };
@@ -33,14 +33,11 @@ export const Data = (props) => {
 
   const settingIp = ({ target: { value } }) => {
     // set Ip
-    setIp(value);
+    const reg = new RegExp(
+      "(25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3}"
+    );
+    if (reg.test(value)) setIp(value);
   };
-
-  const ip_address = document.getElementsByName("ip");
-  ip_address.inputmask({
-    alias: "ip",
-    greedy: false,
-  });
 
   return (
     <>
@@ -72,7 +69,7 @@ export const Data = (props) => {
           <span>
             {typeof TEMPOUT === "number"
               ? (Math.round(TEMPOUT * 10) / 10).toFixed(1)
-              : "123"}
+              : ""}
           </span>
           <Green_text>&nbsp;({TLHVL}°C)</Green_text>
         </Item>
@@ -80,7 +77,7 @@ export const Data = (props) => {
           <span>
             {typeof HUMOUT === "number"
               ? (Math.round(HUMOUT * 10) / 10).toFixed(1)
-              : "123"}
+              : ""}
           </span>
           <Green_text>&nbsp;({HUMOP}%)</Green_text>
         </Item>
@@ -88,13 +85,15 @@ export const Data = (props) => {
           <Switch alt="switch" onClick={ClickAuto} isActive={AUTO} />
         </Item>
         <Item width="8.5vw">
-          <Switch alt="switch" onClick={ClickCooling} isActive={COOLING} />
+          {/* <Switch alt="switch" onClick={ClickCooling} isActive={COOLING} /> */}
+          <Switch alt="switch" isActive={COOLING} />
         </Item>
         <Item width="8.5vw">
-          <Switch alt="switch" onClick={ClickHeating} isActive={HEATING} />
+          {/* <Switch alt="switch" onClick={ClickHeating} isActive={HEATING} /> */}
+          <Switch alt="switch" isActive={HEATING} />
         </Item>
         <Item onClick={showSetModal} setModalOpen={setModalOpen}>
-          <Img src="/setting.svg" alt="setting" imgSize="2.75vw" />
+          <Img src="setting.svg" alt="setting" imgSize="2.75vw" />
         </Item>
       </Item_list>
     </>

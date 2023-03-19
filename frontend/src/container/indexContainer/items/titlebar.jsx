@@ -7,7 +7,11 @@ import { useState } from "react";
 import { BasicSetting } from "./basicSetting";
 
 export const Titlebar = (props) => {
-  const contorls = [min, max, close];
+  const contorls = [
+    "window-minimize-solid.svg",
+    "window-maximize-regular.svg",
+    "rectangle-xmark-regular.svg",
+  ];
   const ipcMsg = ["minimizeApp", "maximizeApp", "closeApp"];
 
   const [modalOpen, setModalOpen] = useState(false);
@@ -23,7 +27,7 @@ export const Titlebar = (props) => {
   return (
     <Container>
       <Icon onClick={showModal}>
-        <img src={Logo} alt="logo" width="60"></img>
+        <img src="logo.png" alt="logo" width="60"></img>
       </Icon>
 
       <Title>Outdoor Projector Enclosure</Title>

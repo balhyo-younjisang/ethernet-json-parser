@@ -33,7 +33,7 @@ export const MainContainer = () => {
       setData(data);
       setTimeout(fetchData, 1000);
     } catch (error) {
-      console.error(error);
+      // console.error(error);
       setTimeout(fetchData, 1000);
     }
   }

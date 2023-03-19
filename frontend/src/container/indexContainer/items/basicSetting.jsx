@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { counterState } from "../../../data/atoms";
-import close from "/rectangle-xmark-regular.svg";
 
 export const BasicSetting = ({ setModalOpen }) => {
   const hideModal = () => {
@@ -23,11 +22,11 @@ export const BasicSetting = ({ setModalOpen }) => {
         <Modal>
           <Header>
             <TextBox>
-              <Img src="/setting.svg" alt="setting" imgSize="2.75vw" />
+              <Img src="setting.svg" alt="setting" imgSize="2.75vw" />
               <Label>Basic Setting</Label>
             </TextBox>
             <Button onClick={hideModal}>
-              <Img src={close} imgSize="1.75vw" ba></Img>
+              <Img src="rectangle-xmark-regular.svg" imgSize="1.75vw" ba></Img>
             </Button>
           </Header>
           <SettingContainer>
@@ -37,7 +36,7 @@ export const BasicSetting = ({ setModalOpen }) => {
               </Item>
               <Item width="14.5vw">
                 <Input
-                  placeholder="Network port number"
+                  placeholder="Number of Enclosure"
                   name="port"
                   value={count}
                   onChange={handleChangeNumber}
