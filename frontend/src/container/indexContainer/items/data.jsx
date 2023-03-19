@@ -63,7 +63,7 @@ export const Data = (props) => {
           <Input onChange={settingIp} value={ip} name="ip"></Input>
         </Item>
         <Item width="8.5vw">
-          <Green_text>{TLLVL}°C</Green_text>
+          <Green_text>{HUMOP}%</Green_text>
         </Item>
         <Item width="13.5vw">
           <span>
@@ -79,7 +79,7 @@ export const Data = (props) => {
               ? (Math.round(HUMOUT * 10) / 10).toFixed(1)
               : ""}
           </span>
-          <Green_text>&nbsp;({HUMOP}%)</Green_text>
+          <Green_text>&nbsp;({TLLVL}°C)</Green_text>
         </Item>
         <Item width="8.5vw">
           <Switch alt="switch" onClick={ClickAuto} isActive={AUTO} />
