@@ -71,7 +71,7 @@ const createWindow = () => {
 // app.dock.setIcon(path.join(__dirname, "/assets/icons/electrosmith.png"));
 
 app.whenReady().then(() => {
-  serverProcess = spawn("node", ["server.js"], { cwd: "server" });
+  serverProcess = spawn("node", ["app.js"], { cwd: "server" });
 
   serverProcess.stdout.on("data", (data) => {
     console.log(`stdout: ${data}`);
