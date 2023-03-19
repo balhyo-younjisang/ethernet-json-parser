@@ -1,9 +1,5 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import close from "/rectangle-xmark-regular.svg";
-import upload from "/upload-svgrepo-com.svg";
-import increase from "/Increase.svg";
-import decrease from "/decrease.svg";
 import { arduinoControl, changeName } from "../api/apis";
 
 export const ClientSetting = (props) => {
@@ -30,9 +26,9 @@ export const ClientSetting = (props) => {
   };
 
   const settingLabels = [
-    "Heater Operation value",
-    "Cooler Operation value",
     "Dehumidification value",
+    "Cooler Operation value",
+    "Heater Operation value",
   ];
 
   const settingValues = [
@@ -51,11 +47,11 @@ export const ClientSetting = (props) => {
           <Modal>
             <Header>
               <TextBox>
-                <Img src="/setting.svg" alt="setting" imgSize="2.75vw" />
+                <Img src="setting.svg" alt="setting" imgSize="2.75vw" />
                 <span>Client Setting</span>
               </TextBox>
               <Button onClick={hideModal}>
-                <Img src={close} imgSize="1.75vw"></Img>
+                <Img src="rectangle-xmark-regular.svg" imgSize="1.75vw"></Img>
               </Button>
             </Header>
             <SettingContainer>
@@ -74,7 +70,7 @@ export const ClientSetting = (props) => {
                       />
                     </Item>
                     <ControlImg
-                      src={upload}
+                      src="upload-svgrepo-com.svg"
                       width="30"
                       height="30"
                       onClick={() => changeName(name)}
@@ -87,7 +83,7 @@ export const ClientSetting = (props) => {
                       <Font>{label}</Font>
                     </Item>
                     <ControlImg
-                      src={increase}
+                      src="Increase.svg"
                       width="25"
                       height="25"
                       onClick={() => arduinoControl(upCommand[index])}
@@ -96,7 +92,7 @@ export const ClientSetting = (props) => {
                       <Green_text>{settingValues[index]}</Green_text>
                     </Item>
                     <ControlImg
-                      src={decrease}
+                      src="decrease.svg"
                       width="25"
                       height="25"
                       onClick={() => arduinoControl(downCommand[index])}
