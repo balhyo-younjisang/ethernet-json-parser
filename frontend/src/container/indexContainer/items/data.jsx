@@ -36,6 +36,12 @@ export const Data = (props) => {
     setIp(value);
   };
 
+  const ip_address = document.getElementsByName("ip");
+  ip_address.inputmask({
+    alias: "ip",
+    greedy: false,
+  });
+
   return (
     <>
       {Modalopen && (
