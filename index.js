@@ -1,7 +1,9 @@
 const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
 const ipc = ipcMain;
-const { exec } = require("child_process");
+const { spawn, exec } = require("child_process");
+
+let serverProcess;
 
 app.disableHardwareAcceleration();
 
@@ -69,30 +71,28 @@ const createWindow = () => {
 // app.dock.setIcon(path.join(__dirname, "/assets/icons/electrosmith.png"));
 
 app.whenReady().then(() => {
-  exec("cd server/ && node app.js", (error, stdout, stderr) => {
-    if (error) {
-      console.error(`exec error: ${error}`);
-      return;
-    } else {
-      console.log(`stdout: ${stdout}`);
-      console.error(`stderr: ${stderr}`);
-    }
+  serverProcess = spawn("node", ["server.js"], { cwd: "server" });
+
+  serverProcess.stdout.on("data", (data) => {
+    console.log(`stdout: ${data}`);
   });
 
-  // exec("cd frontend/ && npm run dev", (error, stdout, stderr) => {
-  //   if (error) {
-  //     console.error(`exec error: ${error}`);
-  //     return;
-  //   } else {
-  //     console.log(`stdout: ${stdout}`);
-  //     console.error(`stderr: ${stderr}`);
-  //   }
-  // });
+  serverProcess.stderr.on("data", (data) => {
+    console.error(`stderr: ${data}`);
+  });
+
+  serverProcess.on("close", (code) => {
+    console.log(`server process exited with code ${code}`);
+  });
 
   createWindow();
 
   app.on("activate", () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
+  });
+
+  app.on("will-quit", () => {
+    serverProcess.kill();
   });
 });
 
