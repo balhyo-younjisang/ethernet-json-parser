@@ -4,18 +4,8 @@ import { arduinoControl, changeName } from "../api/apis";
 
 export const ClientSetting = (props) => {
   const [name, setName] = useState(props.data.NAME);
-  // const [heating, setHeating] = useState(props.data.HEATING);
-  // const [cooling, setCooling] = useState(props.data.COOLING);
 
   // console.log(props);
-
-  // const ClickCooler = () => {
-  //   props.setCooling(!props.cooling);
-  // };
-
-  // const ClickHeater = () => {
-  //   props.setHeating(!props.heating);
-  // };
 
   const hideModal = () => {
     props.setModalOpen(false);
@@ -26,15 +16,15 @@ export const ClientSetting = (props) => {
   };
 
   const settingLabels = [
-    "Dehumidification value",
-    "Cooler Operation value",
     "Heater Operation value",
+    "Cooler Operation value",
+    "Dehumidification value",
   ];
 
   const settingValues = [
-    props.data.TLLVL + "°C",
-    props.data.TLHVL + "°C",
-    props.data.HUMOP + "%",
+    props.data.TLLVL !== null ? props.data.TLLVL + "°C" : "null",
+    props.data.TLHVL !== null ? props.data.TLHVL + "°C" : "null",
+    props.data.HUMOP !== null ? props.data.HUMOP + "°C" : "null",
   ];
 
   const upCommand = ["<S00TLLIC>", "<S00TLHIC>", "<S00HOPIC>"];
@@ -201,7 +191,7 @@ const Modal = styled.div`
   background-color: #ffffff;
   box-shadow: 0 2px 7px rgba(0, 0, 0, 0.3);
   width: 60vw;
-  height: 50vh;
+  height: 48.5vh;
   transform: translate(-50%, -40%);
 `;
 
@@ -278,7 +268,7 @@ const SwitchWrap = styled.div`
 const ButtonWrap = styled.div`
   display: flex;
   text-align: center;
-  padding-top: 3px;
+  padding-top: 6px;
   width: 12vw;
   height: 40vh;
 `;
@@ -291,6 +281,7 @@ const RebootBtn = styled.button`
   height: inherit;
   align-items: center;
   font-size: 1.25rem;
+  background-color: rgb(191, 191, 191);
 
   @media screen and (max-width: 1200px) {
     font-size: 0.8rem;
