@@ -8,7 +8,7 @@ export const Data = (props) => {
     props.data;
   const [isHovering, setIsHovering] = useState(false);
   const [Modalopen, setModalOpen] = useState(false);
-  const [ip, setIp] = useState("192.168.000.000");
+  const [ip, setIp] = useState("192.168.000.100");
 
   const ClickAuto = () => {
     arduinoControl("<S00AUTO1>");
@@ -35,13 +35,8 @@ export const Data = (props) => {
   };
 
   const settingIp = ({ target: { value } }) => {
-    // set Ip
-    const reg = new RegExp(
-      "(25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3}"
-    );
+    const reg = new RegExp("^[0-9.]+$");
     if (reg.test(value)) setIp(value);
-    else setIp("");
-    console.log(ip);
   };
 
   return (
@@ -64,13 +59,18 @@ export const Data = (props) => {
           <span>{NAME}</span>
         </Item>
         <Item width="11.2vw">
-          {/* <span>192.168.000.100</span> */}
-          <Input onChange={settingIp} value={ip} name="ip"></Input>
+          <Input
+            onChange={settingIp}
+            maxLength={15}
+            value={ip}
+            name="ip"
+            placeholder="IP Address"
+          ></Input>
         </Item>
         <Item width="8.5vw">
           <Green_text>
             &nbsp;
-            {typeof HUMOP === "number" ? `${HUMOP}%` : ""}
+            {typeof HUMOP === "number" ? `${HUMOP}%` : null}
           </Green_text>
         </Item>
         <Item width="13.5vw">
