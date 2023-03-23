@@ -8,17 +8,20 @@ export const Data = (props) => {
     props.data;
   const [isHovering, setIsHovering] = useState(false);
   const [Modalopen, setModalOpen] = useState(false);
-  const [ip, setIp] = useState("192.168.000.100");
+  const [ip, setIp] = useState("192.168.000.000");
 
   const ClickAuto = () => {
     arduinoControl("<S00AUTO1>");
   };
+
   // const ClickCooling = () => {
   //   arduinoControl("<S00COOLT>"); // 배기팬 동작 상태 반전
   // };
+
   // const ClickHeating = () => {
   //   arduinoControl("<S00HEATT>"); // 히터 동작 상태 반전
   // };
+
   const handleMouseOver = () => {
     setIsHovering(true);
   };
@@ -65,7 +68,10 @@ export const Data = (props) => {
           <Input onChange={settingIp} value={ip} name="ip"></Input>
         </Item>
         <Item width="8.5vw">
-          <Green_text>{HUMOP}%</Green_text>
+          <Green_text>
+            &nbsp;
+            {typeof HUMOP === "number" ? `${HUMOP}%` : ""}
+          </Green_text>
         </Item>
         <Item width="13.5vw">
           <span>
@@ -73,7 +79,10 @@ export const Data = (props) => {
               ? (Math.round(TEMPOUT * 10) / 10).toFixed(1)
               : ""}
           </span>
-          <Green_text>&nbsp;({TLHVL}°C)</Green_text>
+          <Green_text>
+            &nbsp;
+            {typeof TLHVL === "number" ? `(${TLHVL}°C)` : null}
+          </Green_text>
         </Item>
         <Item width="13.5vw">
           <span>
@@ -81,7 +90,10 @@ export const Data = (props) => {
               ? (Math.round(HUMOUT * 10) / 10).toFixed(1)
               : ""}
           </span>
-          <Green_text>&nbsp;({TLLVL}°C)</Green_text>
+          <Green_text>
+            &nbsp;
+            {typeof TLLVL === "number" ? `(${TLLVL}°C)` : null}
+          </Green_text>
         </Item>
         <Item width="8.5vw">
           <Switch alt="switch" onClick={ClickAuto} isActive={AUTO} />

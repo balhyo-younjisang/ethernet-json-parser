@@ -22,9 +22,9 @@ export const ClientSetting = (props) => {
   ];
 
   const settingValues = [
-    props.data.TLLVL !== null ? props.data.TLLVL + "°C" : "null",
-    props.data.TLHVL !== null ? props.data.TLHVL + "°C" : "null",
-    props.data.HUMOP !== null ? props.data.HUMOP + "°C" : "null",
+    props.data.TLLVL !== null ? props.data.TLLVL + "°C" : "",
+    props.data.TLHVL !== null ? props.data.TLHVL + "°C" : "",
+    props.data.HUMOP !== null ? props.data.HUMOP + "°C" : "",
   ];
 
   const upCommand = ["<S00TLLIC>", "<S00TLHIC>", "<S00HOPIC>"];
