@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
-import { counterState } from "../../../data/atoms";
+import { counterState, portState } from "../../../data/atoms";
 
 export const BasicSetting = ({ setModalOpen }) => {
   const hideModal = () => {
@@ -13,7 +13,7 @@ export const BasicSetting = ({ setModalOpen }) => {
   const handleChangeNumber = (e) => setCount(e.target.value);
   // console.log(count);
 
-  const [port, setPort] = useState(10001);
+  const [port, setPort] = useRecoilState(portState);
   const handleChangePort = ({ target: { value } }) => setPort(value);
 
   return (

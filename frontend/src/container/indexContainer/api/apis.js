@@ -27,3 +27,16 @@ export const changeName = async (name) => {
   const { data } = await axios.get(`http://localhost:3000/name/${name}`);
   // console.log(data);
 };
+
+export const addClient = async (ip, port, index) => {
+  // console.log(ip, port, index);
+  const { data } = await axios.get(
+    `http://localhost:3000/connect/${ip}/${port}/${index}`
+  );
+  // console.log(data);
+};
+
+export const cleanClientList = async () => {
+  const { data } = await axios.get(`http://localhost:3000/cleanup`);
+  console.log(data);
+};

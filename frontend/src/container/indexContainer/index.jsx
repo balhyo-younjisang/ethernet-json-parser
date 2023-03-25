@@ -49,7 +49,7 @@ export const MainContainer = () => {
       {count === ""
         ? null
         : [...Array(parseInt(count))].map((n, index) => {
-            return <Data key={index} data={data} />;
+            return <Data key={index} data={data} index={index} />;
           })}
     </>
   );

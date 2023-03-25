@@ -1,26 +1,23 @@
-import { useState } from "react";
-import { arduinoControl } from "../api/apis";
+import { useEffect, useState } from "react";
+import { arduinoControl, addClient } from "../api/apis";
 import styled from "styled-components";
 import { ClientSetting } from "./clientSetting";
+import { portState } from "../../../data/atoms";
+import { useRecoilState } from "recoil";
 
 export const Data = (props) => {
+  const { data, index } = props;
   const { NAME, TEMPOUT, HUMOUT, HEATING, COOLING, AUTO, TLHVL, TLLVL, HUMOP } =
-    props.data;
+    data;
   const [isHovering, setIsHovering] = useState(false);
   const [Modalopen, setModalOpen] = useState(false);
-  const [ip, setIp] = useState("192.168.000.100");
+  const [ip, setIp] = useState("");
+
+  const [port] = useRecoilState(portState);
 
   const ClickAuto = () => {
     arduinoControl("<S00AUTO1>");
   };
-
-  // const ClickCooling = () => {
-  //   arduinoControl("<S00COOLT>"); // 배기팬 동작 상태 반전
-  // };
-
-  // const ClickHeating = () => {
-  //   arduinoControl("<S00HEATT>"); // 히터 동작 상태 반전
-  // };
 
   const handleMouseOver = () => {
     setIsHovering(true);
@@ -38,6 +35,12 @@ export const Data = (props) => {
     const reg = new RegExp("^[0-9.]+$");
     if (reg.test(value)) setIp(value);
   };
+
+  useEffect(() => {
+    if (ip.length >= 11) {
+      addClient(ip, port, index);
+    }
+  }, [ip, port, index]);
 
   return (
     <>

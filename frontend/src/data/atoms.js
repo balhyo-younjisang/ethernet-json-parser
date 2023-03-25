@@ -14,3 +14,8 @@ export const coolingState = atom({
   key: "coolingState",
   default: false,
 });
+
+export const portState = atom({
+  key: "portState",
+  default: "",
+});
