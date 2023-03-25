@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { arduinoControl, addClient } from "../api/apis";
-import styled from "styled-components";
 import { ClientSetting } from "./clientSetting";
 import { portState } from "../../../data/atoms";
 import { useRecoilState } from "recoil";
+import styled from "styled-components";
 
 export const Data = (props) => {
   const { data, index } = props;
@@ -14,6 +14,8 @@ export const Data = (props) => {
   const [ip, setIp] = useState("");
 
   const [port] = useRecoilState(portState);
+
+  // console.log(index);
 
   const ClickAuto = () => {
     arduinoControl("<S00AUTO1>");
@@ -45,13 +47,7 @@ export const Data = (props) => {
   return (
     <>
       {Modalopen && (
-        <ClientSetting
-          setModalOpen={setModalOpen}
-          data={props.data}
-          heating={HEATING}
-          cooling={COOLING}
-          auto={AUTO}
-        />
+        <ClientSetting setModalOpen={setModalOpen} data={props.data} ip={ip} />
       )}
       <Item_list
         onMouseOver={handleMouseOver}

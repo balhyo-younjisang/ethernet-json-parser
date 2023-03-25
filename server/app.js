@@ -10,6 +10,17 @@ const port = 3000;
 app.use(cors());
 
 let clients = [];
+let data = Array.from({ length: 1 }, () => ({
+  NAME: null,
+  TEMPOUT: null,
+  HUMOUT: null,
+  HEATING: false,
+  COOLING: false,
+  AUTO: false,
+  TLHVL: null,
+  TLLVL: null,
+  HUMOP: null,
+}));
 
 const addClient = (ip, port, index) => {
   clients[index] = { ip, port };
@@ -24,31 +35,101 @@ const removeClient = (ip, port) => {
   console.log(`Client disconnected: ${ip}:${port}`);
 };
 
-let data = [];
+const extendArrayTo = (arr, n) => {
+  if (arr.length >= n) {
+    return true;
+  }
 
-app.get("/", (req, res) => {
-  // const data = [];
-  clients.forEach((client, index) => {
+  const newArr = Array.from(arr);
+
+  while (newArr.length < n) {
+    newArr.push({
+      NAME: null,
+      TEMPOUT: null,
+      HUMOUT: null,
+      HEATING: false,
+      COOLING: false,
+      AUTO: false,
+      TLHVL: null,
+      TLLVL: null,
+      HUMOP: null,
+    });
+  }
+
+  arr.length = 0;
+  arr.push(...newArr);
+  return true;
+};
+
+// app.get("/", (req, res) => {
+//   let a = 0;
+//   clients.forEach((client, index) => {
+//     const tcpClient = net.createConnection(
+//       { host: client.ip, port: client.port },
+//       () => {
+//         tcpClient.on("data", (chunk) => {
+//           try {
+//             const parsedData = JSON.parse(chunk.toString());
+//             // console.log(client.ip, client.port, parsedData);
+//             data[index] = parsedData;
+//             console.log(a);
+//             a++;
+//           } catch (e) {
+//             console.error(e);
+//           }
+//         });
+//       }
+//     );
+//     tcpClient.on("error", () => {});
+//   });
+//   console.log("roop end");
+//   res.send(data);
+// });
+
+app.get("/", async (req, res) => {
+  let a = 0;
+  for (const [index, client] of clients.entries()) {
     const tcpClient = net.createConnection(
       { host: client.ip, port: client.port },
       () => {
         tcpClient.on("data", (chunk) => {
-          data[index] = chunk.toString();
+          try {
+            const parsedData = JSON.parse(chunk.toString());
+            data[index] = parsedData;
+            console.log(a);
+            a++;
+            if (a === clients.length) {
+              res.send(data);
+            }
+          } catch (e) {
+            console.error(e);
+          }
         });
       }
     );
     tcpClient.on("error", () => {});
-  });
-  res.send(data);
+  }
+  console.log("roop end");
 });
 
-app.get("/check", (req, res) => {
+app.get("/client/check", (req, res) => {
   res.send(clients);
 });
 
-app.get("client/cleanup", (req, res) => {
-  data = [];
+app.get("/client/cleanup", (req, res) => {
+  for (let i = 0; i < data.length; i++) {
+    data[i] = null;
+  }
   res.send(data);
+});
+
+app.get("/client/dataList/:number", (req, res) => {
+  const { number } = req.params;
+  // 배열을 10개로 확장
+  const status = extendArrayTo(data, parseInt(number));
+  // 확장된 배열을 클라이언트에게 전송
+  // res.json(data);
+  res.send(status);
 });
 
 app.get("/connect/:ip/:port/:index", (req, res) => {
@@ -57,27 +138,23 @@ app.get("/connect/:ip/:port/:index", (req, res) => {
   res.send(`Client connected: ${ip}:${port}`);
 });
 
-app.get("/:method", (req, res) => {
-  const method = req.params.method;
-  console.log(method);
-  clients.forEach((client) => {
-    const tcpClient = net.createConnection(
-      { host: client.ip, port: client.port },
-      () => {
-        tcpClient.write(method, (err) => {
-          if (err) {
-            console.error(err);
-          } else {
-            console.log(
-              `Sent ${method} command to ${client.ip}:${client.port}`
-            );
-          }
-          tcpClient.end();
-        });
-      }
-    );
+app.get("/:ip/:port/:method", (req, res) => {
+  const { ip, port, method } = req.params;
+  console.log(req.params);
+  // console.log(method);
+
+  let client = net.createConnection({ host: ip, port: port }, () => {
+    console.log("Connected to TCP server");
   });
-  res.send(`Sent ${method} command to all clients`);
+
+  client.write(method, (err) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send("Error sending data to Arduino");
+    } else {
+      res.send(`send ${method} command to Arduino`);
+    }
+  });
 });
 
 app.get("/name/:name", (req, res) => {

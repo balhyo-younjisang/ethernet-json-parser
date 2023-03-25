@@ -7,17 +7,19 @@ import { useRecoilState } from "recoil";
 import { counterState } from "../../data/atoms";
 
 export const MainContainer = () => {
-  const [data, setData] = useState({
-    NAME: null,
-    TEMPOUT: null,
-    HUMOUT: null,
-    HEATING: false,
-    COOLING: false,
-    AUTO: false,
-    TLHVL: null,
-    TLLVL: null,
-    HUMOP: null,
-  });
+  const [data, setData] = useState([
+    {
+      NAME: null,
+      TEMPOUT: null,
+      HUMOUT: null,
+      HEATING: false,
+      COOLING: false,
+      AUTO: false,
+      TLHVL: null,
+      TLLVL: null,
+      HUMOP: null,
+    },
+  ]);
   const [count] = useRecoilState(counterState);
 
   // async function fetchData() {
@@ -49,7 +51,7 @@ export const MainContainer = () => {
       {count === ""
         ? null
         : [...Array(parseInt(count))].map((n, index) => {
-            return <Data key={index} data={data} index={index} />;
+            return <Data key={index} data={data[index]} index={index} />;
           })}
     </>
   );

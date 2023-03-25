@@ -1,11 +1,14 @@
 import React, { useState } from "react";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
+import { portState } from "../../../data/atoms";
 import { arduinoControl, changeName } from "../api/apis";
 
 export const ClientSetting = (props) => {
   const [name, setName] = useState(props.data.NAME);
+  const [port] = useRecoilState(portState);
 
-  // console.log(props);
+  // console.log(props.ip);
 
   const hideModal = () => {
     props.setModalOpen(false);
@@ -55,7 +58,7 @@ export const ClientSetting = (props) => {
                     <Item width="19.5vw">
                       <Input
                         type="text"
-                        value={name}
+                        value={name || ""}
                         onChange={changeNameValue}
                       />
                     </Item>
@@ -76,7 +79,9 @@ export const ClientSetting = (props) => {
                       src="Increase.svg"
                       width="25"
                       height="25"
-                      onClick={() => arduinoControl(upCommand[index])}
+                      onClick={() =>
+                        arduinoControl(props.ip, port, upCommand[index])
+                      }
                     />
                     <Item width="8vw">
                       <Green_text>{settingValues[index]}</Green_text>
@@ -90,7 +95,9 @@ export const ClientSetting = (props) => {
                   </Item_list>
                 ))}
               </CommandSetting>
-              <ButtonWrap onClick={() => arduinoControl("<S00SWRST>")}>
+              <ButtonWrap
+                onClick={() => arduinoControl(props.ip, port, "<S00SWRST>")}
+              >
                 <RebootBtn>REBOOT SYSTEM</RebootBtn>
               </ButtonWrap>
               <ButtonWrap>

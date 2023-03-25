@@ -1,7 +1,9 @@
 import axios from "axios";
 
-export const arduinoControl = async (method) => {
-  const { data } = await axios.get(`http://localhost:3000/${method}`);
+export const arduinoControl = async (ip, port, method) => {
+  const { data } = await axios.get(
+    `http://localhost:3000/${ip}/${port}/${method}`
+  );
   console.log(data);
 };
 
@@ -38,5 +40,12 @@ export const addClient = async (ip, port, index) => {
 
 export const cleanClientList = async () => {
   const { data } = await axios.get(`http://localhost:3000/cleanup`);
+  console.log(data);
+};
+
+export const dataLengthSet = async (num) => {
+  const { data } = await axios.get(
+    `http://localhost:3000/client/dataList/${num}`
+  );
   console.log(data);
 };
