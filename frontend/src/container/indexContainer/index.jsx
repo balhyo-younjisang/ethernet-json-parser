@@ -22,16 +22,19 @@ export const MainContainer = () => {
   ]);
   const [count] = useRecoilState(counterState);
 
-  // async function fetchData() {
-  //   const { data } = await axios.get("http://localhost:3000/");
-  //   // console.log(data);
-  //   setData(data);
-  //   setTimeout(fetchData, 1000); // 1초 후에 fetchData 함수를 다시 호출합니다.
-  // }
+  async function settingData() {
+    try {
+      await axios.get("http://localhost:3000/");
+      setTimeout(settingData, 5000);
+    } catch (error) {
+      // console.error(error);
+      setTimeout(settingData, 5000);
+    }
+  }
 
   async function fetchData() {
     try {
-      const { data } = await axios.get("http://localhost:3000/");
+      const { data } = await axios.get("http://localhost:3000/fetch");
       setData(data);
       setTimeout(fetchData, 1000);
     } catch (error) {
@@ -41,6 +44,7 @@ export const MainContainer = () => {
   }
 
   useEffect(() => {
+    settingData();
     fetchData();
   }, []);
 

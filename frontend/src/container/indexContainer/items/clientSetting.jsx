@@ -66,7 +66,7 @@ export const ClientSetting = (props) => {
                       src="upload-svgrepo-com.svg"
                       width="30"
                       height="30"
-                      onClick={() => changeName(name)}
+                      onClick={() => changeName(props.ip, port, name)}
                     />
                   </Item_list>
                 </Wrap>
@@ -90,7 +90,9 @@ export const ClientSetting = (props) => {
                       src="decrease.svg"
                       width="25"
                       height="25"
-                      onClick={() => arduinoControl(downCommand[index])}
+                      onClick={() =>
+                        arduinoControl(props.ip, port, downCommand[index])
+                      }
                     />
                   </Item_list>
                 ))}
@@ -108,8 +110,8 @@ export const ClientSetting = (props) => {
                       <SwitchWrap
                         onClick={() =>
                           props.heating === true
-                            ? arduinoControl("<S00HEAT0>")
-                            : arduinoControl("<S00HEAT1>")
+                            ? arduinoControl(props.ip, port, "<S00HEAT0>")
+                            : arduinoControl(props.ip, port, "<S00HEAT1>")
                         }
                       >
                         <FontControl>Heater</FontControl>
@@ -124,8 +126,8 @@ export const ClientSetting = (props) => {
                       <SwitchWrap
                         onClick={() =>
                           props.cooling === true
-                            ? arduinoControl("<S00COOL0>")
-                            : arduinoControl("<S00COOL1>")
+                            ? arduinoControl(props.ip, port, "<S00COOL0>")
+                            : arduinoControl(props.ip, port, "<S00COOL1>")
                         }
                       >
                         <FontControl>Cooler</FontControl>

@@ -10,7 +10,7 @@ const port = 3000;
 app.use(cors());
 
 let clients = [];
-let data = Array.from({ length: 1 }, () => ({
+let data = Array.from({ length: 99 }, () => ({
   NAME: null,
   TEMPOUT: null,
   HUMOUT: null,
@@ -24,8 +24,8 @@ let data = Array.from({ length: 1 }, () => ({
 
 const addClient = (ip, port, index) => {
   clients[index] = { ip, port };
-  console.log(index);
-  console.log(`Client connected: ${ip}:${port} / index : ${index}`);
+  // console.log(index);
+  // console.log(`Client connected: ${ip}:${port} / index : ${index}`);
 };
 
 const removeClient = (ip, port) => {
@@ -35,60 +35,8 @@ const removeClient = (ip, port) => {
   console.log(`Client disconnected: ${ip}:${port}`);
 };
 
-const extendArrayTo = (arr, n) => {
-  if (arr.length >= n) {
-    return true;
-  }
-
-  const newArr = Array.from(arr);
-
-  while (newArr.length < n) {
-    newArr.push({
-      NAME: null,
-      TEMPOUT: null,
-      HUMOUT: null,
-      HEATING: false,
-      COOLING: false,
-      AUTO: false,
-      TLHVL: null,
-      TLLVL: null,
-      HUMOP: null,
-    });
-  }
-
-  arr.length = 0;
-  arr.push(...newArr);
-  return true;
-};
-
-// app.get("/", (req, res) => {
-//   let a = 0;
-//   clients.forEach((client, index) => {
-//     const tcpClient = net.createConnection(
-//       { host: client.ip, port: client.port },
-//       () => {
-//         tcpClient.on("data", (chunk) => {
-//           try {
-//             const parsedData = JSON.parse(chunk.toString());
-//             // console.log(client.ip, client.port, parsedData);
-//             data[index] = parsedData;
-//             console.log(a);
-//             a++;
-//           } catch (e) {
-//             console.error(e);
-//           }
-//         });
-//       }
-//     );
-//     tcpClient.on("error", () => {});
-//   });
-//   console.log("roop end");
-//   res.send(data);
-// });
-
-app.get("/", async (req, res) => {
-  let a = 0;
-  for (const [index, client] of clients.entries()) {
+app.get("/", (req, res) => {
+  clients.forEach((client, index) => {
     const tcpClient = net.createConnection(
       { host: client.ip, port: client.port },
       () => {
@@ -96,11 +44,6 @@ app.get("/", async (req, res) => {
           try {
             const parsedData = JSON.parse(chunk.toString());
             data[index] = parsedData;
-            console.log(a);
-            a++;
-            if (a === clients.length) {
-              res.send(data);
-            }
           } catch (e) {
             console.error(e);
           }
@@ -108,8 +51,12 @@ app.get("/", async (req, res) => {
       }
     );
     tcpClient.on("error", () => {});
-  }
-  console.log("roop end");
+  });
+  res.send(data);
+});
+
+app.get("/fetch", (req, res) => {
+  res.send(data);
 });
 
 app.get("/client/check", (req, res) => {
@@ -121,15 +68,6 @@ app.get("/client/cleanup", (req, res) => {
     data[i] = null;
   }
   res.send(data);
-});
-
-app.get("/client/dataList/:number", (req, res) => {
-  const { number } = req.params;
-  // 배열을 10개로 확장
-  const status = extendArrayTo(data, parseInt(number));
-  // 확장된 배열을 클라이언트에게 전송
-  // res.json(data);
-  res.send(status);
 });
 
 app.get("/connect/:ip/:port/:index", (req, res) => {
@@ -147,6 +85,11 @@ app.get("/:ip/:port/:method", (req, res) => {
     console.log("Connected to TCP server");
   });
 
+  client.on("error", (err) => {
+    console.error(err);
+    res.status(500).send("Error connecting to Arduino");
+  });
+
   client.write(method, (err) => {
     if (err) {
       console.error(err);
@@ -157,37 +100,23 @@ app.get("/:ip/:port/:method", (req, res) => {
   });
 });
 
-app.get("/name/:name", (req, res) => {
+app.get("/:ip/:port/name/:name", (req, res) => {
+  const { ip, port } = req.params;
   const name = req.params.name + " ";
-  clients.forEach((client) => {
-    const tcpClient = net.createConnection(
-      { host: client.ip, port: client.port },
-      () => {
-        tcpClient.write("<CHIFNAME>", (err) => {
-          if (err) {
-            console.error(err);
-          } else {
-            console.log(
-              `Sent <CHIFNAME> command to ${client.ip}:${client.port}`
-            );
-          }
-        });
-        setTimeout(() => {
-          tcpClient.write(name, (err) => {
-            if (err) {
-              console.error(err);
-            } else {
-              console.log(
-                `Sent name ${name.trim()} to ${client.ip}:${client.port}`
-              );
-            }
-            tcpClient.end();
-          });
-        }, 1000);
-      }
-    );
+
+  let client = net.createConnection({ host: ip, port: port }, () => {
+    console.log("Connected to TCP server");
   });
-  res.send(`Sent name ${name.trim()} to all clients`);
+
+  client.write("<CHIFNAME>", (err) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send("Error sending data to Arduino");
+    } else {
+      setTimeout(() => console.log(""), 1000);
+      client.write(name);
+    }
+  });
 });
 
 const server = app.listen(port, () => {
