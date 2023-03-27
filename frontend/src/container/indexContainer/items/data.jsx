@@ -30,6 +30,7 @@ export const Data = (props) => {
   };
 
   const showSetModal = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
     setModalOpen(true);
   };
 

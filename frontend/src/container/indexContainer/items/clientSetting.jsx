@@ -160,7 +160,9 @@ const TextBox = styled.div`
 
 const Container = styled.div`
   font-size: 1.25rem;
-  position: fixed;
+  position: absolute;
+  top: 0;
+  margin-top: 40px;
   width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.3);

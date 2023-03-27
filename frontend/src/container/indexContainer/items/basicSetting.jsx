@@ -86,7 +86,7 @@ const Container = styled.div`
 `;
 
 const Window = styled.div`
-  position: relative;
+  position: absolute;
   width: 100%;
   height: 80%;
   display: flex;
