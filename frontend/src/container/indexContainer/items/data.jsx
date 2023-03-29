@@ -31,6 +31,7 @@ export const Data = (props) => {
 
   const showSetModal = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
+    document.body.style.overflow = "hidden";
     setModalOpen(true);
   };
 
@@ -54,6 +55,7 @@ export const Data = (props) => {
         onMouseOver={handleMouseOver}
         onMouseOut={handleMouseOut}
         isHovering={isHovering}
+        className="ItemList"
       >
         <Item width="25vw">
           <span>{NAME}</span>

@@ -12,6 +12,7 @@ export const ClientSetting = (props) => {
 
   const hideModal = () => {
     props.setModalOpen(false);
+    document.body.style.overflow = "auto";
   };
 
   const changeNameValue = (e) => {
@@ -163,8 +164,8 @@ const Container = styled.div`
   position: absolute;
   top: 0;
   margin-top: 40px;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   background-color: rgba(0, 0, 0, 0.3);
 `;
 
