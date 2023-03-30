@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { counterState, portState } from "../../../data/atoms";
-import { dataLengthSet } from "../api/apis";
 
 export const BasicSetting = ({ setModalOpen }) => {
   const hideModal = () => {
@@ -14,15 +13,14 @@ export const BasicSetting = ({ setModalOpen }) => {
   // const handleChangeNumber = (e) => setCount(e.target.value);
 
   const handleChangeNumber = ({ target: { value } }) => {
-    let stat = null;
     const reg = new RegExp("^[0-9]+$");
     if (reg.test(value)) {
       console.log(value);
-      if (value !== "") stat = dataLengthSet(value);
-      setCount(value);
+      if (value !== "") {
+        setCount(value);
+      }
     }
   };
-  // console.log(count);
 
   const [port, setPort] = useRecoilState(portState);
   const handleChangePort = ({ target: { value } }) => setPort(value);

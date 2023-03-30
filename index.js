@@ -27,7 +27,7 @@ const createWindow = () => {
   // win.loadFile("frontend/dist/index.html");
   win.loadFile("public/index.html");
 
-  // win.webContents.openDevTools();
+  win.webContents.openDevTools();
 
   win.webContents.session.webRequest.onBeforeSendHeaders(
     (details, callback) => {

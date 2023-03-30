@@ -11,6 +11,7 @@ export const Titlebar = (props) => {
   const ipcMsg = ["minimizeApp", "maximizeApp", "closeApp"];
 
   const [modalOpen, setModalOpen] = useState(false);
+
   const showModal = () => {
     setModalOpen(true);
   };

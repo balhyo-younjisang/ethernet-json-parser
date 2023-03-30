@@ -2,13 +2,13 @@ import axios from "axios";
 
 export const arduinoControl = async (ip, port, method) => {
   const { data } = await axios.get(
-    `http://localhost:3000/${ip}/${port}/${method}`
+    `http://localhost:51983/${ip}/${port}/${method}`
   );
   console.log(data);
 };
 
 export const dataQuery = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: "http://localhost:51983",
   retry: {
     retry: true,
     retryDelay: 1000,
@@ -27,7 +27,7 @@ export const dataQuery = axios.create({
 
 export const changeName = async (ip, port, name) => {
   const { data } = await axios.get(
-    `http://localhost:3000/${ip}/${port}/name/${name}`
+    `http://localhost:51983/${ip}/${port}/name/${name}`
   );
   // console.log(data);
 };
@@ -35,19 +35,12 @@ export const changeName = async (ip, port, name) => {
 export const addClient = async (ip, port, index) => {
   // console.log(ip, port, index);
   const { data } = await axios.get(
-    `http://localhost:3000/connect/${ip}/${port}/${index}`
+    `http://localhost:51983/connect/${ip}/${port}/${index}`
   );
   // console.log(data);
 };
 
 export const cleanClientList = async () => {
-  const { data } = await axios.get(`http://localhost:3000/cleanup`);
-  console.log(data);
-};
-
-export const dataLengthSet = async (num) => {
-  const { data } = await axios.get(
-    `http://localhost:3000/client/dataList/${num}`
-  );
+  const { data } = await axios.get(`http://localhost:51983/cleanup`);
   console.log(data);
 };

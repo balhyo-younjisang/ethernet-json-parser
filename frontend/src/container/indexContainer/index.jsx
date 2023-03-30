@@ -24,7 +24,7 @@ export const MainContainer = () => {
 
   async function settingData() {
     try {
-      await axios.get("http://localhost:3000/");
+      await axios.get("http://localhost:51983/");
       setTimeout(settingData, 5000);
     } catch (error) {
       // console.error(error);
@@ -34,7 +34,7 @@ export const MainContainer = () => {
 
   async function fetchData() {
     try {
-      const { data } = await axios.get("http://localhost:3000/fetch");
+      const { data } = await axios.get("http://localhost:51983/fetch");
       setData(data);
       setTimeout(fetchData, 1000);
     } catch (error) {
