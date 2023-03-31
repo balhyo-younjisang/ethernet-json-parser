@@ -1,33 +1,79 @@
-"use strict";
-
 const express = require("express");
-const morgan = require("morgan");
-const cors = require("cors");
+const net = require("net");
 
-const { dataList } = require("./testData");
-
-// 상수
-const PORT = 3000;
-
-// 앱
 const app = express();
 
-//로깅
-app.use(morgan("common"));
-app.use(cors());
+let clients = [];
+const dataArr = [];
+let sockets = null;
 
-app.get("/build", (req, res) => {
-  res.sendFile("../frontend/dist/index.html");
+const addClient = (host, port, index) => {
+  clients[index] = { host, port };
+};
+
+app.get("/connect/:ip/:port/:index", (req, res) => {
+  const { ip, port, index } = req.params;
+  addClient(ip, port, index);
+  res.send(`Client connected: ${ip}:${port}`);
+});
+
+app.get("/setting", (req, res) => {
+  sockets = clients.map((server, index) => {
+    const socket = net.createConnection(server, () => {
+      console.log(`Connected to ${server.host}:${server.port}`);
+      console.log(index);
+    });
+
+    // 데이터 수신 이벤트 처리
+    socket.on("data", (data) => {
+      console.log(
+        `Received data from ${server.host}:${server.port} / ${index}`
+      );
+      dataArr[index] = JSON.parse(data.toString());
+    });
+
+    // 연결 종료 이벤트 처리
+    socket.on("end", () => {
+      console.log(`Disconnected from ${server.host}:${server.port}`);
+    });
+
+    // 에러 발생 이벤트 처리
+    socket.on("error", (err) => {
+      console.log(`Error occurred in ${server.host}:${server.port}: ${err}`);
+    });
+
+    return socket;
+  });
+  res.send("");
+});
+
+// HTTP 서버 연결
+app.get("/message", (req, res) => {
+  const message = req.query.msg;
+  if (!message) {
+    return res.status(400).send("Message is missing");
+  }
+
+  const target = req.query.target;
+  if (!target) {
+    return res.status(400).send("Target is missing");
+  }
+
+  const socket = sockets[target];
+  if (!socket) {
+    return res.status(400).send(`Target ${target} is not found`);
+  }
+
+  // 문자열 전송
+  socket.write(message);
+
+  res.send(`send ${message} command to Arduino`);
 });
 
 app.get("/", (req, res) => {
-  let random = Math.floor(Math.random() * dataList.length);
-  res.send(dataList[random]);
-  // console.log(dataList[random]);
+  res.send(dataArr);
 });
 
-app.get("/:method", (req, res) => {
-  res.send(req.params.method);
+app.listen(51983, () => {
+  console.log("HTTP server listening on port 51983");
 });
-
-app.listen(PORT, console.log(`Running on http://localhost:${PORT}`));

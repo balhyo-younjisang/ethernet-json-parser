@@ -14,7 +14,8 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.18.2",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "request": "^2.88.2"
   },
   "devDependencies": {
     "net": "^1.0.2",

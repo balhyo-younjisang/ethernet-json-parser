@@ -1,16 +1,14 @@
-"use strict";
-
 const express = require("express");
 const cors = require("cors");
 const net = require("net");
-const app = express();
 
-const port = 51983;
+const app = express();
 
 app.use(cors());
 
 let clients = [];
-let data = Array.from({ length: 99 }, () => ({
+// const dataArr = [];
+const dataArr = Array.from({ length: 99 }, () => ({
   NAME: null,
   TEMPOUT: null,
   HUMOUT: null,
@@ -21,53 +19,14 @@ let data = Array.from({ length: 99 }, () => ({
   TLLVL: null,
   HUMOP: null,
 }));
+let sockets = null;
 
-const addClient = (ip, port, index) => {
-  clients[index] = { ip, port };
-  // console.log(index);
-  // console.log(`Client connected: ${ip}:${port} / index : ${index}`);
+const addClient = (host, port, index) => {
+  clients[index] = { host, port };
 };
-
-const removeClient = (ip, port) => {
-  clients = clients.filter(
-    (client) => client.ip !== ip || client.port !== port
-  );
-  console.log(`Client disconnected: ${ip}:${port}`);
-};
-
-app.get("/", (req, res) => {
-  clients.forEach((client, index) => {
-    const tcpClient = net.createConnection(
-      { host: client.ip, port: client.port },
-      () => {
-        tcpClient.on("data", (chunk) => {
-          try {
-            const parsedData = JSON.parse(chunk.toString());
-            data[index] = parsedData;
-          } catch (e) {
-            console.error(e);
-          }
-        });
-      }
-    );
-    tcpClient.on("error", () => {});
-  });
-  res.send(data);
-});
 
 app.get("/fetch", (req, res) => {
-  res.send(data);
-});
-
-app.get("/client/check", (req, res) => {
-  res.send(clients);
-});
-
-app.get("/client/cleanup", (req, res) => {
-  for (let i = 0; i < data.length; i++) {
-    data[i] = null;
-  }
-  res.send(data);
+  res.send(dataArr);
 });
 
 app.get("/connect/:ip/:port/:index", (req, res) => {
@@ -76,55 +35,59 @@ app.get("/connect/:ip/:port/:index", (req, res) => {
   res.send(`Client connected: ${ip}:${port}`);
 });
 
-app.get("/:ip/:port/:method", (req, res) => {
-  const { ip, port, method } = req.params;
-  console.log(req.params);
-  // console.log(method);
+app.get("/setting", (req, res) => {
+  sockets = clients.map((server, index) => {
+    const socket = net.createConnection(server, () => {
+      console.log(`Connected to ${server.host}:${server.port}`);
+      console.log(index);
+    });
 
-  let client = net.createConnection({ host: ip, port: port }, () => {
-    console.log("Connected to TCP server");
-  });
+    // 데이터 수신 이벤트 처리
+    socket.on("data", (data) => {
+      // console.log(`Received data from ${server.host}:${server.port}`);
+      dataArr[index] = JSON.parse(data.toString());
+    });
 
-  client.on("error", (err) => {
-    console.error(err);
-    res.status(500).send("Error connecting to Arduino");
-  });
+    // 연결 종료 이벤트 처리
+    socket.on("end", () => {
+      console.log(`Disconnected from ${server.host}:${server.port}`);
+    });
 
-  client.write(method, (err) => {
-    if (err) {
-      console.error(err);
-      res.status(500).send("Error sending data to Arduino");
-    } else {
-      res.send(`send ${method} command to Arduino`);
-    }
+    // 에러 발생 이벤트 처리
+    socket.on("error", (err) => {
+      console.log(`Error occurred in ${server.host}:${server.port}: ${err}`);
+    });
+
+    return socket;
   });
+  res.send("");
 });
 
-app.get("/:ip/:port/name/:name", (req, res) => {
-  const { ip, port } = req.params;
-  const name = req.params.name + " ";
-
-  let client = net.createConnection({ host: ip, port: port }, () => {
-    console.log("Connected to TCP server");
-  });
-
-  client.write("<CHIFNAME>", (err) => {
-    if (err) {
-      console.error(err);
-      res.status(500).send("Error sending data to Arduino");
-    } else {
-      setTimeout(() => console.log(""), 1000);
-      client.write(name);
-    }
-  });
-});
-
-const server = app.listen(port, () => {
-  console.log(`Server listening on port ${port}`);
-});
-
-server.on("error", (err) => {
-  if (err.code === "EADDRINUSE") {
-    console.log(`Port ${port} is already in use`);
+// HTTP 서버 연결
+app.get("/message", (req, res) => {
+  const message = req.query.msg;
+  if (!message) {
+    return res.status(400).send("Message is missing");
   }
+
+  const target = req.query.target;
+  if (!target) {
+    return res.status(400).send("Target is missing");
+  }
+
+  console.log(message, target);
+
+  const socket = sockets[target];
+  if (!socket) {
+    return res.status(400).send(`Target ${target} is not found`);
+  }
+
+  // 문자열 전송
+  socket.write(message);
+
+  res.send(`send ${message} command to Arduino`);
+});
+
+app.listen(51983, () => {
+  console.log("HTTP server listening on port 51983");
 });
