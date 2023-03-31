@@ -24,11 +24,10 @@ export const MainContainer = () => {
 
   async function settingData() {
     try {
-      await axios.get("http://localhost:51983/");
-      setTimeout(settingData, 5000);
+      await axios.get("http://localhost:51983/setting");
+      setTimeout(settingData, 1000);
     } catch (error) {
-      // console.error(error);
-      setTimeout(settingData, 5000);
+      setTimeout(settingData, 1000);
     }
   }
 

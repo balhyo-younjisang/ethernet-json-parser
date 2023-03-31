@@ -5,10 +5,9 @@ import { portState } from "../../../data/atoms";
 import { arduinoControl, changeName } from "../api/apis";
 
 export const ClientSetting = (props) => {
+  const { index } = props;
   const [name, setName] = useState(props.data.NAME);
   const [port] = useRecoilState(portState);
-
-  // console.log(props.ip);
 
   const hideModal = () => {
     props.setModalOpen(false);
@@ -80,9 +79,7 @@ export const ClientSetting = (props) => {
                       src="Increase.svg"
                       width="25"
                       height="25"
-                      onClick={() =>
-                        arduinoControl(props.ip, port, upCommand[index])
-                      }
+                      onClick={() => arduinoControl(upCommand[index], index)}
                     />
                     <Item width="8vw">
                       <Green_text>{settingValues[index]}</Green_text>
@@ -91,16 +88,12 @@ export const ClientSetting = (props) => {
                       src="decrease.svg"
                       width="25"
                       height="25"
-                      onClick={() =>
-                        arduinoControl(props.ip, port, downCommand[index])
-                      }
+                      onClick={() => arduinoControl(downCommand[index], index)}
                     />
                   </Item_list>
                 ))}
               </CommandSetting>
-              <ButtonWrap
-                onClick={() => arduinoControl(props.ip, port, "<S00SWRST>")}
-              >
+              <ButtonWrap onClick={() => arduinoControl("<S00SWRST>", index)}>
                 <RebootBtn>REBOOT SYSTEM</RebootBtn>
               </ButtonWrap>
               <ButtonWrap>
@@ -111,8 +104,8 @@ export const ClientSetting = (props) => {
                       <SwitchWrap
                         onClick={() =>
                           props.heating === true
-                            ? arduinoControl(props.ip, port, "<S00HEAT0>")
-                            : arduinoControl(props.ip, port, "<S00HEAT1>")
+                            ? arduinoControl("<S00HEAT0>", index)
+                            : arduinoControl("<S00HEAT1>", index)
                         }
                       >
                         <FontControl>Heater</FontControl>
@@ -127,8 +120,8 @@ export const ClientSetting = (props) => {
                       <SwitchWrap
                         onClick={() =>
                           props.cooling === true
-                            ? arduinoControl(props.ip, port, "<S00COOL0>")
-                            : arduinoControl(props.ip, port, "<S00COOL1>")
+                            ? arduinoControl("<S00COOL0>", index)
+                            : arduinoControl("<S00COOL1>", index)
                         }
                       >
                         <FontControl>Cooler</FontControl>

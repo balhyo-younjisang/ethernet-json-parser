@@ -15,7 +15,6 @@ export const BasicSetting = ({ setModalOpen }) => {
   const handleChangeNumber = ({ target: { value } }) => {
     const reg = new RegExp("^[0-9]+$");
     if (reg.test(value)) {
-      console.log(value);
       if (value !== "") {
         setCount(value);
       }

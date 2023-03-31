@@ -49,7 +49,11 @@ export const Data = (props) => {
   return (
     <>
       {Modalopen && (
-        <ClientSetting setModalOpen={setModalOpen} data={props.data} ip={ip} />
+        <ClientSetting
+          setModalOpen={setModalOpen}
+          data={props.data}
+          index={index}
+        />
       )}
       <Item_list
         onMouseOver={handleMouseOver}
