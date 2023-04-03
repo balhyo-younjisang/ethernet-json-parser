@@ -11,7 +11,14 @@ export const BasicSetting = ({ setModalOpen }) => {
     setModalOpen(false);
   };
 
+  // const [count, setCount] = useLocalStorage(
+  //   "unique",
+  //   "count",
+  //   useRecoilState(counterState)[0]
+  // );
+
   const [count, setCount] = useRecoilState(counterState);
+  // console.log(typeof count);
 
   // const handleChangeNumber = (e) => setCount(e.target.value);
 
@@ -19,12 +26,18 @@ export const BasicSetting = ({ setModalOpen }) => {
     const reg = new RegExp("^[0-9]+$");
     if (reg.test(value)) {
       if (value !== "") {
-        setCount(value);
+        setCount(Number(value));
       }
+      // setCount(Number(value));
     }
   };
 
-  const [port, setPort] = useRecoilState(portState);
+  // const [port, setPort] = useRecoilState(portState);
+  const [port, setPort] = useLocalStorage(
+    "unique",
+    "port",
+    useRecoilState(portState)[0]
+  );
   const handleChangePort = ({ target: { value } }) => {
     setPort(value);
   };

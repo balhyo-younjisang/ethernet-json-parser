@@ -17,9 +17,11 @@ export const Data = (props) => {
   const [ip, setIp] = useLocalStorage(index, "ip", "");
 
   // const [port] = useRecoilState(portState);
-  const [port] = useRecoilState(portState);
-
-  console.log(port);
+  const [port, setPort] = useLocalStorage(
+    "unique",
+    "port",
+    useRecoilState(portState)[0]
+  );
   // console.log(index);
 
   const ClickAuto = () => {

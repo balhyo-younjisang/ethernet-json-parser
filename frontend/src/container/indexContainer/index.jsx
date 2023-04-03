@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRecoilState } from "recoil";
 import { counterState } from "../../data/atoms";
+import { useLocalStorage } from "../../data/useLocalstorage";
 
 export const MainContainer = () => {
   const [data, setData] = useState([
@@ -21,6 +22,12 @@ export const MainContainer = () => {
     },
   ]);
   const [count] = useRecoilState(counterState);
+  // const [count, setCount] = useLocalStorage(
+  //   "unique",
+  //   "count",
+  //   useRecoilState(counterState)[0]
+  // );
+  // console.log(typeof count, count, Array(count).length);
 
   async function settingData() {
     try {
@@ -53,7 +60,7 @@ export const MainContainer = () => {
       <Header></Header>
       {count === ""
         ? null
-        : [...Array(parseInt(count))].map((n, index) => {
+        : [...Array(count)].map((n, index) => {
             return <Data key={index} data={data[index]} index={index} />;
           })}
     </>
