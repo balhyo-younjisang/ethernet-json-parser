@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { counterState, portState } from "../../../data/atoms";
+import { useLocalStorage } from "../../../data/useLocalstorage";
+
+// when change the ip and port, save the data at the json for localstorage and save the localstorage
 
 export const BasicSetting = ({ setModalOpen }) => {
   const hideModal = () => {
@@ -22,7 +25,9 @@ export const BasicSetting = ({ setModalOpen }) => {
   };
 
   const [port, setPort] = useRecoilState(portState);
-  const handleChangePort = ({ target: { value } }) => setPort(value);
+  const handleChangePort = ({ target: { value } }) => {
+    setPort(value);
+  };
 
   return (
     <Container>

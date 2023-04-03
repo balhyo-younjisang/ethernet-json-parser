@@ -4,17 +4,22 @@ import { ClientSetting } from "./clientSetting";
 import { portState } from "../../../data/atoms";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
+import { useLocalStorage } from "../../../data/useLocalstorage";
 
 export const Data = (props) => {
   const { data, index } = props;
+  // console.log(data, index);
   const { NAME, TEMPOUT, HUMOUT, HEATING, COOLING, AUTO, TLHVL, TLLVL, HUMOP } =
     data;
   const [isHovering, setIsHovering] = useState(false);
   const [Modalopen, setModalOpen] = useState(false);
-  const [ip, setIp] = useState("");
+  // const [ip, setIp] = useState(() => JSON.parse(window.localStorage.getItem()) || "");
+  const [ip, setIp] = useLocalStorage(index, "ip", "");
 
+  // const [port] = useRecoilState(portState);
   const [port] = useRecoilState(portState);
 
+  console.log(port);
   // console.log(index);
 
   const ClickAuto = () => {
