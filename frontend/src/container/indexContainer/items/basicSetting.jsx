@@ -12,9 +12,9 @@ export const BasicSetting = ({ setModalOpen }) => {
   };
 
   // const [count, setCount] = useLocalStorage(
-  //   "unique",
-  //   "count",
-  //   useRecoilState(counterState)[0]
+  //   "unique", // key
+  //   "count", // type
+  //   useRecoilState(counterState)[0] // init
   // );
 
   const [count, setCount] = useRecoilState(counterState);
@@ -26,13 +26,16 @@ export const BasicSetting = ({ setModalOpen }) => {
     const reg = new RegExp("^[0-9]+$");
     if (reg.test(value)) {
       if (value !== "") {
+        console.log("setCount", value);
         setCount(Number(value));
+        window.localStorage.setItem("count", Number(value));
+        // window.localStorage.setItem("count unique", Number(value)); // when count value is change, save the count in the localstorage
       }
       // setCount(Number(value));
     }
   };
+  console.log(typeof count); // update state isn't working
 
-  // const [port, setPort] = useRecoilState(portState);
   const [port, setPort] = useLocalStorage(
     "unique",
     "port",

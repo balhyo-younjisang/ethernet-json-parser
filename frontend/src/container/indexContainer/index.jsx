@@ -21,24 +21,29 @@ export const MainContainer = () => {
       HUMOP: null,
     },
   ]);
-  const [count] = useRecoilState(counterState);
+  const [count, setCount] = useRecoilState(counterState);
+  console.log(count);
   // const [count, setCount] = useLocalStorage(
-  //   "unique",
-  //   "count",
-  //   useRecoilState(counterState)[0]
+  //   "unique", // key
+  //   "count", // type
+  //   useRecoilState(counterState)[0] // init
   // );
-  // console.log(typeof count, count, Array(count).length);
 
   async function settingData() {
+    // console.log("settingData");
     try {
       await axios.get("http://localhost:51983/setting");
       setTimeout(settingData, 1000);
+
+      if (window.localStorage.getItem("count"))
+        setCount(Number(window.localStorage.getItem("count")));
     } catch (error) {
       setTimeout(settingData, 1000);
     }
   }
 
   async function fetchData() {
+    // console.log("fetchData");
     try {
       const { data } = await axios.get("http://localhost:51983/fetch");
       setData(data);
@@ -54,6 +59,15 @@ export const MainContainer = () => {
     fetchData();
   }, []);
 
+  // const rendering = () => {
+  //   //push data for render Data
+  //   const result = [];
+  //   for (let i = 0; i < count; i++) {
+  //     result.push(<Data key={i} data={data[i]} index={i} />);
+  //   }
+  //   return result;
+  // };
+
   return (
     <>
       <Titlebar></Titlebar>
@@ -63,6 +77,7 @@ export const MainContainer = () => {
         : [...Array(count)].map((n, index) => {
             return <Data key={index} data={data[index]} index={index} />;
           })}
+      {/* {count === "" ? null : rendering()} */}
     </>
   );
 };
