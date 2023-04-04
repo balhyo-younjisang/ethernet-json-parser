@@ -19,7 +19,7 @@ const dataArr = Array.from({ length: 99 }, () => ({
   TLLVL: null,
   HUMOP: null,
 }));
-let sockets = null;
+let sockets = [];
 
 const addClient = (host, port, index) => {
   clients[index] = { host, port };
@@ -32,14 +32,23 @@ app.get("/fetch", (req, res) => {
 app.get("/connect/:ip/:port/:index", (req, res) => {
   const { ip, port, index } = req.params;
   addClient(ip, port, index);
-  res.send(`Client connected: ${ip}:${port}`);
+  // res.send(`Client connected: ${ip}:${port}`);
 });
 
 app.get("/setting", (req, res) => {
+  if (sockets.length <= 1) {
+    sockets.forEach((socket, index) => {
+      socket.end();
+      // console.log(
+      // `Disconnected from ${clients[index].host}:${clients[index].port}`
+      // );
+    });
+  }
+
   sockets = clients.map((server, index) => {
     const socket = net.createConnection(server, () => {
-      console.log(`Connected to ${server.host}:${server.port}`);
-      console.log(index);
+      // console.log(`Connected to ${server.host}:${server.port}`);
+      // console.log(index);
     });
 
     // 데이터 수신 이벤트 처리
@@ -50,12 +59,12 @@ app.get("/setting", (req, res) => {
 
     // 연결 종료 이벤트 처리
     socket.on("end", () => {
-      console.log(`Disconnected from ${server.host}:${server.port}`);
+      // console.log(`Disconnected from ${server.host}:${server.port}`);
     });
 
     // 에러 발생 이벤트 처리
     socket.on("error", (err) => {
-      console.log(`Error occurred in ${server.host}:${server.port}: ${err}`);
+      // console.log(`Error occurred in ${server.host}:${server.port}: ${err}`);
     });
 
     return socket;
