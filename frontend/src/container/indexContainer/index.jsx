@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRecoilState } from "recoil";
 import { counterState } from "../../data/atoms";
-import { useLocalStorage } from "../../data/useLocalstorage";
 
 export const MainContainer = () => {
   const [data, setData] = useState([
@@ -21,22 +20,14 @@ export const MainContainer = () => {
       HUMOP: null,
     },
   ]);
-  const [count, setCount] = useRecoilState(counterState);
-  console.log(count);
-  // const [count, setCount] = useLocalStorage(
-  //   "unique", // key
-  //   "count", // type
-  //   useRecoilState(counterState)[0] // init
-  // );
+  const [count] = useRecoilState(counterState);
+  // console.log(count);
 
   async function settingData() {
     // console.log("settingData");
     try {
       await axios.get("http://localhost:51983/setting");
       setTimeout(settingData, 1000);
-
-      if (window.localStorage.getItem("count"))
-        setCount(Number(window.localStorage.getItem("count")));
     } catch (error) {
       setTimeout(settingData, 1000);
     }
@@ -46,6 +37,7 @@ export const MainContainer = () => {
     // console.log("fetchData");
     try {
       const { data } = await axios.get("http://localhost:51983/fetch");
+      console.log(data);
       setData(data);
       setTimeout(fetchData, 1000);
     } catch (error) {
@@ -59,25 +51,18 @@ export const MainContainer = () => {
     fetchData();
   }, []);
 
-  // const rendering = () => {
-  //   //push data for render Data
-  //   const result = [];
-  //   for (let i = 0; i < count; i++) {
-  //     result.push(<Data key={i} data={data[i]} index={i} />);
-  //   }
-  //   return result;
-  // };
-
   return (
     <>
       <Titlebar></Titlebar>
       <Header></Header>
       {count === ""
         ? null
-        : [...Array(count)].map((n, index) => {
+        : [...Array(parseInt(count))].map((n, index) => {
+            if (!data[index]) {
+              return;
+            }
             return <Data key={index} data={data[index]} index={index} />;
           })}
-      {/* {count === "" ? null : rendering()} */}
     </>
   );
 };

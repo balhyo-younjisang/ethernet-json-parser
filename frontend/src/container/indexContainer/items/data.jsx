@@ -8,7 +8,6 @@ import { useLocalStorage } from "../../../data/useLocalstorage";
 
 export const Data = (props) => {
   const { data, index } = props;
-  // console.log(data, index);
   const { NAME, TEMPOUT, HUMOUT, HEATING, COOLING, AUTO, TLHVL, TLLVL, HUMOP } =
     data;
   const [isHovering, setIsHovering] = useState(false);
