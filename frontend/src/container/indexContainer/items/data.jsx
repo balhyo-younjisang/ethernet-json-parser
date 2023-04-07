@@ -58,7 +58,7 @@ export const Data = (props) => {
         <ClientSetting
           setModalOpen={setModalOpen}
           data={props.data}
-          index={index}
+          clientIndex={index}
         />
       )}
       <Item_list

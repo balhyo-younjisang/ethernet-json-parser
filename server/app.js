@@ -22,8 +22,13 @@ const dataArr = Array.from({ length: 99 }, () => ({
 let sockets = [];
 
 const addClient = (host, port, index) => {
+  console.log(host, port, index);
   clients[index] = { host, port };
 };
+
+app.get("/client", (req, res) => {
+  res.send(clients);
+});
 
 app.get("/fetch", (req, res) => {
   res.send(dataArr);
@@ -84,17 +89,18 @@ app.get("/message", (req, res) => {
     return res.status(400).send("Target is missing");
   }
 
-  console.log(message, target);
+  // console.log(message, target);
 
-  const socket = sockets[target];
-  if (!socket) {
-    return res.status(400).send(`Target ${target} is not found`);
-  }
+  // const socket = sockets[target];
+  // if (!socket) {
+  //   return res.status(400).send(`Target ${target} is not found`);
+  // }
 
   // 문자열 전송
-  socket.write(message);
+  // socket.write(message);
 
-  res.send(`send ${message} command to Arduino`);
+  // res.send(`send ${message} command to Arduino`);
+  res.send(`${message}, ${target}`);
 });
 
 app.listen(51983, () => {
