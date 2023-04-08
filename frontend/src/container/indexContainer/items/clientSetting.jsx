@@ -5,6 +5,10 @@ import { portState } from "../../../data/atoms";
 import { arduinoControl, changeName } from "../api/apis";
 
 export const ClientSetting = (props) => {
+  const { data, ip } = props;
+  const { NAME, TEMPOUT, HUMOUT, HEATING, COOLING, AUTO, TLHVL, TLLVL, HUMOP } =
+    data;
+  // console.log(props.data.COOLING);
   const { clientIndex } = props;
   const [name, setName] = useState(props.data.NAME);
   const [port] = useRecoilState(portState);
@@ -25,9 +29,9 @@ export const ClientSetting = (props) => {
   ];
 
   const settingValues = [
-    props.data.TLLVL !== null ? props.data.TLLVL + "°C" : "",
-    props.data.TLHVL !== null ? props.data.TLHVL + "°C" : "",
-    props.data.HUMOP !== null ? props.data.HUMOP + "°C" : "",
+    TLLVL !== null ? TLLVL + "°C" : "",
+    TLHVL !== null ? TLHVL + "°C" : "",
+    HUMOP !== null ? HUMOP + "°C" : "",
   ];
 
   const upCommand = ["<S00TLLIC>", "<S00TLHIC>", "<S00HOPIC>"];
@@ -66,7 +70,7 @@ export const ClientSetting = (props) => {
                       src="upload-svgrepo-com.svg"
                       width="30"
                       height="30"
-                      onClick={() => changeName(props.ip, port, name)}
+                      onClick={() => changeName(name, clientIndex)}
                     />
                   </Item_list>
                 </Wrap>
@@ -109,7 +113,7 @@ export const ClientSetting = (props) => {
                     <WhiteLine>
                       <SwitchWrap
                         onClick={() =>
-                          props.heating === true
+                          HEATING === true
                             ? arduinoControl("<S00HEAT0>", clientIndex)
                             : arduinoControl("<S00HEAT1>", clientIndex)
                         }
@@ -117,7 +121,7 @@ export const ClientSetting = (props) => {
                         <FontControl>Heater</FontControl>
                         <Switch
                           alt="switch"
-                          clicked={props.heating}
+                          clicked={HEATING}
                           // onClick={ClickHeater}
                         />
                       </SwitchWrap>
@@ -125,7 +129,7 @@ export const ClientSetting = (props) => {
                     <WhiteLine>
                       <SwitchWrap
                         onClick={() =>
-                          props.cooling === true
+                          COOLING === true
                             ? arduinoControl("<S00COOL0>", clientIndex)
                             : arduinoControl("<S00COOL1>", clientIndex)
                         }
@@ -133,7 +137,7 @@ export const ClientSetting = (props) => {
                         <FontControl>Cooler</FontControl>
                         <Switch
                           alt="switch"
-                          clicked={props.cooling}
+                          clicked={COOLING}
                           // onClick={ClickCooler}
                         />
                       </SwitchWrap>

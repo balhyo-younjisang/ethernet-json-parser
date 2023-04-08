@@ -59,15 +59,16 @@ app.get("/message", (req, res) => {
     return res.status(400).send("Target is missing");
   }
 
-  const socket = sockets[target];
-  if (!socket) {
-    return res.status(400).send(`Target ${target} is not found`);
-  }
+  const { ip, port } = clients[target];
 
-  // 문자열 전송
-  socket.write(message);
+  // const socket = net.createConnection({ host: ip, port: port }, () => {
+  //   console.log("Connected to TCP server");
+  // });
 
-  res.send(`send ${message} command to Arduino`);
+  // // 문자열 전송
+  // socket.write(message);
+
+  // res.send(`send ${message} command to Arduino`);
 });
 
 app.get("/", (req, res) => {

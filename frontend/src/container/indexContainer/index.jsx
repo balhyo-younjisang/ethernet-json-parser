@@ -27,28 +27,31 @@ export const MainContainer = () => {
     // console.log("settingData");
     try {
       await axios.get("http://localhost:51983/setting");
-      setTimeout(settingData, 1000);
-    } catch (error) {
-      setTimeout(settingData, 1000);
-    }
-  }
-
-  async function fetchData() {
-    // console.log("fetchData");
-    try {
       const { data } = await axios.get("http://localhost:51983/fetch");
       // console.log(data);
       setData(data);
-      setTimeout(fetchData, 1000);
+      setTimeout(settingData, 500);
     } catch (error) {
-      // console.error(error);
-      setTimeout(fetchData, 1000);
+      setTimeout(settingData, 500);
     }
   }
 
+  // async function fetchData() {
+  //   console.log("fetchData");
+  //   try {
+  //     const { data } = await axios.get("http://localhost:51983/fetch");
+  //     console.log(data);
+  //     setData(data);
+  //     setTimeout(fetchData, 1000);
+  //   } catch (error) {
+  //     // console.error(error);
+  //     setTimeout(fetchData, 1000);
+  //   }
+  // }
+
   useEffect(() => {
     settingData();
-    fetchData();
+    // fetchData();
   }, []);
 
   return (

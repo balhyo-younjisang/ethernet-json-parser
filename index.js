@@ -45,7 +45,7 @@ const createWindow = () => {
   });
 
   ipc.on("send_main_ping", (event, arg) => {
-    console.log("Main received a ping!!!");
+    // console.log("Main received a ping!!!");
   });
 
   ipc.on("minimizeApp", () => {
@@ -64,7 +64,7 @@ const createWindow = () => {
   });
 
   ipc.on("message-from-renderer", (event, arg) => {
-    console.log(arg);
+    // console.log(arg);
   });
 };
 
@@ -74,11 +74,11 @@ app.whenReady().then(() => {
   serverProcess = spawn("node", ["app.js"], { cwd: "server" });
 
   serverProcess.stdout.on("data", (data) => {
-    console.log(`stdout: ${data}`);
+    // console.log(`stdout: ${data}`);
   });
 
   serverProcess.stderr.on("data", (data) => {
-    console.error(`stderr: ${data}`);
+    // console.error(`stderr: ${data}`);
   });
 
   serverProcess.on("close", (code) => {
