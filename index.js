@@ -1,7 +1,7 @@
 const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
 const ipc = ipcMain;
-const { spawn, exec } = require("child_process");
+const { spawn } = require("child_process");
 
 let serverProcess;
 
@@ -9,7 +9,7 @@ app.disableHardwareAcceleration();
 
 const createWindow = () => {
   const win = new BrowserWindow({
-    width: 1200, // Default width : 1600 -> 1000
+    width: 1500, // Default width : 1600 -> 1000
     height: 600,
     frame: false,
     icon: path.join(__dirname, "assets/icons/electrosmith.png"),
@@ -22,12 +22,9 @@ const createWindow = () => {
   });
   win.setMenu(null); // Delete line
 
-  // win.loadURL("http://localhost:5174"); --> electron: Failed to load URL: http://localhost:5174/ with error: ERR_CONNECTION_REFUSED
-  // win.loadURL("http://localhost:5175");
-  // win.loadFile("frontend/dist/index.html");
   win.loadFile("public/index.html");
 
-  win.webContents.openDevTools();
+  // win.webContents.openDevTools();
 
   win.webContents.session.webRequest.onBeforeSendHeaders(
     (details, callback) => {
@@ -68,13 +65,11 @@ const createWindow = () => {
   });
 };
 
-// app.dock.setIcon(path.join(__dirname, "/assets/icons/electrosmith.png"));
-
 app.whenReady().then(() => {
-  serverProcess = spawn("node", ["app.js"], { cwd: "server" });
+  serverProcess = spawn("node", ["app.js"], { cwd: "." });
 
   serverProcess.stdout.on("data", (data) => {
-    // console.log(`stdout: ${data}`);
+    console.log(`stdout: ${data}`);
   });
 
   serverProcess.stderr.on("data", (data) => {
