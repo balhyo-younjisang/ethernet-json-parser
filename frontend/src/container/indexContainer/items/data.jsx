@@ -93,27 +93,27 @@ export const Data = (props) => {
           <StatusImg isAuto={AUTO} />
         </Item>
         <Item width="7.39vw">
-          <span>26.5°C</span>
+          <span>{TEMPOUT}°C</span>
           <Green_text></Green_text>
         </Item>
         <Item width="7.39vw">
-          <span>65.3%</span>
+          <span>{HUMOUT}%</span>
         </Item>
         <ControlPannel width="13.22vw">
           <Img src="button-up-solid.svg" alt="setting" imgSize="1.5vw" />
-          <Green_text>28°C</Green_text>
+          <Green_text>{TLHVL}°C</Green_text>
           <Img src="button-down-solid.svg" alt="setting" imgSize="1.5vw" />
           <Img src="button runNstop2.svg" alt="setting" imgSize="1.5vw" />
         </ControlPannel>
         <ControlPannel width="13.22vw">
           <Img src="button-up-solid.svg" alt="setting" imgSize="1.5vw" />
-          <Green_text>7°C</Green_text>
+          <Green_text>{TLLVL}°C</Green_text>
           <Img src="button-down-solid.svg" alt="setting" imgSize="1.5vw" />
           <Img src="button runNstop2.svg" alt="setting" imgSize="1.5vw" />
         </ControlPannel>
         <ControlPannel width="9.75vw">
           <Img src="button-up-solid.svg" alt="setting" imgSize="1.5vw" />
-          <Green_text>50%</Green_text>
+          <Green_text>{HUMOP}%</Green_text>
           <Img src="button-down-solid.svg" alt="setting" imgSize="1.5vw" />
         </ControlPannel>
         <Item width="2.43vw">
