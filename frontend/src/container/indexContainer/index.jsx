@@ -20,11 +20,10 @@ export const MainContainer = () => {
       HUMOP: null,
     },
   ]);
+
   const [count] = useRecoilState(counterState);
-  // console.log(count);
 
   async function settingData() {
-    // console.log("settingData");
     try {
       await axios.get("http://localhost:51983/setting");
       setTimeout(settingData, 1000);
@@ -34,14 +33,12 @@ export const MainContainer = () => {
   }
 
   async function fetchData() {
-    // console.log("fetchData");
     try {
       const { data } = await axios.get("http://localhost:51983/fetch");
       // console.log(data);
       setData(data);
       setTimeout(fetchData, 1000);
     } catch (error) {
-      // console.error(error);
       setTimeout(fetchData, 1000);
     }
   }

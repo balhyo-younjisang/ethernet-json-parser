@@ -26,7 +26,7 @@ export const BasicSetting = ({ setModalOpen }) => {
       // setCount(Number(value));
     }
   };
-  console.log(typeof count); // update state isn't working
+  // console.log(typeof count); // update state isn't working
 
   const [port, setPort] = useLocalStorage(
     "unique",

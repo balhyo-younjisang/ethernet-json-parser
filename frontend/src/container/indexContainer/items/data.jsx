@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { arduinoControl, addClient } from "../api/apis";
-import { ClientSetting } from "./clientSetting";
 import { portState } from "../../../data/atoms";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
@@ -14,6 +13,7 @@ export const Data = (props) => {
   const [Modalopen, setModalOpen] = useState(false);
   // const [ip, setIp] = useState(() => JSON.parse(window.localStorage.getItem()) || "");
   const [ip, setIp] = useLocalStorage(index, "ip", "");
+  const [name, setName] = useState(NAME);
 
   // const [port] = useRecoilState(portState);
   const [port, setPort] = useLocalStorage(
@@ -21,7 +21,6 @@ export const Data = (props) => {
     "port",
     useRecoilState(portState)[0]
   );
-  // console.log(index);
 
   const ClickAuto = () => {
     arduinoControl("<S00AUTO1>");
@@ -46,6 +45,10 @@ export const Data = (props) => {
     if (reg.test(value)) setIp(value);
   };
 
+  const settingName = ({ target: { value } }) => {
+    setName(value);
+  };
+
   useEffect(() => {
     if (ip.length >= 11) {
       addClient(ip, port, index);
@@ -54,23 +57,30 @@ export const Data = (props) => {
 
   return (
     <>
-      {Modalopen && (
+      {/*Modalopen && (
         <ClientSetting
           setModalOpen={setModalOpen}
           data={props.data}
           clientIndex={index}
         />
-      )}
+      )*/}
       <Item_list
         onMouseOver={handleMouseOver}
         onMouseOut={handleMouseOut}
         isHovering={isHovering}
         className="ItemList"
       >
-        <Item width="25vw">
-          <span>{NAME}</span>
-        </Item>
-        <Item width="11.2vw">
+        <Name width="29.5vw">
+          <Input
+            onChange={settingName}
+            value={name}
+            name="Name"
+            placeholder="Name"
+          ></Input>
+          <Img src="button update.svg" alt="setting" imgSize="1.5vw" />
+        </Name>
+
+        <Item width="12vw">
           <Input
             onChange={settingIp}
             maxLength={15}
@@ -79,46 +89,37 @@ export const Data = (props) => {
             placeholder="IP Address"
           ></Input>
         </Item>
-        <Item width="8.5vw">
-          <Green_text>
-            &nbsp;
-            {typeof HUMOP === "number" ? `${HUMOP}%` : null}
-          </Green_text>
+        <Item width="2.43vw">
+          <StatusImg isAuto={AUTO} />
         </Item>
-        <Item width="13.5vw">
-          <span>
-            {typeof TEMPOUT === "number"
-              ? (Math.round(TEMPOUT * 10) / 10).toFixed(1)
-              : ""}
-          </span>
-          <Green_text>
-            &nbsp;
-            {typeof TLHVL === "number" ? `(${TLHVL}°C)` : null}
-          </Green_text>
+        <Item width="7.39vw">
+          <span>26.5°C</span>
+          <Green_text></Green_text>
         </Item>
-        <Item width="13.5vw">
-          <span>
-            {typeof HUMOUT === "number"
-              ? (Math.round(HUMOUT * 10) / 10).toFixed(1)
-              : ""}
-          </span>
-          <Green_text>
-            &nbsp;
-            {typeof TLLVL === "number" ? `(${TLLVL}°C)` : null}
-          </Green_text>
+        <Item width="7.39vw">
+          <span>65.3%</span>
         </Item>
-        <Item width="8.5vw">
-          <Switch alt="switch" onClick={ClickAuto} isActive={AUTO} />
+        <ControlPannel width="13.22vw">
+          <Img src="button-up-solid.svg" alt="setting" imgSize="1.5vw" />
+          <Green_text>28°C</Green_text>
+          <Img src="button-down-solid.svg" alt="setting" imgSize="1.5vw" />
+          <Img src="button runNstop2.svg" alt="setting" imgSize="1.5vw" />
+        </ControlPannel>
+        <ControlPannel width="13.22vw">
+          <Img src="button-up-solid.svg" alt="setting" imgSize="1.5vw" />
+          <Green_text>7°C</Green_text>
+          <Img src="button-down-solid.svg" alt="setting" imgSize="1.5vw" />
+          <Img src="button runNstop2.svg" alt="setting" imgSize="1.5vw" />
+        </ControlPannel>
+        <ControlPannel width="9.75vw">
+          <Img src="button-up-solid.svg" alt="setting" imgSize="1.5vw" />
+          <Green_text>50%</Green_text>
+          <Img src="button-down-solid.svg" alt="setting" imgSize="1.5vw" />
+        </ControlPannel>
+        <Item width="2.43vw">
+          <Img src="button repeat.svg" alt="setting" imgSize="1.75vw" />
         </Item>
-        <Item width="8.5vw">
-          {/* <Switch alt="switch" onClick={ClickCooling} isActive={COOLING} /> */}
-          <Switch alt="switch" isActive={COOLING} />
-        </Item>
-        <Item width="8.5vw">
-          {/* <Switch alt="switch" onClick={ClickHeating} isActive={HEATING} /> */}
-          <Switch alt="switch" isActive={HEATING} />
-        </Item>
-        <Item onClick={showSetModal} setModalOpen={setModalOpen}>
+        <Item onClick={showSetModal} setModalOpen={setModalOpen} width="2.43vw">
           <Img src="setting.svg" alt="setting" imgSize="2.75vw" />
         </Item>
       </Item_list>
@@ -132,23 +133,43 @@ const Item_list = styled.div`
   border-bottom: 3px solid ${(props) => (props.isHovering ? "black" : "white")};
 `;
 
+const Name = styled.div`
+  background-color: rgb(230, 230, 230);
+  border-right: 2px solid ${(props) => (props.isHovering ? "black" : "white")};
+  height: 2.5vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: ${(props) => props.width};
+`;
+
 const Item = styled.div`
   background-color: rgb(230, 230, 230);
   border-right: 2px solid ${(props) => (props.isHovering ? "black" : "white")};
-  height: 48px;
+  height: 2.5vw;
   display: flex;
   align-items: center;
   justify-content: center;
   width: ${(props) => props.width};
 `;
 
-const Switch = styled.img`
+const ControlPannel = styled.div`
+  background-color: rgb(230, 230, 230);
+  border-right: 2px solid ${(props) => (props.isHovering ? "black" : "white")};
+  height: 2.5vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: ${(props) => props.width};
+`;
+
+const StatusImg = styled.img`
   content: url(${(props) =>
-    props.isActive ? "togle_on.svg" : "togle_off.svg"});
+    props.isAuto ? "status-auto.svg" : "status-manual.svg"});
+  width: 2.1vw;
   user-select: none;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
-  width: 5vw;
 `;
 
 const Img = styled.img`
