@@ -59,7 +59,15 @@ app.get("/setting", (req, res) => {
     // 데이터 수신 이벤트 처리
     socket.on("data", (data) => {
       // console.log(`Received data from ${server.host}:${server.port}`);
-      dataArr[index] = JSON.parse(data.toString());
+      // console.log(data.toString());
+      // dataArr[index] = JSON.parse(data.toString());
+
+      try {
+        const jsonData = JSON.parse(data.toString());
+        dataArr[index] = jsonData;
+      } catch (err) {
+        // console.error("Received invalid JSON data:", err);
+      }
     });
 
     // 연결 종료 이벤트 처리
@@ -91,16 +99,45 @@ app.get("/message", (req, res) => {
 
   // console.log(message, target);
 
-  // const socket = sockets[target];
-  // if (!socket) {
-  //   return res.status(400).send(`Target ${target} is not found`);
-  // }
+  const socket = sockets[target];
+  if (!socket) {
+    return res.status(400).send(`Target ${target} is not found`);
+  }
 
-  // 문자열 전송
-  // socket.write(message);
+  socket.write(message);
 
-  // res.send(`send ${message} command to Arduino`);
-  res.send(`${message}, ${target}`);
+  res.send(`send ${message} command to Arduino`);
+  // res.send(`${message}, ${target}`);
+});
+
+app.get("/change_name", (req, res) => {
+  let socket;
+  const name = req.query.name + " ";
+  if (!name) {
+    return res.status(400).send("Name is missing");
+  }
+
+  const target = req.query.target;
+  if (!target) {
+    return res.status(400).send("Target is missing");
+  } else {
+    const { host, port } = clients[target];
+    socket = net.createConnection({ host: host, port: port });
+  }
+
+  socket.write("<CHIFNAME>", (err) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send("Error sending data to Arduino");
+    } else {
+      setTimeout(() => console.log(""), 1000);
+      socket.write(name);
+
+      socket.end();
+    }
+  });
+
+  // socket.end();
 });
 
 app.listen(51983, () => {

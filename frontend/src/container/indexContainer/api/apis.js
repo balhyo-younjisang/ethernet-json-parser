@@ -4,12 +4,12 @@ export const arduinoControl = async (method, target) => {
   const { data } = await axios.get(
     `http://localhost:51983/message?msg=${method}&target=${target}`
   );
-  console.log(data);
+  // console.log(data);
 };
 
-export const changeName = async (ip, port, name) => {
+export const changeName = async (name, target) => {
   const { data } = await axios.get(
-    `http://localhost:51983/${ip}/${port}/name/${name}`
+    `http://localhost:51983/change_name?name=${name}&target=${target}`
   );
   // console.log(data);
 };
@@ -24,5 +24,5 @@ export const addClient = async (ip, port, index) => {
 
 export const cleanClientList = async () => {
   const { data } = await axios.get(`http://localhost:51983/cleanup`);
-  console.log(data);
+  // console.log(data);
 };
