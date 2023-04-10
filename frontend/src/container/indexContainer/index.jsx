@@ -20,38 +20,32 @@ export const MainContainer = () => {
       HUMOP: null,
     },
   ]);
+
   const [count] = useRecoilState(counterState);
-  // console.log(count);
 
   async function settingData() {
-    // console.log("settingData");
     try {
       await axios.get("http://localhost:51983/setting");
-      const { data } = await axios.get("http://localhost:51983/fetch");
-      // console.log(data);
-      setData(data);
-      setTimeout(settingData, 500);
+      setTimeout(settingData, 1000);
     } catch (error) {
-      setTimeout(settingData, 500);
+      setTimeout(settingData, 1000);
     }
   }
 
-  // async function fetchData() {
-  //   console.log("fetchData");
-  //   try {
-  //     const { data } = await axios.get("http://localhost:51983/fetch");
-  //     console.log(data);
-  //     setData(data);
-  //     setTimeout(fetchData, 1000);
-  //   } catch (error) {
-  //     // console.error(error);
-  //     setTimeout(fetchData, 1000);
-  //   }
-  // }
+  async function fetchData() {
+    try {
+      const { data } = await axios.get("http://localhost:51983/fetch");
+      // console.log(data);
+      setData(data);
+      setTimeout(fetchData, 1000);
+    } catch (error) {
+      setTimeout(fetchData, 1000);
+    }
+  }
 
   useEffect(() => {
     settingData();
-    // fetchData();
+    fetchData();
   }, []);
 
   return (

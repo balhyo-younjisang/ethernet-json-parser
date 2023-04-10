@@ -4,14 +4,19 @@ export const Header = () => {
   return (
     <nav>
       <Main_list>
-        <Name>Name</Name>
-        <Ip>IP Address</Ip>
-        <Heater>Dehumidify val</Heater>
-        <Cooler>TEMP (Cooling val)</Cooler>
-        <Humi>HUM(Heating val)</Humi>
-        <Auto>Auto</Auto>
-        <Auto>Cooling</Auto>
-        <Auto>Heating</Auto>
+        <Item width="29.4vw">
+          <p></p>
+          <p>Name</p>
+        </Item>
+        <Item width="12.3vw">IP Address</Item>
+        <Item width="2.43vw">AT</Item>
+        <Item width="7.39vw">TEMP</Item>
+        <Item width="7.39vw">HUM</Item>
+        <Item width="13.22vw">Colling set</Item>
+        <Item width="13.22vw">Heating set</Item>
+        <Item width="9.75vw">Dehum set</Item>
+        <Item width="2.43vw">BOOT</Item>
+        <Item width="2.43vw">SET</Item>
       </Main_list>
     </nav>
   );
@@ -34,6 +39,13 @@ const Main_list = styled.ul`
   @media screen and (max-width: 800px) {
     font-size: 0.5rem;
   }
+`;
+
+const Item = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: ${(props) => props.width};
 `;
 
 const Name = styled.li`
