@@ -4,7 +4,7 @@ export const arduinoControl = async (method, target) => {
   const { data } = await axios.get(
     `http://localhost:51983/message?msg=${method}&target=${target}`
   );
-  // console.log(data);
+  console.log(data);
 };
 
 export const changeName = async (name, target) => {

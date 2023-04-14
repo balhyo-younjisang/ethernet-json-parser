@@ -4,6 +4,7 @@ import { portState } from "../../../data/atoms";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { useLocalStorage } from "../../../data/useLocalstorage";
+import { ClientSetting } from "./clientSetting";
 
 export const Data = (props) => {
   const { data, index } = props;
@@ -57,13 +58,13 @@ export const Data = (props) => {
 
   return (
     <>
-      {/*Modalopen && (
+      {Modalopen && (
         <ClientSetting
           setModalOpen={setModalOpen}
           data={props.data}
           clientIndex={index}
         />
-      )*/}
+      )}
       <Item_list
         onMouseOver={handleMouseOver}
         onMouseOut={handleMouseOut}
@@ -73,7 +74,7 @@ export const Data = (props) => {
         <Name width="29.5vw">
           <Input
             onChange={settingName}
-            value={name}
+            value={name || ""}
             name="Name"
             placeholder="Name"
           ></Input>
@@ -84,40 +85,88 @@ export const Data = (props) => {
           <Input
             onChange={settingIp}
             maxLength={15}
-            value={ip}
+            value={ip || ""}
             name="ip"
             placeholder="IP Address"
           ></Input>
         </Item>
         <Item width="2.43vw">
-          <StatusImg isAuto={AUTO} />
+          <StatusImg
+            isAuto={AUTO}
+            onClick={() => arduinoControl("<S00AUTO>", clientIndex)}
+          />
         </Item>
         <Item width="7.39vw">
-          <span>{TEMPOUT}°C</span>
+          <span>{TEMPOUT === undefined ? TEMPOUT + "°C" : null}</span>
           <Green_text></Green_text>
         </Item>
         <Item width="7.39vw">
-          <span>{HUMOUT}%</span>
+          <span>{HUMOUT === undefined ? HUMOUT + "%" : null}</span>
         </Item>
-        <ControlPannel width="13.22vw">
-          <Img src="button-up-solid.svg" alt="setting" imgSize="1.5vw" />
-          <Green_text>{TLHVL}°C</Green_text>
-          <Img src="button-down-solid.svg" alt="setting" imgSize="1.5vw" />
-          <Img src="button runNstop2.svg" alt="setting" imgSize="1.5vw" />
+        <ControlPannel isActive={COOLING} width="13.22vw">
+          <Img
+            src="button-up-solid.svg"
+            alt="setting"
+            imgSize="1.5vw"
+            onClick={() => arduinoControl("<S00TLHIC>", clientIndex)}
+          />
+          <Green_text>{TLHVL === undefined ? TLHVL + "°C" : null}</Green_text>
+          <Img
+            src="button-down-solid.svg"
+            alt="setting"
+            imgSize="1.5vw"
+            onClick={() => arduinoControl("<S00TLHDC>", clientIndex)}
+          />
+          <Img
+            src="button runNstop2.svg"
+            alt="setting"
+            imgSize="1.5vw"
+            onClick={() => arduinoControl("<S00COOLT>", clientIndex)}
+          />
         </ControlPannel>
-        <ControlPannel width="13.22vw">
-          <Img src="button-up-solid.svg" alt="setting" imgSize="1.5vw" />
-          <Green_text>{TLLVL}°C</Green_text>
-          <Img src="button-down-solid.svg" alt="setting" imgSize="1.5vw" />
-          <Img src="button runNstop2.svg" alt="setting" imgSize="1.5vw" />
+        <ControlPannel isActive={HEATING} width="13.22vw">
+          <Img
+            src="button-up-solid.svg"
+            alt="setting"
+            imgSize="1.5vw"
+            onClick={() => arduinoControl("<S00TLHIC>", clientIndex)}
+          />
+          <Green_text>{TLLVL === undefined ? TLLVL + "°C" : null}</Green_text>
+          <Img
+            src="button-down-solid.svg"
+            alt="setting"
+            imgSize="1.5vw"
+            onClick={() => arduinoControl("<S00TLHDC>", clientIndex)}
+          />
+          <Img
+            src="button runNstop2.svg"
+            alt="setting"
+            imgSize="1.5vw"
+            onClick={() => arduinoControl("<S00HEATT>", clientIndex)}
+          />
         </ControlPannel>
         <ControlPannel width="9.75vw">
-          <Img src="button-up-solid.svg" alt="setting" imgSize="1.5vw" />
-          <Green_text>{HUMOP}%</Green_text>
-          <Img src="button-down-solid.svg" alt="setting" imgSize="1.5vw" />
+          <Img
+            src="button-up-solid.svg"
+            alt="setting"
+            imgSize="1.5vw"
+            onClick={() => arduinoControl("<S00HOPIC>", clientIndex)}
+          />
+          <Green_text>{HUMOP === undefined ? HUMOP + "°C" : null}</Green_text>
+          <Img
+            src="button-down-solid.svg"
+            alt="setting"
+            imgSize="1.5vw"
+            onClick={() => arduinoControl("<S00HOPDC>", clientIndex)}
+          />
         </ControlPannel>
         <Item width="2.43vw">
-          <Img src="button repeat.svg" alt="setting" imgSize="1.75vw" />
+          <Img
+            src="button repeat.svg"
+            alt="setting"
+            imgSize="1.75vw"
+            onClick={() => arduinoControl("<S00SWRST>", clientIndex)}
+          />
         </Item>
         <Item onClick={showSetModal} setModalOpen={setModalOpen} width="2.43vw">
           <Img src="setting.svg" alt="setting" imgSize="2.75vw" />
@@ -154,7 +203,8 @@ const Item = styled.div`
 `;
 
 const ControlPannel = styled.div`
-  background-color: rgb(230, 230, 230);
+  background-color: ${(props) =>
+    props.isActive ? "rgb(0,255,0)" : "rgb(230, 230, 230)"};
   border-right: 2px solid ${(props) => (props.isHovering ? "black" : "white")};
   height: 2.5vw;
   display: flex;
