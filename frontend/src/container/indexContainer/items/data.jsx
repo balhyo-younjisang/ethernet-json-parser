@@ -16,6 +16,8 @@ export const Data = (props) => {
   const [ip, setIp] = useLocalStorage(index, "ip", "");
   const [name, setName] = useState(NAME);
 
+  console.log(data);
+
   // const [port] = useRecoilState(portState);
   const [port, setPort] = useLocalStorage(
     "unique",
@@ -74,7 +76,7 @@ export const Data = (props) => {
         <Name width="29.5vw">
           <Input
             onChange={settingName}
-            value={name || ""}
+            value={NAME || ""}
             name="Name"
             placeholder="Name"
           ></Input>
@@ -97,11 +99,19 @@ export const Data = (props) => {
           />
         </Item>
         <Item width="7.39vw">
-          <span>{TEMPOUT === undefined ? TEMPOUT + "°C" : null}</span>
+          <span>
+            {TEMPOUT !== undefined
+              ? (Math.round(TEMPOUT * 10) / 10).toFixed(1) + "°C"
+              : null}
+          </span>
           <Green_text></Green_text>
         </Item>
         <Item width="7.39vw">
-          <span>{HUMOUT === undefined ? HUMOUT + "%" : null}</span>
+          <span>
+            {HUMOUT !== undefined
+              ? (Math.round(HUMOUT * 10) / 10).toFixed(1) + "%"
+              : null}
+          </span>
         </Item>
         <ControlPannel isActive={COOLING} width="13.22vw">
           <Img
@@ -110,7 +120,7 @@ export const Data = (props) => {
             imgSize="1.5vw"
             onClick={() => arduinoControl("<S00TLHIC>", clientIndex)}
           />
-          <Green_text>{TLHVL === undefined ? TLHVL + "°C" : null}</Green_text>
+          <Green_text>{TLHVL !== undefined ? TLHVL + "°C" : null}</Green_text>
           <Img
             src="button-down-solid.svg"
             alt="setting"
@@ -131,7 +141,7 @@ export const Data = (props) => {
             imgSize="1.5vw"
             onClick={() => arduinoControl("<S00TLHIC>", clientIndex)}
           />
-          <Green_text>{TLLVL === undefined ? TLLVL + "°C" : null}</Green_text>
+          <Green_text>{TLLVL !== undefined ? TLLVL + "°C" : null}</Green_text>
           <Img
             src="button-down-solid.svg"
             alt="setting"
@@ -152,7 +162,7 @@ export const Data = (props) => {
             imgSize="1.5vw"
             onClick={() => arduinoControl("<S00HOPIC>", clientIndex)}
           />
-          <Green_text>{HUMOP === undefined ? HUMOP + "°C" : null}</Green_text>
+          <Green_text>{HUMOP !== undefined ? HUMOP + "°C" : null}</Green_text>
           <Img
             src="button-down-solid.svg"
             alt="setting"
