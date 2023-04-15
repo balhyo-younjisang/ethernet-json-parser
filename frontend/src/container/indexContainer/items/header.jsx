@@ -1,11 +1,30 @@
 import styled from "styled-components";
+import { useState } from "react";
 
 export const Header = () => {
+  const Name = "000"; // get Name data
+  const [locationName, setLocationName] = useState(""); // get LocationName & setting locationName
+
+  const changeLocationValue = (e) => {
+    if (e.target.value.length > 20) return;
+    setLocationName(e.target.value);
+  };
+
   return (
     <nav>
       <Main_list>
         <Item width="29.4vw">
-          <p>Name</p>
+          <ItemWrap>
+            <p>Q'ty : {Name}</p>
+            <LocationNameWrap>
+              <p>Name :</p>
+              <input
+                type="text"
+                value={locationName || ""}
+                onChange={changeLocationValue}
+              />
+            </LocationNameWrap>
+          </ItemWrap>
         </Item>
         <Item width="12.3vw">IP Address</Item>
         <Item width="2.43vw">AT</Item>
@@ -69,4 +88,27 @@ const Humi = styled.li`
 
 const Auto = styled.li`
   width: 8.5vw;
+`;
+
+const ItemWrap = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: start;
+
+  & :nth-child(2) {
+    padding-left: 60px;
+  }
+`;
+
+const LocationNameWrap = styled.div`
+  display: flex;
+
+  & input {
+    background: none;
+    border: none;
+    outline: none;
+    text-align: center;
+    font-size: 1em;
+    font-weight: 500;
+  }
 `;
