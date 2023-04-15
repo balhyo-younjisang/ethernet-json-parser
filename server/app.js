@@ -44,9 +44,6 @@ app.get("/setting", (req, res) => {
   if (sockets.length <= 1) {
     sockets.forEach((socket, index) => {
       socket.end();
-      // console.log(
-      // `Disconnected from ${clients[index].host}:${clients[index].port}`
-      // );
     });
   }
 
