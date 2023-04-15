@@ -17,9 +17,18 @@
     "build:win64": "electron-builder --win --x64"
   },
   "build": {
+    "extraFiles": [
+      {
+        "from": "/server/app.js",
+        "to": ".",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
     "productName": "ELECTROSMITH",
     "appId": "kr.co.balhyo.www",
-    "asar": true,
+    "asar": false,
     "protocols": {
       "name": "productTest",
       "schemes": [
