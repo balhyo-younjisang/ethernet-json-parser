@@ -5,7 +5,6 @@ export const Header = () => {
     <nav>
       <Main_list>
         <Item width="29.4vw">
-          <p></p>
           <p>Name</p>
         </Item>
         <Item width="12.3vw">IP Address</Item>

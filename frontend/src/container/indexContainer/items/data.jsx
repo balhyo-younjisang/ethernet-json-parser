@@ -16,7 +16,7 @@ export const Data = (props) => {
   const [ip, setIp] = useLocalStorage(index, "ip", "");
   const [name, setName] = useState(NAME);
 
-  console.log(data);
+  // console.log(data);
 
   // const [port] = useRecoilState(portState);
   const [port, setPort] = useLocalStorage(
@@ -79,8 +79,9 @@ export const Data = (props) => {
             value={NAME || ""}
             name="Name"
             placeholder="Name"
+            disabled
           ></Input>
-          <Img src="button update.svg" alt="setting" imgSize="1.5vw" />
+          {/* <Img src="button update.svg" alt="setting" imgSize="1.3vw" /> */}
         </Name>
 
         <Item width="12vw">
@@ -95,7 +96,7 @@ export const Data = (props) => {
         <Item width="2.43vw">
           <StatusImg
             isAuto={AUTO}
-            onClick={() => arduinoControl("<S00AUTO>", clientIndex)}
+            onClick={() => arduinoControl("<S00AUTO>", index)}
           />
         </Item>
         <Item width="7.39vw">
@@ -117,57 +118,57 @@ export const Data = (props) => {
           <Img
             src="button-up-solid.svg"
             alt="setting"
-            imgSize="1.5vw"
-            onClick={() => arduinoControl("<S00TLHIC>", clientIndex)}
+            imgSize="1.3vw"
+            onClick={() => arduinoControl("<S00TLHIC>", index)}
           />
           <Green_text>{TLHVL !== undefined ? TLHVL + "°C" : null}</Green_text>
           <Img
             src="button-down-solid.svg"
             alt="setting"
-            imgSize="1.5vw"
-            onClick={() => arduinoControl("<S00TLHDC>", clientIndex)}
+            imgSize="1.3vw"
+            onClick={() => arduinoControl("<S00TLHDC>", index)}
           />
           <Img
             src="button runNstop2.svg"
             alt="setting"
-            imgSize="1.5vw"
-            onClick={() => arduinoControl("<S00COOLT>", clientIndex)}
+            imgSize="1.3vw"
+            onClick={() => arduinoControl("<S00COOLT>", index)}
           />
         </ControlPannel>
         <ControlPannel isActive={HEATING} width="13.22vw">
           <Img
             src="button-up-solid.svg"
             alt="setting"
-            imgSize="1.5vw"
-            onClick={() => arduinoControl("<S00TLHIC>", clientIndex)}
+            imgSize="1.3vw"
+            onClick={() => arduinoControl("<S00TLLIC>", index)}
           />
           <Green_text>{TLLVL !== undefined ? TLLVL + "°C" : null}</Green_text>
           <Img
             src="button-down-solid.svg"
             alt="setting"
-            imgSize="1.5vw"
-            onClick={() => arduinoControl("<S00TLHDC>", clientIndex)}
+            imgSize="1.3vw"
+            onClick={() => arduinoControl("<S00TLLDC>", index)}
           />
           <Img
             src="button runNstop2.svg"
             alt="setting"
-            imgSize="1.5vw"
-            onClick={() => arduinoControl("<S00HEATT>", clientIndex)}
+            imgSize="1.3vw"
+            onClick={() => arduinoControl("<S00HEATT>", index)}
           />
         </ControlPannel>
         <ControlPannel width="9.75vw">
           <Img
             src="button-up-solid.svg"
             alt="setting"
-            imgSize="1.5vw"
-            onClick={() => arduinoControl("<S00HOPIC>", clientIndex)}
+            imgSize="1.3vw"
+            onClick={() => arduinoControl("<S00HOPIC>", index)}
           />
           <Green_text>{HUMOP !== undefined ? HUMOP + "°C" : null}</Green_text>
           <Img
             src="button-down-solid.svg"
             alt="setting"
-            imgSize="1.5vw"
-            onClick={() => arduinoControl("<S00HOPDC>", clientIndex)}
+            imgSize="1.3vw"
+            onClick={() => arduinoControl("<S00HOPDC>", index)}
           />
         </ControlPannel>
         <Item width="2.43vw">
@@ -175,7 +176,7 @@ export const Data = (props) => {
             src="button repeat.svg"
             alt="setting"
             imgSize="1.75vw"
-            onClick={() => arduinoControl("<S00SWRST>", clientIndex)}
+            onClick={() => arduinoControl("<S00SWRST>", index)}
           />
         </Item>
         <Item onClick={showSetModal} setModalOpen={setModalOpen} width="2.43vw">
