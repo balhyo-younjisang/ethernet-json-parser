@@ -22,7 +22,8 @@ const createWindow = () => {
   });
   win.setMenu(null); // Delete line
 
-  win.loadFile("public/index.html");
+  // win.loadFile("public/index.html");
+  win.loadURL("http://localhost:5173");
 
   win.webContents.openDevTools();
 

@@ -1,30 +1,41 @@
 import styled from "styled-components";
-import { useState } from "react";
+// import { useState } from "react";
+import { counterState } from "../../../data/atoms";
+import { useRecoilState } from "recoil";
 
 export const Header = () => {
   const Name = "000"; // get Name data
-  const [locationName, setLocationName] = useState(""); // get LocationName & setting locationName
+  const [count, setCount] = useRecoilState(counterState);
 
-  const changeLocationValue = (e) => {
-    if (e.target.value.length > 20) return;
-    setLocationName(e.target.value);
+  const handleChangeNumber = ({ target: { value } }) => {
+    const reg = new RegExp("^[0-9]+$");
+    if (reg.test(value)) {
+      if (value !== "") {
+        // console.log("setCount", value);
+        setCount(Number(value));
+        // window.localStorage.setItem("count", Number(value)); // when count value is change, save the count in the localstorage
+      }
+      // setCount(Number(value));
+    }
   };
 
   return (
     <nav>
       <Main_list>
         <Item width="29.4vw">
-          <ItemWrap>
-            <p>Q'ty : {Name}</p>
+          <LocationNameWrap>
+            <p>Q'ty : </p>{" "}
+            <input
+              type="text"
+              value={count || ""}
+              onChange={handleChangeNumber}
+              maxLength={3}
+            />
             <LocationNameWrap>
-              <p>Name :</p>
-              <input
-                type="text"
-                value={locationName || ""}
-                onChange={changeLocationValue}
-              />
+              <p>Name</p>
+              <input type="text" disabled />
             </LocationNameWrap>
-          </ItemWrap>
+          </LocationNameWrap>
         </Item>
         <Item width="12.3vw">IP Address</Item>
         <Item width="2.43vw">AT</Item>
@@ -102,7 +113,6 @@ const ItemWrap = styled.div`
 
 const LocationNameWrap = styled.div`
   display: flex;
-
   & input {
     background: none;
     border: none;
@@ -110,5 +120,7 @@ const LocationNameWrap = styled.div`
     text-align: center;
     font-size: 1em;
     font-weight: 500;
+    width: 5vw;
+    margin-right: 5vw;
   }
 `;
