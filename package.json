@@ -17,6 +17,12 @@
     "build:win64": "electron-builder --win --x64"
   },
   "build": {
+    "extraResources": [
+      {
+        "from": "log/",
+        "to": "log"
+      }
+    ],
     "extraFiles": [
       {
         "from": "/server/app.js",
@@ -28,10 +34,14 @@
     ],
     "productName": "ELECTROSMITH",
     "appId": "kr.co.balhyo.www",
+<<<<<<< HEAD
     "asar": false,
     "asarUnpack": [
       "**/*.node"
     ],
+=======
+    "asar": true,
+>>>>>>> 94b802d2d54e711dc49fd99aa894f41fb3a1ea5a
     "protocols": {
       "name": "productTest",
       "schemes": [
@@ -88,6 +98,7 @@
     "cors": "^2.8.5",
     "electron-store": "^8.1.0",
     "express": "^4.18.2",
+    "net": "^1.0.2",
     "recoil-persist": "^4.2.0",
     "redux": "^4.2.1"
   },

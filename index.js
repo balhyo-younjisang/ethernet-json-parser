@@ -105,6 +105,7 @@
 
 const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
+const fs = require("fs");
 const ipc = ipcMain;
 const { spawn } = require("child_process");
 const express = require("express");
@@ -230,6 +231,14 @@ let serverProcess;
 
 app.disableHardwareAcceleration();
 
+const logFilePath = path.join(__dirname, "./log/mylog.txt");
+
+function log(message) {
+  const now = new Date();
+  const formatted = `[${now.toLocaleString()}] ${message}\n`;
+  fs.appendFileSync(logFilePath, formatted);
+}
+
 const createWindow = () => {
   const win = new BrowserWindow({
     width: 1500, // Default width : 1600 -> 1000
@@ -246,6 +255,7 @@ const createWindow = () => {
   win.setMenu(null); // Delete line
 
   win.loadFile("public/index.html");
+  // win.loadURL("http://localhost:5173");
 
   win.webContents.openDevTools();
 
@@ -291,21 +301,28 @@ const createWindow = () => {
 };
 
 app.whenReady().then(() => {
+<<<<<<< HEAD
 
   createWindow();
   // serverProcess = spawn("node", ["app.js"], { cwd: "./server/app.js" });
   serverProcess = spawn("node", ["app.js"], { cwd: "." });
+=======
+  serverProcess = spawn("node", ["./app.js"], { stdio: "inherit" });
+>>>>>>> 94b802d2d54e711dc49fd99aa894f41fb3a1ea5a
 
-  serverProcess.stdout.on("data", (data) => {
+  serverProcess.on("data", (data) => {
     console.log(`stdout: ${data}`);
+    log(data);
   });
 
-  serverProcess.stderr.on("data", (data) => {
+  serverProcess.on("data", (data) => {
     // console.error(`stderr: ${data}`);
+    log(data);
   });
 
   serverProcess.on("close", (code) => {
     console.log(`server process exited with code ${code}`);
+    log(code);
   });
 
 
