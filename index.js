@@ -1,3 +1,4 @@
+{
 // const { app, BrowserWindow, ipcMain } = require("electron");
 // const path = require("path");
 // const ipc = ipcMain;
@@ -102,6 +103,7 @@
 //   }
 
 // });
+}
 
 const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
