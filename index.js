@@ -301,14 +301,10 @@ const createWindow = () => {
 };
 
 app.whenReady().then(() => {
-<<<<<<< HEAD
-
   createWindow();
   // serverProcess = spawn("node", ["app.js"], { cwd: "./server/app.js" });
   serverProcess = spawn("node", ["app.js"], { cwd: "." });
-=======
-  serverProcess = spawn("node", ["./app.js"], { stdio: "inherit" });
->>>>>>> 94b802d2d54e711dc49fd99aa894f41fb3a1ea5a
+//   serverProcess = spawn("node", ["./app.js"], { stdio: "inherit" });
 
   serverProcess.on("data", (data) => {
     console.log(`stdout: ${data}`);
