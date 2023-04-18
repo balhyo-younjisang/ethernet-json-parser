@@ -34,14 +34,10 @@
     ],
     "productName": "ELECTROSMITH",
     "appId": "kr.co.balhyo.www",
-<<<<<<< HEAD
-    "asar": false,
     "asarUnpack": [
       "**/*.node"
     ],
-=======
     "asar": true,
->>>>>>> 94b802d2d54e711dc49fd99aa894f41fb3a1ea5a
     "protocols": {
       "name": "productTest",
       "schemes": [
