@@ -172,30 +172,37 @@ appExpress.get("/message", (req, res) => {
 
 appExpress.get("/change_name", (req, res) => {
   let socket;
-  const name = req.query.name + " ";
-  if (!name) {
-    return res.status(400).send("Name is missing");
-  }
+  console.log(req.query);
 
-  const target = req.query.target;
-  if (!target) {
-    return res.status(400).send("Target is missing");
-  } else {
-    const { host, port } = clients[target];
-    socket = net.createConnection({ host: host, port: port });
-  }
-
-  socket.write("<CHIFNAME>", (err) => {
-    if (err) {
-      console.error(err);
-      res.status(500).send("Error sending data to Arduino");
-    } else {
-      setTimeout(() => console.log(""), 1000);
-      socket.write(name);
-
-      socket.end();
+  if (req.query !== undefined) {
+    const name = req.query.name + " ";
+    if (!name) {
+      return res.status(400).send("Name is missing");
     }
-  });
+
+    const target = req.query.target;
+    if (target === undefined) {
+      return res.status(400).send("Target is missing");
+    } else {
+      const { host, port } = clients[target];
+      socket = net.createConnection({ host: host, port: port });
+    }
+
+    socket.write("<CHIFNAME>", (err) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send("Error sending data to Arduino");
+      } else {
+        setTimeout(() => console.log(""), 1000);
+        socket.write(name);
+
+        socket.end();
+      }
+    });
+  } else {
+    console.log("asdasdsA");
+  }
+  // socket.end();
 });
 
 appExpress.listen(51983, () => {

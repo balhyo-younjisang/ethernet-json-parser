@@ -44,8 +44,8 @@ export const Header = () => {
         <Item width="13.22vw">Colling set</Item>
         <Item width="13.22vw">Heating set</Item>
         <Item width="9.75vw">Dehum set</Item>
-        <Item width="2.43vw">BOOT</Item>
-        <Item width="2.43vw">SET</Item>
+        <Item width="2.43vw">BT</Item>
+        <Item width="2.43vw">ST</Item>
       </Main_list>
     </nav>
   );

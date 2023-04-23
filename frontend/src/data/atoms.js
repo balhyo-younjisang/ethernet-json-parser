@@ -5,7 +5,7 @@ const { persistAtom } = recoilPersist();
 export const counterState = atom({
   key: "counterState",
   default: 1,
-  effects_UNSTABLE: [persistAtom]
+  effects_UNSTABLE: [persistAtom],
 });
 
 export const heatingState = atom({
@@ -20,5 +20,5 @@ export const coolingState = atom({
 
 export const portState = atom({
   key: "portState",
-  default: "",
+  default: "10001",
 });

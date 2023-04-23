@@ -23,7 +23,8 @@ export const Titlebar = (props) => {
 
   return (
     <Container>
-      <Icon onClick={showModal}>
+      {/* <Icon onClick={showModal}> */}
+      <Icon>
         <img src="logo.png" alt="logo" width="60"></img>
       </Icon>
 

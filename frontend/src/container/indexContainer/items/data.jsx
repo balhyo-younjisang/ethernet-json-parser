@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { arduinoControl, addClient } from "../api/apis";
+import { arduinoControl, addClient, changeName } from "../api/apis";
 import { portState } from "../../../data/atoms";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { useLocalStorage } from "../../../data/useLocalstorage";
-import { ClientSetting } from "./clientSetting";
+// import { ClientSetting } from "./clientSetting";
 
 export const Data = (props) => {
   const { data, index } = props;
@@ -12,22 +12,18 @@ export const Data = (props) => {
     data;
   const [isHovering, setIsHovering] = useState(false);
   const [Modalopen, setModalOpen] = useState(false);
-  // const [ip, setIp] = useState(() => JSON.parse(window.localStorage.getItem()) || "");
   const [ip, setIp] = useLocalStorage(index, "ip", "");
   const [name, setName] = useState(NAME);
+  const [nameChange, setNameChange] = useState(false);
+  const [settingMode, setSettingMode] = useState(false);
 
   // console.log(data);
 
-  // const [port] = useRecoilState(portState);
   const [port, setPort] = useLocalStorage(
     "unique",
     "port",
     useRecoilState(portState)[0]
   );
-
-  const ClickAuto = () => {
-    arduinoControl("<S00AUTO1>");
-  };
 
   const handleMouseOver = () => {
     setIsHovering(true);
@@ -37,11 +33,20 @@ export const Data = (props) => {
     setIsHovering(false);
   };
 
-  const showSetModal = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-    document.body.style.overflow = "hidden";
-    setModalOpen(true);
+  const sendNameToServer = (name, clientIndex) => {
+    console.log(name, clientIndex);
+    changeName(name, clientIndex);
+    setName("");
+    setTimeout(() => {
+      setNameChange(false);
+    });
   };
+
+  // const showSetModal = () => {
+  //   window.scrollTo({ top: 0, behavior: "smooth" });
+  //   document.body.style.overflow = "hidden";
+  //   setModalOpen(true);
+  // };
 
   const settingIp = ({ target: { value } }) => {
     const reg = new RegExp("^[0-9.]+$");
@@ -60,13 +65,13 @@ export const Data = (props) => {
 
   return (
     <>
-      {Modalopen && (
+      {/* {Modalopen && (
         <ClientSetting
           setModalOpen={setModalOpen}
           data={props.data}
           clientIndex={index}
         />
-      )}
+      )} */}
       <Item_list
         onMouseOver={handleMouseOver}
         onMouseOut={handleMouseOut}
@@ -74,14 +79,30 @@ export const Data = (props) => {
         className="ItemList"
       >
         <Name width="29.5vw">
-          <Input
-            onChange={settingName}
-            value={NAME || ""}
-            name="Name"
-            placeholder="Name"
-            disabled
-          ></Input>
-          {/* <Img src="button update.svg" alt="setting" imgSize="1.3vw" /> */}
+          {nameChange ? (
+            <Input
+              onChange={settingName}
+              value={name || ""}
+              name="Name"
+              placeholder="Please enter the device name"
+              maxLength={20}
+            />
+          ) : (
+            <Input value={NAME || ""} placeholder="Name" disabled />
+          )}
+
+          <DefaultImg
+            src="button update.svg"
+            alt="setting"
+            imgSize="1.3vw"
+            onClick={
+              nameChange
+                ? () => {
+                    if (name !== "") sendNameToServer(name, index);
+                  }
+                : () => setNameChange(!nameChange)
+            }
+          />
         </Name>
 
         <Item width="12vw">
@@ -96,7 +117,7 @@ export const Data = (props) => {
         <Item width="2.43vw">
           <StatusImg
             isAuto={AUTO}
-            onClick={() => arduinoControl("<S00AUTO>", index)}
+            onClick={() => arduinoControl("<S00AUTO1>", index)}
           />
         </Item>
         <Item width="7.39vw">
@@ -119,20 +140,29 @@ export const Data = (props) => {
             src="button-up-solid.svg"
             alt="setting"
             imgSize="1.3vw"
-            onClick={() => arduinoControl("<S00TLHIC>", index)}
+            settingMode={settingMode}
+            onClick={() => {
+              if (settingMode) arduinoControl("<S00TLHIC>", index);
+            }}
           />
           <Green_text>{TLHVL !== undefined ? TLHVL + "°C" : null}</Green_text>
           <Img
             src="button-down-solid.svg"
             alt="setting"
             imgSize="1.3vw"
-            onClick={() => arduinoControl("<S00TLHDC>", index)}
+            settingMode={settingMode}
+            onClick={() => {
+              if (settingMode) arduinoControl("<S00TLHDC>", index);
+            }}
           />
           <Img
             src="button runNstop2.svg"
             alt="setting"
             imgSize="1.3vw"
-            onClick={() => arduinoControl("<S00COOLT>", index)}
+            settingMode={settingMode}
+            onClick={() => {
+              if (settingMode) arduinoControl("<S00COOLT>", index);
+            }}
           />
         </ControlPannel>
         <ControlPannel isActive={HEATING} width="13.22vw">
@@ -140,20 +170,29 @@ export const Data = (props) => {
             src="button-up-solid.svg"
             alt="setting"
             imgSize="1.3vw"
-            onClick={() => arduinoControl("<S00TLLIC>", index)}
+            settingMode={settingMode}
+            onClick={() => {
+              if (settingMode) arduinoControl("<S00TLLIC>", index);
+            }}
           />
           <Green_text>{TLLVL !== undefined ? TLLVL + "°C" : null}</Green_text>
           <Img
             src="button-down-solid.svg"
             alt="setting"
             imgSize="1.3vw"
-            onClick={() => arduinoControl("<S00TLLDC>", index)}
+            settingMode={settingMode}
+            onClick={() => {
+              if (settingMode) arduinoControl("<S00TLLDC>", index);
+            }}
           />
           <Img
             src="button runNstop2.svg"
             alt="setting"
             imgSize="1.3vw"
-            onClick={() => arduinoControl("<S00HEATT>", index)}
+            settingMode={settingMode}
+            onClick={() => {
+              if (settingMode) arduinoControl("<S00HEATT>", index);
+            }}
           />
         </ControlPannel>
         <ControlPannel width="9.75vw">
@@ -161,14 +200,20 @@ export const Data = (props) => {
             src="button-up-solid.svg"
             alt="setting"
             imgSize="1.3vw"
-            onClick={() => arduinoControl("<S00HOPIC>", index)}
+            settingMode={settingMode}
+            onClick={() => {
+              if (settingMode) arduinoControl("<S00HOPIC>", index);
+            }}
           />
           <Green_text>{HUMOP !== undefined ? HUMOP + "°C" : null}</Green_text>
           <Img
             src="button-down-solid.svg"
             alt="setting"
             imgSize="1.3vw"
-            onClick={() => arduinoControl("<S00HOPDC>", index)}
+            settingMode={settingMode}
+            onClick={() => {
+              if (settingMode) arduinoControl("<S00HOPDC>", index);
+            }}
           />
         </ControlPannel>
         <Item width="2.43vw">
@@ -176,11 +221,21 @@ export const Data = (props) => {
             src="button repeat.svg"
             alt="setting"
             imgSize="1.75vw"
-            onClick={() => arduinoControl("<S00SWRST>", index)}
+            settingMode={settingMode}
+            onClick={() => {
+              if (settingMode) arduinoControl("<S00SWRST>", index);
+            }}
           />
         </Item>
-        <Item onClick={showSetModal} setModalOpen={setModalOpen} width="2.43vw">
-          <Img src="setting.svg" alt="setting" imgSize="2.75vw" />
+        {/* <Item onClick={showSetModal} setModalOpen={setModalOpen} width="2.43vw"> */}
+        <Item width="2.43vw">
+          <SettingImg
+            src="setting.svg"
+            alt="setting"
+            imgSize="3.5rem"
+            settingMode={settingMode}
+            onClick={() => setSettingMode(!settingMode)}
+          />
         </Item>
       </Item_list>
     </>
@@ -234,6 +289,28 @@ const StatusImg = styled.img`
 `;
 
 const Img = styled.img`
+  width: ${(props) => props.imgSize};
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  filter: ${(props) =>
+    props.settingMode
+      ? "invert(0%) sepia(2%) saturate(0%) hue-rotate(219deg) brightness(97%) contrast(100%)"
+      : "invert(67%) sepia(12%) saturate(0%) hue-rotate(190deg) brightness(96%) contrast(81%)"};
+`;
+
+const SettingImg = styled.img`
+  width: ${(props) => props.imgSize};
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  filter: ${(props) =>
+    props.settingMode
+      ? "invert(67%) sepia(12%) saturate(0%) hue-rotate(190deg) brightness(96%) contrast(81%)"
+      : "invert(0%) sepia(2%) saturate(0%) hue-rotate(219deg) brightness(97%) contrast(100%)"};
+`;
+
+const DefaultImg = styled.img`
   width: ${(props) => props.imgSize};
   user-select: none;
   -webkit-touch-callout: none;
