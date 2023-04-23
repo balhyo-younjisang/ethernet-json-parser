@@ -221,7 +221,7 @@ export const Data = (props) => {
             src="button repeat.svg"
             alt="setting"
             imgSize="1.75vw"
-            settingMode={settingMode}
+            settingMode={true}
             onClick={() => {
               if (settingMode) arduinoControl("<S00SWRST>", index);
             }}
