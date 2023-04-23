@@ -6,4 +6,8 @@ export default createGlobalStyle`
     padding: 0;
     font-family: 'Spoqa Han Sans Neo';
     font-style: normal;
-}`;
+}
+html,body {
+    overflow: hidden;
+}
+`;
