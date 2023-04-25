@@ -2,20 +2,27 @@ import styled from "styled-components";
 // import { useState } from "react";
 import { counterState } from "../../../data/atoms";
 import { useRecoilState } from "recoil";
+import { useState } from "react";
 
 export const Header = () => {
-  const Name = "000"; // get Name data
   const [count, setCount] = useRecoilState(counterState);
+  const [localCount, setLocalCount] = useState(count);
 
   const handleChangeNumber = ({ target: { value } }) => {
     const reg = new RegExp("^[0-9]+$");
     if (reg.test(value)) {
       if (value !== "") {
         // console.log("setCount", value);
-        setCount(Number(value));
+        setLocalCount(Number(value));
         // window.localStorage.setItem("count", Number(value)); // when count value is change, save the count in the localstorage
       }
       // setCount(Number(value));
+    }
+  };
+
+  const submitClientCount = (e) => {
+    if (e.key === "Enter") {
+      setCount(localCount);
     }
   };
 
@@ -27,8 +34,9 @@ export const Header = () => {
             <p>Q'ty : </p>{" "}
             <input
               type="text"
-              value={count || ""}
+              value={localCount || ""}
               onChange={handleChangeNumber}
+              onKeyUp={submitClientCount}
               maxLength={3}
             />
             <LocationNameWrap>

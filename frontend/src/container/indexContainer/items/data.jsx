@@ -13,6 +13,7 @@ export const Data = (props) => {
   const [isHovering, setIsHovering] = useState(false);
   const [Modalopen, setModalOpen] = useState(false);
   const [ip, setIp] = useLocalStorage(index, "ip", "");
+  const [localIp, setLocalIp] = useState("");
   const [name, setName] = useState(NAME);
   const [nameChange, setNameChange] = useState(false);
   const [settingMode, setSettingMode] = useState(false);
@@ -48,9 +49,17 @@ export const Data = (props) => {
   //   setModalOpen(true);
   // };
 
+  const reg = new RegExp("^[0-9.]+$");
+
   const settingIp = ({ target: { value } }) => {
-    const reg = new RegExp("^[0-9.]+$");
-    if (reg.test(value)) setIp(value);
+    if (reg.test(value)) setLocalIp(value);
+  };
+
+  const submitClientIp = (e) => {
+    console.log(localIp);
+    if (e.key === "Enter") {
+      if (reg.test(e.target.value)) setIp(localIp);
+    }
   };
 
   const settingName = ({ target: { value } }) => {
@@ -59,6 +68,7 @@ export const Data = (props) => {
 
   useEffect(() => {
     if (ip.length >= 11) {
+      setLocalIp(ip);
       addClient(ip, port, index);
     }
   }, [ip, port, index]);
@@ -91,16 +101,19 @@ export const Data = (props) => {
             <Input value={NAME || ""} placeholder="Name" disabled />
           )}
 
-          <DefaultImg
+          <Img
             src="button update.svg"
             alt="setting"
             imgSize="1.3vw"
+            settingMode={settingMode}
             onClick={
               nameChange
                 ? () => {
                     if (name !== "") sendNameToServer(name, index);
                   }
-                : () => setNameChange(!nameChange)
+                : () => {
+                    if (settingMode) setNameChange(!nameChange);
+                  }
             }
           />
         </Name>
@@ -108,11 +121,12 @@ export const Data = (props) => {
         <Item width="12vw">
           <Input
             onChange={settingIp}
+            onKeyUp={submitClientIp}
             maxLength={15}
-            value={ip || ""}
+            value={localIp || ""}
             name="ip"
             placeholder="IP Address"
-          ></Input>
+          />
         </Item>
         <Item width="2.43vw">
           <StatusImg
