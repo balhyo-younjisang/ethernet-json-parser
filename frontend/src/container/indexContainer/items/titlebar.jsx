@@ -24,7 +24,7 @@ export const Titlebar = (props) => {
   return (
     <Container>
       {/* <Icon onClick={showModal}> */}
-      <Icon>
+      <Icon onClick={() => location.reload()}>
         <img src="logo.png" alt="logo" width="60"></img>
       </Icon>
 
