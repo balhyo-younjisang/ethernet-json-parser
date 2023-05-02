@@ -10,14 +10,14 @@ let clients = [];
 // const dataArr = [];
 const dataArr = Array.from({ length: 99 }, () => ({
   NAME: null,
-  TEMPOUT: null,
-  HUMOUT: null,
+  TEMPOUT: 0,
+  HUMOUT: 0,
   HEATING: false,
   COOLING: false,
   AUTO: false,
-  TLHVL: null,
-  TLLVL: null,
-  HUMOP: null,
+  TLHVL: 0,
+  TLLVL: 0,
+  HUMOP: 0,
 }));
 let sockets = [];
 
