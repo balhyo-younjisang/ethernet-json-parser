@@ -69,8 +69,7 @@ export const Data = (props) => {
   useEffect(() => {
     if (ip.length >= 11) {
       setLocalIp(ip);
-      // addClient(ip, port, index);
-      addClient(ip, 10001, index);
+      addClient(ip, port, index);
     }
   }, [ip, port, index]);
 

@@ -10,14 +10,14 @@ export const MainContainer = () => {
   const [data, setData] = useState([
     {
       NAME: null,
-      TEMPOUT: null,
-      HUMOUT: null,
+      TEMPOUT: 0,
+      HUMOUT: 0,
       HEATING: false,
       COOLING: false,
       AUTO: false,
-      TLHVL: null,
-      TLLVL: null,
-      HUMOP: null,
+      TLHVL: 0,
+      TLLVL: 0,
+      HUMOP: 0,
     },
   ]);
 
@@ -26,9 +26,9 @@ export const MainContainer = () => {
   async function settingData() {
     try {
       await axios.get("http://localhost:51983/setting");
-      setTimeout(settingData, 1000);
+      setTimeout(settingData, 400);
     } catch (error) {
-      setTimeout(settingData, 1000);
+      setTimeout(settingData, 400);
     }
   }
 

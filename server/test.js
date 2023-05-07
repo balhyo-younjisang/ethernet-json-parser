@@ -1,14 +1,12 @@
-const { app, BrowserWindow, ipcMain } = require("electron");
-const path = require("path");
-const ipc = ipcMain;
 const express = require("express");
 const cors = require("cors");
 const net = require("net");
 
-const appExpress = express();
+const app = express();
 
-appExpress.use(cors());
+app.use(cors());
 
+// 클라이언트 데이터를 저장할 변수
 const clientData = Array.from({ length: 99 }, () => ({
   NAME: null,
   TEMPOUT: 0,
@@ -26,14 +24,18 @@ let clientOptions = Array.from({ length: 99 }, () => ({
   port: 0,
 }));
 
-appExpress.get("/connect/:host/:clientPort/:index", (req, res) => {
+app.get("/connect/:host/:clientPort/:index", (req, res) => {
+  // 클라이언트 옵션에 데이터 삽입
   const { host, clientPort, index } = req.params;
   port = Number(clientPort);
   clientOptions[index] = { host, port };
+  // res.send(`addclient ${host} , ${port}`);
 
+  // 소켓으로 구현해 클라이언트 데이터 배열에 삽입
   const client = new net.Socket();
 
   client.connect(clientOptions[index], () => {
+    console.log("Connected to TCP client");
     res.send("success");
     clientList[index] = client;
   });
@@ -42,16 +44,20 @@ appExpress.get("/connect/:host/:clientPort/:index", (req, res) => {
     try {
       const jsonData = JSON.parse(data.toString());
       clientData[index] = jsonData;
-    } catch (err) {}
+    } catch (err) {
+      // console.error("Received invalid JSON data:", err);
+    }
   });
 
+  // 오류 처리
   client.on("error", (err) => {
     console.error("Error connecting to TCP client:", err.message);
     res.send(`failed by "${err.message}" error`);
+    // 이 부분에 적절한 오류 처리 로직을 추가할 수 있습니다.
   });
 });
 
-appExpress.get("/setting", (req, res) => {
+app.get("/setting", (req, res) => {
   let returnValue = [];
   clientOptions.forEach((clientOptions) => {
     returnValue.push(clientOptions);
@@ -59,7 +65,7 @@ appExpress.get("/setting", (req, res) => {
   res.json(returnValue);
 });
 
-appExpress.get("/message", (req, res) => {
+app.get("/message", (req, res) => {
   const message = req.query.msg;
   if (!message) {
     return res.status(400).send("Message is missing");
@@ -80,7 +86,8 @@ appExpress.get("/message", (req, res) => {
   res.send(`send ${message} command to Arduino`);
 });
 
-appExpress.get("/change_name", (req, res) => {
+app.get("/change_name", (req, res) => {
+  let socket;
   console.log(req.query);
 
   if (req.query !== undefined) {
@@ -112,79 +119,16 @@ appExpress.get("/change_name", (req, res) => {
   }
 });
 
-appExpress.get("/fetch", (req, res) => {
+// /fetch 핸들러
+app.get("/fetch", (req, res) => {
+  // 현재 클라이언트 데이터를 리턴
   res.json(clientData);
 });
 
-appExpress.get("/client", (req, res) => {
+app.get("/client", (req, res) => {
   res.send(clientList);
 });
 
-appExpress.listen(51983, () => {});
-
-app.disableHardwareAcceleration();
-
-const createWindow = () => {
-  const win = new BrowserWindow({
-    width: 1500, // Default width : 1600 -> 1000
-    height: 600,
-    frame: false,
-    icon: path.join(__dirname, "assets/icons/electrosmith.png"),
-    webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: false,
-      enableRemoteModule: true,
-      preload: __dirname + "/preload.js",
-    },
-  });
-  win.setMenu(null); // Delete line
-
-  win.loadFile("public/index.html");
-
-  win.webContents.session.webRequest.onBeforeSendHeaders(
-    (details, callback) => {
-      callback({ requestHeaders: { Origin: "*", ...details.requestHeaders } });
-    }
-  );
-
-  win.webContents.session.webRequest.onHeadersReceived((details, callback) => {
-    callback({
-      responseHeaders: {
-        "Access-Control-Allow-Origin": ["*"],
-        ...details.responseHeaders,
-      },
-    });
-  });
-
-  ipc.on("minimizeApp", () => {
-    win.minimize();
-  });
-  ipc.on("maximizeApp", () => {
-    if (win.isMaximized()) {
-      win.restore();
-    } else {
-      win.maximize();
-    }
-  });
-  ipc.on("closeApp", () => {
-    win.close();
-    app.quit();
-  });
-
-  ipc.on("message-from-renderer", (event, arg) => {});
-};
-
-app.whenReady().then(() => {
-  createWindow();
-
-  app.on("activate", () => {
-    if (BrowserWindow.getAllWindows().length === 0) createWindow();
-  });
-});
-
-app.on("window-all-closed", () => {
-  if (process.platform !== "darwin") {
-    win = null;
-    app.quit();
-  }
+app.listen(51983, () => {
+  console.log("Server is listening on port 3000");
 });

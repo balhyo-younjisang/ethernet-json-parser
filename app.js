@@ -7,17 +7,17 @@ const app = express();
 app.use(cors());
 
 let clients = [];
-// const dataArr = [];
+// const dataArr = []
 const dataArr = Array.from({ length: 99 }, () => ({
   NAME: null,
-  TEMPOUT: 0,
-  HUMOUT: 0,
+  TEMPOUT: null,
+  HUMOUT: null,
   HEATING: false,
   COOLING: false,
   AUTO: false,
-  TLHVL: 0,
-  TLLVL: 0,
-  HUMOP: 0,
+  TLHVL: null,
+  TLLVL: null,
+  HUMOP: null,
 }));
 let sockets = [];
 
