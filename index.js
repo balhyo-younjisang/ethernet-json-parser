@@ -4,7 +4,6 @@
   // const ipc = ipcMain;
   // const { spawn } = require("child_process");
   // let serverProcess;
-  // app.disableHardwareAcceleration();
   // const createWindow = () => {
   //   const win = new BrowserWindow({
   //     width: 1500, // Default width : 1600 -> 1000
