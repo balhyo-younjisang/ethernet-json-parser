@@ -8,6 +8,6 @@ export default createGlobalStyle`
     font-style: normal;
 }
 html,body {
-    overflow: hidden;
+    overflow-x: hidden;
 }
 `;
