@@ -37,9 +37,9 @@ export const MainContainer = () => {
       const { data } = await axios.get("http://localhost:51983/fetch");
       // console.log(data);
       setData(data);
-      setTimeout(fetchData, 400);
+      setTimeout(fetchData, 200);
     } catch (error) {
-      setTimeout(fetchData, 400);
+      setTimeout(fetchData, 200);
     }
   }
 
