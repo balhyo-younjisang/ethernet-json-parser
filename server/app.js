@@ -6,9 +6,8 @@ const app = express();
 
 app.use(cors());
 
-let clients = [];
-// const dataArr = [];
-const dataArr = Array.from({ length: 99 }, () => ({
+// 클라이언트 데이터를 저장할 변수
+const clientData = Array.from({ length: 99 }, () => ({
   NAME: null,
   TEMPOUT: 0,
   HUMOUT: 0,
@@ -19,73 +18,54 @@ const dataArr = Array.from({ length: 99 }, () => ({
   TLLVL: 0,
   HUMOP: 0,
 }));
-let sockets = [];
+let clientList = [];
+let clientOptions = Array.from({ length: 99 }, () => ({
+  host: "",
+  port: 0,
+}));
 
-const addClient = (host, port, index) => {
-  console.log(host, port, index);
-  clients[index] = { host, port };
-};
+app.get("/connect/:host/:clientPort/:index", (req, res) => {
+  // 클라이언트 옵션에 데이터 삽입
+  const { host, clientPort, index } = req.params;
+  port = Number(clientPort);
+  clientOptions[index] = { host, port };
+  // res.send(`addclient ${host} , ${port}`);
 
-app.get("/client", (req, res) => {
-  res.send(clients);
-});
+  // 소켓으로 구현해 클라이언트 데이터 배열에 삽입
+  const client = new net.Socket();
 
-app.get("/fetch", (req, res) => {
-  res.send(dataArr);
-});
+  client.connect(clientOptions[index], () => {
+    console.log("Connected to TCP client");
+    res.send("success");
+    clientList[index] = client;
+  });
 
-app.get("/connect/:ip/:port/:index", (req, res) => {
-  const { ip, port, index } = req.params;
-  addClient(ip, port, index);
-  // res.send(`Client connected: ${ip}:${port}`);
+  client.on("data", (data) => {
+    try {
+      const jsonData = JSON.parse(data.toString());
+      clientData[index] = jsonData;
+    } catch (err) {
+      // console.error("Received invalid JSON data:", err);
+    }
+  });
+
+  // 오류 처리
+  client.on("error", (err) => {
+    console.error("Error connecting to TCP client:", err.message);
+    res.send(`failed by "${err.message}" error`);
+    // 이 부분에 적절한 오류 처리 로직을 추가할 수 있습니다.
+  });
 });
 
 app.get("/setting", (req, res) => {
-  if (sockets.length <= 1) {
-    sockets.forEach((socket, index) => {
-      socket.end();
-    });
-  }
-
-  sockets = clients.map((server, index) => {
-    const socket = net.createConnection(server, () => {
-      // console.log(`Connected to ${server.host}:${server.port}`);
-      // console.log(index);
-    });
-
-    // 데이터 수신 이벤트 처리
-    socket.on("data", (data) => {
-      // console.log(`Received data from ${server.host}:${server.port}`);
-      // console.log(data.toString());
-      // dataArr[index] = JSON.parse(data.toString());
-
-      try {
-        const jsonData = JSON.parse(data.toString());
-        dataArr[index] = jsonData;
-      } catch (err) {
-        // console.error("Received invalid JSON data:", err);
-      }
-    });
-
-    // 연결 종료 이벤트 처리
-    socket.on("end", () => {
-      // console.log(`Disconnected from ${server.host}:${server.port}`);
-    });
-
-    // 에러 발생 이벤트 처리
-    socket.on("error", (err) => {
-      // console.log(`Error occurred in ${server.host}:${server.port}: ${err}`);
-    });
-
-    return socket;
+  let returnValue = [];
+  clientOptions.forEach((clientOptions) => {
+    returnValue.push(clientOptions);
   });
-  res.send("");
+  res.json(returnValue);
 });
 
-// HTTP 서버 연결
 app.get("/message", (req, res) => {
-  console.log("ok");
-
   const message = req.query.msg;
   if (!message) {
     return res.status(400).send("Message is missing");
@@ -96,9 +76,7 @@ app.get("/message", (req, res) => {
     return res.status(400).send("Target is missing");
   }
 
-  // console.log(message, target);
-
-  const socket = sockets[target];
+  const socket = clientList[target];
   if (!socket) {
     return res.status(400).send(`Target ${target} is not found`);
   }
@@ -106,7 +84,6 @@ app.get("/message", (req, res) => {
   socket.write(message);
 
   res.send(`send ${message} command to Arduino`);
-  // res.send(`${message}, ${target}`);
 });
 
 app.get("/change_name", (req, res) => {
@@ -120,11 +97,13 @@ app.get("/change_name", (req, res) => {
     }
 
     const target = req.query.target;
-    if (target === undefined) {
+    if (!target) {
       return res.status(400).send("Target is missing");
-    } else {
-      const { host, port } = clients[target];
-      socket = net.createConnection({ host: host, port: port });
+    }
+
+    const socket = clientList[target];
+    if (!socket) {
+      return res.status(400).send(`Target ${target} is not found`);
     }
 
     socket.write("<CHIFNAME>", (err) => {
@@ -132,18 +111,24 @@ app.get("/change_name", (req, res) => {
         console.error(err);
         res.status(500).send("Error sending data to Arduino");
       } else {
-        setTimeout(() => console.log(""), 1000);
-        socket.write(name);
+        setTimeout(() => socket.write(name), 400);
 
-        socket.end();
+        res.send(`change name to  '${req.query.name}'`);
       }
     });
-  } else {
-    console.log("asdasdsA");
   }
-  // socket.end();
+});
+
+// /fetch 핸들러
+app.get("/fetch", (req, res) => {
+  // 현재 클라이언트 데이터를 리턴
+  res.json(clientData);
+});
+
+app.get("/client", (req, res) => {
+  res.send(clientList);
 });
 
 app.listen(51983, () => {
-  console.log("HTTP server listening on port 51983");
+  console.log("Server is listening on port 3000");
 });
